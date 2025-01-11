@@ -1,0 +1,22 @@
+#+title: Test Resume
+#+LATEX_CLASS: moderncv
+#+LATEX_HEADER: \name{Test}{User}
+#+INCLUDE: "../../resumel.org"
+#+OPTIONS: toc:nil title:nil H:2
+
+* Test Section
+
+* Skill Tags
+{{{cvtags(Python,Emacs,LaTeX)}}}
+
+* Skill Tags with Skill Levels
+{{{cvltags(Python,5,Emacs,4,LaTeX,3)}}}
+
+* CV Item
+{{{cvitem(Programming Languages,Proficient in Python, Elisp, and LaTeX)}}}
+
+* CV Double Item
+{{{cvdoubleitem(Languages,English (Native),Tools,Emacs \& LaTeX)}}}
+
+* CV Item with Comment
+{{{cvitemwithcomment(Position,Software Developer,Remote)}}}

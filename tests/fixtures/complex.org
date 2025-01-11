@@ -1,0 +1,34 @@
+#+title: Complex Test Resume
+#+LATEX_CLASS: moderncv
+#+LATEX_HEADER: \name{Complex}{Test}
+#+INCLUDE: "../../resumel.org"
+#+OPTIONS: toc:nil title:nil H:2
+
+* Education
+
+@@latex:\cventry{\calendarsymbol 2022--2024}{Ph.D. in Computer Science\textnormal{ | }}{University\textnormal{ | }}{\addresssymbol City, State.}{}{Group, Department@@
+- Thesis on Emacs-based resume generation
+- Published 3 papers on LaTeX automation
+@@latex:}@@
+
+* Experience
+
+@@latex:\cventry{\calendarsymbol 2018--2020}{Senior Developer\textnormal{ | }}{Tech Corp\textnormal{ | }}{\addresssymbol City, State.}{}{Group, Department@@
+- Led team of 5 developers
+- Implemented CI/CD pipeline {{{cvtags(Python,Docker,Git)}}}
+@@latex:}@@
+
+@@latex:\cventry{\calendarsymbol 2015--2018}{Software Engineer\textnormal{ | }}{Start-up Inc\textnormal{ | }}{\addresssymbol City, State.}{}{Group, Department@@
+- Full-stack development {{{cvltags(JavaScript,4,React,3,Node.js,4)}}}
+@@latex:}@@
+
+* Skills
+
+** Programming
+{{{cvtags(Python,Elisp,JavaScript,LaTeX,C++,Java)}}}
+
+** Tools & Technologies
+{{{cvltags(Emacs,5,Git,4,Docker,3,AWS,4)}}}
+
+* Languages
+{{{cvdoubleitem(English,Native,Spanish,Intermediate)}}}
