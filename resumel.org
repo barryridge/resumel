@@ -19,7 +19,6 @@
 #
 #  Code:
 
-* Macros
 #+MACRO: amp @@latex:&@@
 #+MACRO: endl @@latex:\\@@
 #+MACRO: cal @@latex:\calendarsymbol@@
@@ -46,5 +45,4 @@
 #+MACRO: cvtags (eval (expand-cvtags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10))
 #+MACRO: cvltags (eval (expand-cvltags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20))
 
-
-# resumel.el ends here
+# resumel.org ends here
