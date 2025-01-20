@@ -11,7 +11,7 @@
 {{{cvtags(Python,Emacs,LaTeX)}}}
 
 * Skill Tags with Skill Levels
-{{{cvltags(Python,5,Emacs,4,LaTeX,3)}}}
+{{{cvltags(Python,5,Emacs,4,LaTeX,3,\Cplusplus,2,Shell,1)}}}
 
 * CV Item
 {{{cvitem(Programming Languages,Proficient in Python, Elisp, and LaTeX)}}}
