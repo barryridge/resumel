@@ -63,7 +63,7 @@
 (resumel-test-setup)
 
 ;; Test for basic export
-(ert-deftest resumel-test-basic-export ()
+(ert-deftest resumel-test-moderncv-basic-export ()
   "Test basic resume export."
   (let* ((org-file (expand-file-name "moderncv-basic.org" resumel-fixture-dir))
          (generated-pdf (resumel-test-export-org-to-pdf org-file))
@@ -79,7 +79,7 @@
     (should (resumel-files-equal-p generated-pdf expected-pdf))))
 
 ;; Test for complex export
-(ert-deftest resumel-test-complex-export ()
+(ert-deftest resumel-test-moderncv-complex-export ()
   "Test complex resume export."
   (let* ((org-file (expand-file-name "moderncv-complex.org" resumel-fixture-dir))
          (generated-pdf (resumel-test-export-org-to-pdf org-file))

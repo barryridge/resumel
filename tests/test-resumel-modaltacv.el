@@ -63,7 +63,7 @@
 (resumel-test-setup)
 
 ;; Test for basic export
-(ert-deftest resumel-test-basic-export ()
+(ert-deftest resumel-test-modaltacv-basic-export ()
   "Test basic resume export."
   (let* ((org-file (expand-file-name "modaltacv-basic.org" resumel-fixture-dir))
          (generated-pdf (resumel-test-export-org-to-pdf org-file))
