@@ -11,7 +11,7 @@
 (defvar resumel-expected-dir (expand-file-name "expected" resumel-test-dir)
   "Directory containing expected PDF outputs for testing.")
 
-(defvar resumel-results-dir (expand-file-name "fixtures" resumel-test-dir)
+(defvar resumel-results-dir (expand-file-name "results" resumel-test-dir)
   "Directory where test-generated PDF results are stored.")
 
 ;; Function to export Org to PDF

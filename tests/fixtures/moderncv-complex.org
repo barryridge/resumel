@@ -2,6 +2,7 @@
 #+LATEX_CLASS: moderncv
 #+LATEX_HEADER: \name{Complex}{Test}
 #+INCLUDE: "../../templates/moderncv/resumel-moderncv.org"
+#+EXPORT_FILE_NAME: ../results/moderncv-complex.pdf
 #+OPTIONS: toc:nil title:nil H:2
 
 * Education

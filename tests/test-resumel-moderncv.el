@@ -11,19 +11,17 @@
 (defvar resumel-expected-dir (expand-file-name "expected" resumel-test-dir)
   "Directory containing expected PDF outputs for testing.")
 
-(defvar resumel-results-dir (expand-file-name "fixtures" resumel-test-dir)
+(defvar resumel-results-dir (expand-file-name "results" resumel-test-dir)
   "Directory where test-generated PDF results are stored.")
 
 ;; Function to export Org to PDF
 (defun resumel-test-export-org-to-pdf (org-file)
   "Export ORG-FILE to PDF and return the PDF filename."
   (let* ((base-name (file-name-base org-file))
-         (output-dir resumel-results-dir)
-         (tex-file (expand-file-name (concat base-name ".tex") output-dir))
-         (pdf-file (expand-file-name (concat base-name ".pdf") output-dir)))
+         (pdf-file (expand-file-name (concat base-name ".pdf") resumel-results-dir))
+         (output-dir resumel-results-dir))
     ;; Debug output
     (message "Exporting: %s" org-file)
-    (message "Output TEX: %s" tex-file)
     (message "Output PDF: %s" pdf-file)
     (message "Output directory: %s" output-dir)
 
@@ -33,13 +31,12 @@
       ;; Set LaTeX export settings
       (setq-local org-latex-pdf-process
                   (list (format "latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -output-directory=%s %%f" output-dir)))
-      ;; Do NOT set org-latex-output-directory here, as it only affects auxiliary files.
+      (setq-local org-latex-output-directory output-dir)
 
       ;; Export to PDF and capture any error details
       (condition-case err
           (progn
-            ;; Pass the output .tex file via the EXT-PLIST parameter
-            (org-latex-export-to-pdf nil nil nil nil (list :output-file tex-file))
+            (org-latex-export-to-pdf)
             (unless (file-exists-p pdf-file)
               (message "LaTeX Output:\n%s" (with-current-buffer "*Org PDF LaTeX Output*" (buffer-string)))
               (error "File \"%s\" wasn't produced. See \"*Org PDF LaTeX Output*\" for details" pdf-file))

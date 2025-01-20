@@ -2,6 +2,7 @@
 #+LATEX_CLASS: altacv
 #+AUTHOR: Test User
 #+INCLUDE: "../../templates/modaltacv/resumel-modaltacv.org"
+#+EXPORT_FILE_NAME: ../results/modaltacv-basic.pdf
 #+OPTIONS: toc:nil title:nil H:2
 
 * Test Section

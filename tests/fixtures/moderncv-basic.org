@@ -2,6 +2,7 @@
 #+LATEX_CLASS: moderncv
 #+LATEX_HEADER: \name{Test}{User}
 #+INCLUDE: "../../templates/moderncv/resumel-moderncv.org"
+#+EXPORT_FILE_NAME: ../results/moderncv-basic.pdf
 #+OPTIONS: toc:nil title:nil H:2
 
 * Test Section
