@@ -1,5 +1,11 @@
 (unless (assoc "moderncv" org-latex-classes)
-  (add-to-list 'org-latex-classes
+
+;; Disable Org's hyperref template - let moderncv handle it
+(setq org-latex-hyperref-template nil)
+(setq org-latex-default-packages-alist nil)
+(setq org-latex-packages-alist nil)
+
+(add-to-list 'org-latex-classes
                '("moderncv"
                  "\\documentclass[11pt,letterpaper,sans]{moderncv}
 
