@@ -1,0 +1,13 @@
+#+title: Test Resume
+#+LATEX_CLASS: altacv
+#+AUTHOR: Test User
+#+INCLUDE: "../../templates/modaltacv/resumel-modaltacv.org"
+#+OPTIONS: toc:nil title:nil H:2
+
+* Test Section
+
+* Skill Tags
+{{{cvtags(Python,Emacs,LaTeX)}}}
+
+* Skill Tags with Skill Levels
+{{{cvltags(Python,5,Emacs,4,LaTeX,3)}}}

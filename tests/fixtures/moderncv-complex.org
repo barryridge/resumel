@@ -1,7 +1,7 @@
 #+title: Complex Test Resume
 #+LATEX_CLASS: moderncv
 #+LATEX_HEADER: \name{Complex}{Test}
-#+INCLUDE: "../../resumel.org"
+#+INCLUDE: "../../templates/moderncv/resumel-moderncv.org"
 #+OPTIONS: toc:nil title:nil H:2
 
 * Education

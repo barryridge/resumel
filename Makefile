@@ -11,7 +11,13 @@ test: clean
 		-l ert \
 		-l ox-latex \
 		-l resumel.el \
-		-l $(TEST_DIR)/test-resumel.el \
+		-l $(TEST_DIR)/test-resumel-moderncv.el \
+		-f ert-run-tests-batch-and-exit
+	@emacs -Q --batch \
+		-l ert \
+		-l ox-latex \
+		-l resumel.el \
+		-l $(TEST_DIR)/test-resumel-modaltacv.el \
 		-f ert-run-tests-batch-and-exit
 
 clean:

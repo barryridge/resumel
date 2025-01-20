@@ -18,100 +18,8 @@
 ;;  Description
 ;;
 ;;; Code:
-
-;; Disable Org's hyperref template - let moderncv handle it
-(setq org-latex-hyperref-template nil)
-(setq org-latex-default-packages-alist nil)
-(setq org-latex-packages-alist nil)
-
-(require 'subr-x)  ;; For string-trim if on older Emacs (24.x). Emacs 25+ has it built-in.
+;;;
 (require 'ox-latex)
-
-(setq org-latex-logfiles-extensions '( "lof" "lot" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "xmpi" "run.xml" "bcf"))
-
-(add-to-list 'org-latex-classes
-             '("moderncv"
-               "\\documentclass[11pt,letterpaper,sans]{moderncv}
-
-% ModernCV themes
-\\moderncvstyle{classic}
-
-% To make cover letter text justified
-\\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
-\\makeatletter
-\\patchcmd{\\makeletterhead}% <cmd>
-  {\\raggedright \\@opening}% <search>
-  {\\@opening}% <replace>
-  {}{}% <success><failure>
-\\makeatother
-
-\\moderncvcolor{blue}
-
-% Set up fonts
-\\usepackage[utf8]{inputenc}
-\\usepackage[T1]{fontenc}
-
-% Page layout adjustments
-\\usepackage[scale=0.75]{geometry}
-
-% Math and symbol support
-\\usepackage{amsmath}
-\\usepackage{amsfonts}
-
-% Custom commands
-\\newcommand*{\\Cplusplus}{C{}\\texttt{++}}
-\\renewcommand*{\\cventry}[7][.25em]{%
-  \\cvitem[#1]{#2}{%
-    {\\bfseries#3}%
-    \\ifthenelse{\\equal{#4}{}}{}{{\\slshape#4}}%
-    \\ifthenelse{\\equal{#5}{}}{}{#5}%
-    \\ifthenelse{\\equal{#6}{}}{}{#6}%
-    \\strut%
-    \\ifx&#7&%
-    \\else{\\newline{}\\begin{minipage}[t]{\\linewidth}\\small#7\\end{minipage}}
-    \\fi
-  }
-}
-
-% CV Tags
-\\usepackage{tikz}
-\\usepackage{xcolor}
-
-\\NewDocumentCommand{\\cvtag}{m O{5}}{%
-  \\pgfmathsetmacro{\\skillIntensity}{20 + (#2 * 16)}%
-  \\ifdim \\skillIntensity pt > 100pt \\def\\skillIntensity{100}\\fi
-  \\ifdim \\skillIntensity pt < 0pt   \\def\\skillIntensity{0}\\fi
-  \\tikz[baseline=-0.5ex]{%
-    \\node[draw=black!\\skillIntensity!white,
-           fill=white,
-           rounded corners,
-           inner xsep=0.5ex,
-           inner ysep=0.5ex,
-           text height=1.25ex,
-           text depth=.25ex,
-           font=\\scriptsize,
-           text=black!\\skillIntensity!white]{#1};%
-  }
-}
-
-% Highlight macro used to boldface name in .bib file
-\\newcommand{\\highlight}[1]{\\textbf{#1}} % Replace \textbf with any desired formatting
-
-% Add map marker symbol to address
-\\renewcommand*{\\addresssymbol}{{\\color{color2}\\small\\faMapMarker}~}
-
-% Add calendar symbol command for dates
-\\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendar}~}
-
-% For pdf attachments
-\\usepackage{pdfpages}
-
-% Adjust the page margins
-\\geometry{top=2cm, bottom=2cm, left=2.05cm, right=2.05cm}
-
-"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")))
 
 (defun expand-cvtags (&rest strings)
   "Return a string of \\cvtag{...} expansions from each argument in STRINGS.
@@ -141,6 +49,59 @@ Ignores nil or empty entries."
           ;; Build the final
           (push (format "\\cvtag{%s}[%s]" skill level) result))))
     (string-join (nreverse result) " ")))
+(require 'subr-x)  ;; For string-trim
+
+(defgroup resumel nil
+  "Customization group for resumel."
+  :group 'convenience
+  :prefix "resumel-")
+
+(defcustom resumel-default-template "moderncv"
+  "Default resume template to use."
+  :type '(choice (const "moderncv") (const "modaltacv"))
+  :group 'resumel)
+
+(defvar resumel-templates-dir
+  (expand-file-name "templates" (file-name-directory (or load-file-name buffer-file-name)))
+  "Directory where all resumel templates are stored.")
+
+(defun resumel--load-template (template)
+  "Load the specified TEMPLATE from `resumel-templates-dir`."
+  (let* ((template-dir (expand-file-name template resumel-templates-dir))
+         (template-el (expand-file-name (format "resumel-%s.el" template) template-dir))
+         (template-org (expand-file-name (format "resumel-%s.org" template) template-dir)))
+    (unless (file-exists-p template-el)
+      (error "Template Emacs Lisp file not found: %s" template-el))
+    (unless (file-exists-p template-org)
+      (error "Template Org file not found: %s" template-org))
+    ;; Load the Emacs Lisp file
+    (load-file template-el)
+    ;; Load the Org macros
+    (with-temp-buffer
+      (insert-file-contents template-org)
+      (org-mode)
+      (org-babel-load-file template-org))))
+
+;;;###autoload
+(defun resumel-select-template (template)
+  "Select a resume TEMPLATE to use for exports."
+  (interactive
+   (list (completing-read "Select template: " '("moderncv" "modaltacv") nil t)))
+  (setq resumel-default-template template)
+  (message "resumel template set to: %s" template))
+
+(defun resumel-setup ()
+  "Set up resumel with the selected template."
+  (interactive)
+  (resumel--load-template resumel-default-template)
+  (message "resumel setup complete with template: %s" resumel-default-template))
+
+;;;###autoload
+(defun resumel-export ()
+  "Export the current Org buffer to PDF using the selected resumel template."
+  (interactive)
+  (resumel-setup)
+  (org-latex-export-to-pdf))
 
 (provide 'resumel)
 
