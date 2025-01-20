@@ -1,3 +1,5 @@
+#+INCLUDE: "../../resumel.org"
+
 #+MACRO: amp @@latex:&@@
 #+MACRO: endl @@latex:\\@@
 #+MACRO: cal @@latex:\calendarsymbol@@
@@ -19,7 +21,3 @@
 #+MACRO: cvlistdoubleitem @@latex:\cvlistdoubleitem{$1}{$2}@@
 #+MACRO: cvevent @@latex:\cvevent{$1}{$2}{$3}{$4}@@
 #+MACRO: cvachievement @@latex:\cvachievement{$1}{$2}{$3}{$4}@@
-#+MACRO: cvtag @@latex:\cvtag{$1}@@
-#+MACRO: cvltag @@latex:\cvtag{$1}[$2]@@
-#+MACRO: cvtags (eval (expand-cvtags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10))
-#+MACRO: cvltags (eval (expand-cvltags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20))
