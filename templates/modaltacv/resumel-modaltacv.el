@@ -29,6 +29,19 @@
 \\colorlet{emphasis}{SlateGrey}
 \\colorlet{body}{SlateGrey}
 
+% Set moderncv colors
+\\definecolor{black}{RGB}{0, 0, 0}
+\\definecolor{red}{rgb}{0.95, 0.20, 0.20}
+\\definecolor{darkgrey}{rgb}{0.45, 0.45, 0.45}
+\\definecolor{orange}{rgb}{0.95, 0.55, 0.15}
+\\definecolor{burgundy}{rgb}{0.596078, 0, 0}% 139/255 (0.545098) or 152/255 (0.596078)
+\\definecolor{purple}{rgb}{0.50, 0.33, 0.80}
+\\definecolor{lightblue}{rgb}{0.22, 0.45, 0.70}
+\\definecolor{green}{rgb}{0.35, 0.70, 0.30}
+\\colorlet{color0}{black}
+\\colorlet{color1}{blue}
+\\colorlet{color2}{darkgrey}
+
 % Update fonts
 \\usepackage[utf8]{inputenc}
 \\usepackage[T1]{fontenc}
@@ -54,7 +67,10 @@
 \\newcommand*{\\scholarsocialsymbol}{\\includegraphics[height=1em]{google_scholar_logo_bw.pdf}}
 \\NewInfoField*{scholar}{\\scholarsocialsymbol}
 
+% CV Header
+%
 % Update CV header & section headings - socials on multiple lines
+%
 \\makeatletter
 \\renewcommand{\\makecvheader}{%
   \\begingroup
@@ -74,7 +90,10 @@
 }
 \\makeatother
 
+% CV Sections
+%
 % Update cvsection command to tighten up heading lines
+%
 \\renewcommand{\\cvsection}[2][]{%
   \\par\\bigskip%
   \\color{heading}%
@@ -86,6 +105,40 @@
   \\end{minipage}%
   \\par\\medskip%
   \\color{body}%
+}
+
+% CV Events
+%
+% Update cvevent command to tighten up location next to date
+%
+\\renewcommand{\\cvevent}[4]{%
+  {\\large\\color{color0}#1\\par} % Event title in color0
+  \\smallskip\\normalsize
+  \\ifstrequal{#2}{}{}{%
+  \\textbf{\\color{color0}#2}\\par} % Subtitle/organization in color0
+  \\smallskip
+  \\ifstrequal{#3}{}{}{%
+    {\\small\\makebox[0.5\\linewidth][l]%
+      {\\BeginAccSupp{method=pdfstringdef,ActualText={\\datename:}}{\\color{color2}\\cvDateMarker}\\EndAccSupp{}% Date marker in color2
+      ~\\textcolor{color0}{#3}% Date text in color0
+      \\ifstrequal{#4}{}{}{, ~{\\color{color2}\\cvLocationMarker}~\\textcolor{color0}{#4}}% Location marker in color2, text in color0
+    }}%
+  }\\par
+  \\medskip\\normalsize
+}
+
+% CV References
+%
+% Update to use moderncv colors for symbols
+%
+\\renewcommand{\\cvref}[3]{%
+  \\smallskip
+  \\textcolor{emphasis}{\\textbf{#1}}\\par
+  \\begin{description}[font=\\color{accent},style=multiline,leftmargin=1.35em,align=left]
+  \\item[\\color{color2}\\small\\normalfont\\emailsymbol] #2
+  \\item[\\color{color2}\\small\\normalfont\\mailaddresssymbol] #3
+  \\end{description}
+%   \\medskip
 }
 
 % CV Tags
@@ -114,13 +167,17 @@
 % C++ logo
 \\def\\Cplusplus{C{}\\texttt{++}}
 
+% Add map marker symbol for addresses
+\\newcommand*{\\addresssymbol}{{\\color{color2}\\small\\faMapMarker}~}
+
+% Add calendar symbol command for dates
+\\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendar}~}
+
 % Math stuff...
 \\usepackage{amsmath}
 \\usepackage{amsfonts}
 
 % Itemize labels from moderncv
-\\definecolor{color1}{rgb}{0,0,0}
-\\colorlet{color1}{Blue}
 \\renewcommand{\\labelitemi}{\\strut\\textcolor{color1}{\\large\\rmfamily\\small\\textbullet}}
 \\renewcommand{\\labelitemiii}{\\strut\\textcolor{color1}{\\rmfamily\\textperiodcentered}}
 \\renewcommand{\\labelitemiv}{\\labelitemiii}
@@ -159,6 +216,6 @@
 "
 
                ("\\cvsection{%s}" . "\\cvsection*{%s}")
-               ("\\cvevent{%s}" . "\\cvevent*{%s}"))))
+               ("\\cvsubsection{%s}" . "\\cvsubsection*{%s}"))))
 
 (provide 'resumel-modaltacv)

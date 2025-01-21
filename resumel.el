@@ -19,7 +19,9 @@
 ;;
 ;;; Code:
 ;;;
-(require 'ox-latex)
+(require 'org)           ;; Org
+(require 'ox-latex)      ;; Org LaTeX Export
+(require 'subr-x)        ;; For string-trim
 
 (defun expand-cvtags (&rest strings)
   "Return a string of \\cvtag{...} expansions from each argument in STRINGS.
@@ -61,26 +63,34 @@ Ignores nil or empty entries."
   :type '(choice (const "moderncv") (const "modaltacv"))
   :group 'resumel)
 
-(defvar resumel-templates-dir
-  (expand-file-name "templates" (file-name-directory (or load-file-name buffer-file-name)))
-  "Directory where all resumel templates are stored.")
+;; Set the directory where resumel.el is located
+(defvar resumel-base-dir
+  (file-name-directory (or load-file-name buffer-file-name))
+  "Base directory for resumel package files.")
 
-(defun resumel--load-template (template)
-  "Load the specified TEMPLATE from `resumel-templates-dir`."
-  (let* ((template-dir (expand-file-name template resumel-templates-dir))
+;; Set the directory where resumel templates are stored
+(defvar resumel-templates-dir
+  (expand-file-name "templates" resumel-base-dir)
+  "Directory where resumel templates are stored.")
+
+;; Load a resumel template
+(defun resumel--load-template (template) "Load the specified TEMPLATE from `resumel-templates-dir`."
+  (let* ((base-org (expand-file-name "resumel.org" resumel-base-dir))
+         (template-dir (expand-file-name template resumel-templates-dir))
          (template-el (expand-file-name (format "resumel-%s.el" template) template-dir))
          (template-org (expand-file-name (format "resumel-%s.org" template) template-dir)))
+    ;; Check if central macros file exists
+    (unless (file-exists-p base-org)
+      (error "Base macros file not found: %s" base-org))
+    ;; Load central macros
+    (org-babel-load-file base-org)
+    ;; Check if template files exist
     (unless (file-exists-p template-el)
       (error "Template Emacs Lisp file not found: %s" template-el))
     (unless (file-exists-p template-org)
       (error "Template Org file not found: %s" template-org))
-    ;; Load the Emacs Lisp file
+    ;; Load the template Emacs Lisp file
     (load-file template-el)
-    ;; Load the Org macros
-    (with-temp-buffer
-      (insert-file-contents template-org)
-      (org-mode)
-      (org-babel-load-file template-org))))
 
 ;;;###autoload
 (defun resumel-select-template (template)

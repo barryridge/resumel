@@ -1,23 +1,9 @@
 #+INCLUDE: "../../resumel.org"
 
-#+MACRO: amp @@latex:&@@
-#+MACRO: endl @@latex:\\@@
-#+MACRO: cal @@latex:\calendarsymbol@@
-#+MACRO: pin @@latex:\addresssymbol@@
-#+MACRO: href @@latex:\href{$1}{$2}@@
-#+MACRO: bf @@latex:\textbf{$1}@@
-#+MACRO: divider @@latex:\divider@@
-#+MACRO: par-div @@latex:\par\divider@@
-#+MACRO: new-page @@latex:\newpage@@
-#+MACRO: vspace @@latex:\vspace{$1}@@
-#+MACRO: hspace @@latex:\hspace{$1}@@
+#+MACRO: cvsection @@latex:\cvsection{$1}@@
+#+MACRO: cvsubsection @@latex:\cvsubsection{$1}@@
 #+MACRO: cvevent @@latex:\cvevent{$1}{$2}{$3}{$4}@@
-#+MACRO: cveventlinks @@latex:\cvevent{\textbf{$1} {\vspace{-0.2em}\small | \href{$2}{$3}}}{\vspace{-0.0em}\fontsize{7.5}{36}\selectfont \href{$4}{$5}, \href{$6}{$7}}{$8}{$9}@@
-#+MACRO: cvdegree @@latex:\cvevent{$1}{$2}{$3}{$4}@@
-#+MACRO: cvdegreelinks @@latex:\cvevent{\href{$1}{$2}}{\href{$3}{$4}}{$5}{$6}@@
-#+MACRO: cvthesis @@latex:\faBook \emph{\href{$1}{$2}}@@
-#+MACRO: cvachievement @@latex:\cvachievement{$1}{$2}{$3}{$4}@@
+#+MACRO: cvachievement @@latex:\cvachievement{$1}{$2}{$3}@@
+#+MACRO: cvref @@latex:\cvref{$1}{$2}{$3}@@
 #+MACRO: cvskill @@latex:\cvskill{$1}{$2}@@
-#+MACRO: cvproject @@latex:\cvevent{\textbf{$1} {\small $2}}{\href{$3}{\faGithub $4}}{}{}@@
-#+MACRO: cvawardalt @@latex:\cvevent{\small\textbf{$1}}{\small\cvDateMarker $2 | $3}{}{}@@
-#+MACRO: cvaward @@latex:\cvachievement{\faTrophy}{$1}{\small\cvDateMarker $2 | $3}{}@@
+#+MACRO: wheelchart @@latex:\wheelchart{$1}{$2}{$3}@@

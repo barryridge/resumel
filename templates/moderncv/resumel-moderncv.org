@@ -1,17 +1,5 @@
 #+INCLUDE: "../../resumel.org"
 
-#+MACRO: amp @@latex:&@@
-#+MACRO: endl @@latex:\\@@
-#+MACRO: cal @@latex:\calendarsymbol@@
-#+MACRO: pin @@latex:\addresssymbol@@
-#+MACRO: href @@latex:\href{$1}{$2}@@
-#+MACRO: bf @@latex:\textbf{$1}@@
-#+MACRO: divider @@latex:\divider@@
-#+MACRO: par-div @@latex:\par\divider@@
-#+MACRO: new-page @@latex:\newpage@@
-#+MACRO: vspace @@latex:\vspace{$1}@@
-#+MACRO: hspace @@latex:\hspace{$1}@@
-#+MACRO: fa @@latex:{$2\fa$1}@@
 #+MACRO: cvitem @@latex:\cvitem{$1}{$2}@@
 #+MACRO: cvdoubleitem @@latex:\cvdoubleitem{$1}{$2}{$3}{$4}@@
 #+MACRO: cvtripleitem @@latex:\cvtripleitem{$1}{$2}{$3}{$4}{$5}{$6}@@
@@ -19,5 +7,3 @@
 #+MACRO: cventry @@latex:\cventry{$1}{$2}{$3}{$4}{$5}{$6}@@
 #+MACRO: cvlistitem @@latex:\cvlistitem{$1}@@
 #+MACRO: cvlistdoubleitem @@latex:\cvlistdoubleitem{$1}{$2}@@
-#+MACRO: cvevent @@latex:\cvevent{$1}{$2}{$3}{$4}@@
-#+MACRO: cvachievement @@latex:\cvachievement{$1}{$2}{$3}{$4}@@

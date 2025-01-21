@@ -1,4 +1,20 @@
 # resumel.org --- Description -*- lexical-binding: t; -*-
+# ------------------------------------------------------------------------------
+# General Purpose Macros:
+# ------------------------------------------------------------------------------
+#+MACRO: bf @@latex:\textbf{$1}@@
+#+MACRO: it @@latex:\emph{$1}@@
+#+MACRO: href @@latex:\href{$1}{$2}@@
+#+MACRO: amp @@latex:&@@
+#+MACRO: endl @@latex:\\@@
+#+MACRO: divider @@latex:\divider@@
+#+MACRO: par-div @@latex:\par\divider@@
+#+MACRO: new-page @@latex:\newpage@@
+#+MACRO: vspace @@latex:\vspace{$1}@@
+#+MACRO: hspace @@latex:\hspace{$1}@@
+#+MACRO: cal @@latex:\calendarsymbol@@
+#+MACRO: pin @@latex:\addresssymbol@@
+#+MACRO: fa @@latex:{\color{color2}$2\fa$1}@@
 #
 # Copyright (C) 2025 Barry Ridge
 #
@@ -19,6 +35,9 @@
 #
 #  Code:
 
+# ------------------------------------------------------------------------------
+# CV Macros:
+# ------------------------------------------------------------------------------
 #+MACRO: cvtag @@latex:\cvtag{$1}@@
 #+MACRO: cvltag @@latex:\cvtag{$1}[$2]@@
 #+MACRO: cvtags (eval (expand-cvtags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10))

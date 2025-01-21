@@ -1,23 +1,81 @@
 #+title: Test Resume
 #+LATEX_CLASS: moderncv
 #+LATEX_HEADER: \name{Test}{User}
-#+INCLUDE: "../../templates/moderncv/resumel-moderncv.org"
+#+INCLUDE: ../../templates/moderncv/resumel-moderncv.org
 #+EXPORT_FILE_NAME: ../results/moderncv-basic.pdf
 #+OPTIONS: toc:nil title:nil H:2
 
-* Test Section
+* General Purpose Macro Tests
 
-* Skill Tags
+** Text
+
+- Bold text with Org emphasis: *bold*
+- Bold text with 'bf' macro: {{{bf(bold)}}}
+- Italic text with Org emphasis: /italic/
+- Italic text with 'it' macro: {{{it(italic)}}}
+
+** Hyperlinks
+- A hyperlink with Org: [[https://www.foo.bar][www.foo.bar]]
+- A hyperlink with 'href' macro: {{{href(https://www.foo.bar,www.foo.bar)}}}
+
+** Symbols
+- Calendar symbol: {{{cal}}}
+- Address pin symbol: {{{pin}}}
+- Font Awesome symbols: {{{fa(Cogs)}}} {{{fa(GraduationCap)}}} {{{fa(GraduationCap)}}} {{{fa(Book)}}} {{{fa(Wrench)}}} {{{fa(Trophy)}}} {{{fa(ChalkboardTeacher)}}} {{{fa(Users)}}}
+- Font Awesome symbol in different sizes: {{{fa(Briefcase,\Huge)}}} {{{fa(Briefcase,\huge)}}} {{{fa(Briefcase,\Large)}}} {{{fa(Briefcase,\large)}}} {{{fa(Briefcase,\normalsize)}}} {{{fa(Briefcase,\small)}}} {{{fa(Briefcase,\footnotesize)}}} {{{fa(Briefcase,\scriptsize)}}} {{{fa(Briefcase,\tiny)}}}
+
+** Dividers
+- Divider:
+{{{divider}}}
+
+-  Paragraph Divider:
+{{{par-div}}}
+
+** Spacing
+- 1cm vspace:
+
+{{{vspace(1cm)}}}
+
+- 1cm hspace: From here... {{{hspace(1cm)}}} ...to here.
+
+** Tables
+- Org table:
+
+|--------------+--------------+--------------|
+| Row 1, Col 1 | Row 1, Col 2 | Row 1, Col 3 |
+| Row 2, Col 1 | Row 2, Col 2 | Row 2, Col 3 |
+|--------------+--------------+--------------|
+
+- Macro table:
+
+@@latex:\begin{tabular}{@{}l@{\hspace{10pt}}l@{\hspace{10pt}}l@{\hspace{10pt}}l@{}}@@
+Row 1, Col 1 {{{amp()}}} Row 1, Col 2 {{{amp()}}} Row 1, Col 3 {{{endl()}}}
+Row 2, Col 1 {{{amp()}}} Row 2, Col 2 {{{amp()}}} Row 2, Col 3 {{{endl()}}}
+@@latex:\end{tabular}@@
+
+* CV Macro Tests
+
+** Skill Tags
 {{{cvtags(Python,Emacs,LaTeX)}}}
 
-* Skill Tags with Skill Levels
+** Skill Tags with Skill Levels
 {{{cvltags(Python,5,Emacs,4,LaTeX,3,\Cplusplus,2,Shell,1)}}}
 
-* CV Item
+** CV Item
 {{{cvitem(Programming Languages,Proficient in Python, Elisp, and LaTeX)}}}
 
-* CV Double Item
+** CV Double Item
 {{{cvdoubleitem(Languages,English (Native),Tools,Emacs \& LaTeX)}}}
 
-* CV Item with Comment
+** CV Item with Comment
 {{{cvitemwithcomment(Position,Software Developer,Remote)}}}
+
+** CV List Item
+{{{cvlistitem(Item 1)}}}
+{{{cvlistitem(Item 2)}}}
+{{{cvlistitem(Item 3)}}}
+
+** CV List Double Item
+{{{cvlistdoubleitem(Item 1,Item 4)}}}
+{{{cvlistdoubleitem(Item 2,Item 5)}}}
+{{{cvlistdoubleitem(Item 3,Item 6)}}}
