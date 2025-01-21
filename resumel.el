@@ -77,8 +77,8 @@ Ignores nil or empty entries."
 (defun resumel--load-template (template) "Load the specified TEMPLATE from `resumel-templates-dir`."
   (let* ((base-org (expand-file-name "resumel.org" resumel-base-dir))
          (template-dir (expand-file-name template resumel-templates-dir))
-         (template-el (expand-file-name (format "resumel-%s.el" template) template-dir))
-         (template-org (expand-file-name (format "resumel-%s.org" template) template-dir)))
+         (template-el (expand-file-name (format "%s.el" template) template-dir))
+         (template-org (expand-file-name (format "%s.org" template) template-dir)))
     ;; Check if central macros file exists
     (unless (file-exists-p base-org)
       (error "Base macros file not found: %s" base-org))
@@ -91,6 +91,8 @@ Ignores nil or empty entries."
       (error "Template Org file not found: %s" template-org))
     ;; Load the template Emacs Lisp file
     (load-file template-el)
+    ;; Load the template Org macros
+    (org-babel-load-file template-org)))
 
 ;;;###autoload
 (defun resumel-select-template (template)
