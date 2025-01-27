@@ -1,0 +1,277 @@
+* Config :noexport:
+#+title: Test Resume
+#+LATEX_CLASS: altacv
+#+LATEX_HEADER: \columnratio{0.6} % Set the left/right column width ratio to 6:4.
+#+LATEX_HEADER: \usepackage[bottom]{footmisc}
+#+AUTHOR: Test User
+#+INCLUDE: ../../templates/modaltacv/modaltacv.org
+#+EXPORT_FILE_NAME: ../results/modaltacv-complex.pdf
+#+OPTIONS: toc:nil title:nil H:2
+
+* CV Header :ignore:
+** Photo & Tagline :ignore:
+#+begin_export latex
+\name{Firstname Lastname}
+\tagline{World Expert}
+#+end_export
+
+** Personal Info :ignore:
+#+begin_export latex
+\personalinfo{
+  \location{City, State}
+  \phone{+1 (555) 555-1234}
+  \email{user@foo.bar}
+  \homepage{www.foo.bar}
+  \linkedin{user-name}
+  \github{username}
+}
+\makecvheader
+#+end_export
+
+* Page 1, Column 1 :ignore:
+{{{beginparacol}}}
+
+** Personal Statement :ignore:
+#+begin_export latex
+ \vspace{2.0em}
+ \begin{quote}
+ Seeking a fantastic new role.
+ \newline
+ \vspace{0.1em}
+ Full CV \& references available upon request.
+ \end{quote}
+#+end_export
+
+** Experience @@latex:{\Large \faBriefcase}@@
+*** Job 1 :ignore:
+{{{cvevent(Job 1,\href{https://www.company-1-site.com}{Company 1}, \href{https://www.company-1-site.com/department/group}{Group}, \href{https://www.company-1-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
+
+**** Role 1 :ignore:
+*Role 1*
+- Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 2 :ignore:
+*Role 2*
+- Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 3 :ignore:
+*Role 3*
+- Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+{{{vspace(-0.2cm)}}}
+{{{divider}}}
+{{{vspace(-0.2cm)}}}
+
+*** Job 2 :ignore:
+{{{cvevent(Job 2, \href{https://www.company-2-site.com}{Company 2},\href{https://www.company-2-site.com/department/group}{Group}, \href{https://www.company-2-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
+
+**** Role 1 :ignore:
+*Role 1*
+- Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 2 :ignore:
+*Role 2*
+- Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 3 :ignore:
+*Role 3*
+- Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+{{{vspace(-0.2cm)}}}
+{{{divider}}}
+{{{vspace(-0.2cm)}}}
+
+*** Job 3 :ignore:
+{{{cvevent(Job 3, \href{https://www.company-3-site.com}{Company 3},\href{https://www.company-3-site.com/department/group}{Group}, \href{https://www.company-3-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
+
+**** Role 1 :ignore:
+*Role 1*
+- Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 2 :ignore:
+*Role 2*
+- Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 3 :ignore:
+*Role 3*
+- Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+{{{vspace(-0.2cm)}}}
+{{{divider}}}
+{{{vspace(-0.2cm)}}}
+
+*** Job 4 :ignore:
+{{{cvevent(Job 4, \href{https://www.company-3-site.com}{Company 4},\href{https://www.company-4-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
+
+**** Role 1 :ignore:
+*Role 1*
+- Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 2 :ignore:
+*Role 2*
+- Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 3 :ignore:
+*Role 3*
+- Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+# {{{vspace(-0.2cm)}}}
+# {{{divider}}}
+# {{{vspace(-0.2cm)}}}
+
+
+* Page 1, Column 2 :ignore:
+# Switch to the right column - will automatically move to the next page.
+{{{switchcol}}}
+
+** Skills @@latex:{\Large \faCogs}@@
+*** Programming :ignore:
+*Programming*
+
+{{{cvltags(C,5,\Cplusplus,4,Python,3,ELisp,2,UNIX Shell,1)}}}
+
+{{{vspace(-0.1cm)}}}
+{{{divider}}}
+{{{vspace(-0.1cm)}}}
+
+*** Science, Eng. & Math :ignore:
+*Science, Eng. & Math*
+
+{{{cvtag(Computer Vision (CV))}}} {{{cvtag(Machine Learning (ML))}}}
+
+{{{cvtag(Deep Learning (DL))}}} {{{cvtag(Artificial Intelligence (AI))}}}
+
+{{{vspace(-0.1cm)}}}
+{{{divider}}}
+{{{vspace(-0.1cm)}}}
+
+*** Tools & Libraries :ignore:
+*Tools & Libraries*
+
+{{{cvtag(Git)}}} {{{cvtag(SVN)}}} {{{cvtag(CI/CD)}}} {{{cvtag(Make)}}} {{{cvtag(CMake)}}} {{{cvtag(Vim)}}} {{{cvtag(Emacs)}}}
+
+{{{vspace(-0.1cm)}}}
+
+** Education @@latex:{\Large \faGraduationCap}@@
+{{{cvevent(\href{http://www.university-1.com/department}{Ph.D. in Big Brain Stuff},\href{http://www.university-1.com}{University One}, 1885--2025, City\, Country)}}}
+{{{cvthesis(https://www.thesis-1-link.com, Thesis One Title)}}}
+
+{{{vspace(-0.15cm)}}}
+{{{divider}}}
+{{{vspace(-0.15cm)}}}
+
+{{{cvevent(\href{http://www.university-2.com}{M.Sc. in Medium Brain Stuff},\href{http://www.university-2.com}{University Two},1885--2025, City\, Country)}}}
+{{{cvthesis(https://www.thesis-2-link.com, Thesis Two Title)}}}
+
+{{{vspace(-0.15cm)}}}
+{{{divider}}}
+{{{vspace(-0.15cm)}}}
+
+{{{cvevent(\href{http://www.university-3.com}{B.Sc. in Small Brain Stuff},\href{http://www.university-3.com/}{University Three},1885-2025, City\, Country)}}}
+
+{{{vspace(-0.2cm)}}}
+
+** Projects @@latex:{\Large \faWrench}@@
+*** Project 1 :ignore:
+{{{cvproject(Project 1, Python Library, https://github.com/user-name/project1, https://github.com/user-name/project1)}}}
+{{{vspace(-0.5em)}}}
+- Project 1 description
+
+*** Project 2 :ignore:
+{{{cvproject(Project 2, Python Library, https://github.com/user-name/project2, https://github.com/user-name/project2)}}}
+{{{vspace(-0.5em)}}}
+- Project 2 description
+
+*** Project 3 :ignore:
+{{{cvproject(Project 3, Python Library, https://github.com/user-name/project3, https://github.com/user-name/project3)}}}
+{{{vspace(-0.5em)}}}
+- Project 3 description
+
+*** Project 4 :ignore:
+{{{cvproject(Project 4, Python Library, https://github.com/user-name/project4, https://github.com/user-name/project4)}}}
+{{{vspace(-0.5em)}}}
+- Project 4 description
+
+*** Project 5 :ignore:
+{{{cvproject(Project 5, Python Library, https://github.com/user-name/project5, https://github.com/user-name/project5)}}}
+{{{vspace(-0.5em)}}}
+- Project 5 description
+
+# ** Newpage :ignore:
+# {{{new-page}}}
+
+* Page 2, Column 1 :ignore:
+# Switch to the left column - will automatically move to the next page.
+{{{switchcol}}}
+
+** Experience (Cont.) @@latex:{\Large \faBriefcase}@@
+
+*** Job 5 :ignore:
+{{{cvevent(Job 5, \href{https://www.company-5-site.com}{Company 5}, \href{https://www.company-5-site.com/department/group}{Group}, \href{https://www.company-5-site.com/department}{Department}, May 9 1806 -- Apr 7 2025, City\, State)}}}
+
+**** Role 1 :ignore:
+*Role 1*
+- Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 2 :ignore:
+*Role 2*
+- Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 3 :ignore:
+*Role 3*
+- Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+{{{vspace(-0.2cm)}}}
+{{{divider}}}
+{{{vspace(-0.2cm)}}}
+
+*** Job 6 :ignore:
+{{{cvevent(Job 6,\href{https://www.company-6-site.com}{Company 6},\href{https://www.company-6-site.com/department/group}{Group}, \href{https://www.company-6-site.com/department}{Department},May 9 1806 -- Apr 7 2025,City\, State)}}}
+
+**** Role 1 :ignore:
+*Role 1*
+- Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 2 :ignore:
+*Role 2*
+- Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+**** Role 3 :ignore:
+*Role 3*
+- Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+
+{{{vspace(-0.2cm)}}}
+{{{divider}}}
+{{{vspace(-0.2cm)}}}
+
+# ** Newpage :ignore:
+# {{{new-page}}}
+
+* Page 2, Column 2 :ignore:
+# Switch to the right column
+{{{switchcol}}}
+
+** Projects (Cont.) @@latex:{\Large \faWrench}@@
+*** Project 6 :ignore:
+{{{cvproject(Project 6, ELisp Library, https://github.com/user-name/project6, https://github.com/user-name/project6)}}}
+{{{vspace(-0.3em)}}}
+- Project 6 description.
+
+{{{vspace(-0.2em)}}}
+
+*** Project 7 :ignore:
+{{{cvproject(Project 7, ELisp Library, https://github.com/user-name/project7, https://github.com/user-name/project7)}}}
+{{{vspace(-0.3em)}}}
+- Project 7 description.
+
+{{{vspace(-0.2em)}}}
+
+** Awards @@latex:{\Large \faTrophy}@@
+{{{cvaward(\href{https://www.award-1.com}{Company 1} Award 1, Jun 1885, Award 1 description)}}}
+
+{{{cvaward(\href{https://www.award-2.com}{Company 2} Award 2, Jun 1885, Award 2 description)}}}
+
+{{{cvaward(\href{https://www.award-3.com}{Company 3} Award 3, Jun 1885, Award 3 description)}}}
+
+* Back Matter :ignore:
+{{{endparacol}}}

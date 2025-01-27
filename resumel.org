@@ -12,9 +12,11 @@
 #+MACRO: new-page @@latex:\newpage@@
 #+MACRO: vspace @@latex:\vspace{$1}@@
 #+MACRO: hspace @@latex:\hspace{$1}@@
+#+MACRO: linebreak @@latex:\linebreak@@
+#+MACRO: pagebreak @@latex:\pagebreak@@
 #+MACRO: cal @@latex:\calendarsymbol@@
 #+MACRO: pin @@latex:\addresssymbol@@
-#+MACRO: fa @@latex:{\color{color2}$2\fa$1}@@
+#+MACRO: fa @@latex:{\color{color1}$2\fa$1}@@
 #
 # Copyright (C) 2025 Barry Ridge
 #
