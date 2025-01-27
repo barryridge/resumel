@@ -1,4 +1,5 @@
 (unless (assoc "modaltacv" org-latex-classes)
+(setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "xmpi" "run.xml" "bcf")))
   (add-to-list 'org-latex-classes
                '("altacv"
                  "\\documentclass[10pt,letterpaper,ragged2e,withhyper]{altacv}
@@ -217,5 +218,11 @@
 
                ("\\cvsection{%s}" . "\\cvsection*{%s}")
                ("\\cvsubsection{%s}" . "\\cvsubsection*{%s}"))))
+
+(setq org-latex-packages-alist 'nil)
+(setq org-latex-default-packages-alist
+      '(("" "lmodern" t)  ; Load lmodern package for Latin Modern fonts
+        ("" "paracol" t)  ; Keep paracol for column layout
+        ))
 
 (provide 'resumel-modaltacv)

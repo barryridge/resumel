@@ -1,9 +1,16 @@
 #+INCLUDE: "../../resumel.org"
 
+#+MACRO: beginparacol @@latex:\begin{paracol}{2}@@
+#+MACRO: endparacol @@latex:\end{paracol}@@
+#+MACRO: switchcol @@latex:\switchcolumn@@
+
 #+MACRO: cvsection @@latex:\cvsection{$1}@@
 #+MACRO: cvsubsection @@latex:\cvsubsection{$1}@@
 #+MACRO: cvevent @@latex:\cvevent{$1}{$2}{$3}{$4}@@
 #+MACRO: cvachievement @@latex:\cvachievement{$1}{$2}{$3}@@
 #+MACRO: cvref @@latex:\cvref{$1}{$2}{$3}@@
 #+MACRO: cvskill @@latex:\cvskill{$1}{$2}@@
+#+MACRO: cvthesis @@latex:\faBook \emph{\href{$1}{$2}}@@
+#+MACRO: cvproject @@latex:\cvevent{\textbf{$1} {\small $2}}{\href{$3}{\faGithub $4}}{}{}@@
+#+MACRO: cvaward @@latex:\cvachievement{\faTrophy}{$1}{\small\cvDateMarker $2 | $3}{}@@
 #+MACRO: wheelchart @@latex:\wheelchart{$1}{$2}{$3}@@

@@ -21,6 +21,7 @@
 ;;;
 (require 'org)           ;; Org
 (require 'ox-latex)      ;; Org LaTeX Export
+(require 'ox-extra)      ;; For ignore-headlines
 (require 'subr-x)        ;; For string-trim
 
 (defun expand-cvtags (&rest strings)
@@ -105,6 +106,7 @@ Ignores nil or empty entries."
 (defun resumel-setup ()
   "Set up resumel with the selected template."
   (interactive)
+  (ox-extras-activate '(latex-header-blocks ignore-headlines))
   (resumel--load-template resumel-default-template)
   (message "resumel setup complete with template: %s" resumel-default-template))
 

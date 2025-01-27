@@ -1,35 +1,107 @@
-#+title: Complex Test Resume
+* Config :noexport:
+** LaTeX Config
 #+LATEX_CLASS: moderncv
 #+LATEX_HEADER: \name{Complex}{Test}
 #+INCLUDE: ../../templates/moderncv/moderncv.org
 #+EXPORT_FILE_NAME: ../results/moderncv-complex.pdf
 #+OPTIONS: toc:nil title:nil H:2
+#+LATEX_HEADER: \geometry{scale=0.75}
+#+LATEX_HEADER: \name{Firstname}{Lastname}
+#+LATEX_HEADER: \address{City, State}{}
+#+LATEX_HEADER: \phone[mobile]{+1 (555) 555-1234}
+#+LATEX_HEADER: \email{user@foo.bar}
+#+LATEX_HEADER: \homepage{www.foo.bar}
+#+LATEX_HEADER: \social[linkedin]{user-name}
+#+LATEX_HEADER: \social[github]{username}
 
-* Education
+** Exporter Settings
+#+cite_export: bibtex
+#+BIBLIOGRAPHY: nil
+#+OPTIONS: toc:nil title:nil H:2
+#+AUTHOR: Firstname Lastname
+#+DATE:
+#+TITLE: World Expert \newline \small{Seeking a fantastic new role.} \newline \newline \small{Full CV \& references available upon request.}
+
+* Title :ignore:
+@@latex:\small@@
+@@latex:\makecvtitle@@
+
+* {{{fa(Cogs)}}} Skills
+
+** Programming
+{{{cvtags(Python,Elisp,JavaScript,LaTeX,C++,Java)}}}
+
+** Tools & Technologies
+{{{cvltags(Emacs,5,Git,4,Docker,3,AWS,2)}}}
+
+* {{{fa(Briefcase)}}} Experience
+
+** Job 1 :ignore:
+@@latex:\cventry{\calendarsymbol 2018--2020}{Senior Developer\textnormal{ | }}{Tech Corp\textnormal{ | }}{\addresssymbol City, State.}{}{Group, Department@@
+- Led team of 5 developers
+- Implemented CI/CD pipeline {{{cvtags(Python,Docker,Git)}}}
+@@latex:}@@
+
+** Job 2 :ignore:
+@@latex:\cventry{\calendarsymbol 2015--2018}{Software Engineer\textnormal{ | }}{Start-up Inc\textnormal{ | }}{\addresssymbol City, State.}{}{Group, Department@@
+- Full-stack development {{{cvltags(JavaScript,4,React,3,Node.js,4)}}}
+@@latex:}@@
+
+** Job 3 :ignore:
+@@latex:\cventry{\calendarsymbol May 9 1806 -- Apr 7 2025}{Job 3\textnormal{ | }}{\href{https://www.company-3-site.com}{Company 3}\textnormal{ | }}{\addresssymbol City, State.}{}{\href{https://www.company-3-site.com/department/group}{Group}, \href{https://www.company-3-site.com/department}{Department}@@
+- *Role 1*
+  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 2*
+  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 3*
+  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+@@latex:}@@
+
+** Job 4 :ignore:
+@@latex:\cventry{\calendarsymbol May 9 1806 -- Apr 7 2025}{Job 4\textnormal{ | }}{\href{https://www.company-4-site.com}{Company 4}\textnormal{ | }}{\addresssymbol City, State.}{}{\href{https://www.company-4-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}@@
+- *Role 1*
+  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 2*
+  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 3*
+  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+@@latex:}@@
+
+** Job 5 :ignore:
+@@latex:\cventry{\calendarsymbol May 9 1806 -- Apr 7 2025}{Job 5\textnormal{ | }}{\href{https://www.company-5-site.com}{Company 5}\textnormal{ | }}{\addresssymbol City, State.}{}{\href{https://www.company-5-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}@@
+- *Role 1*
+  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 2*
+  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 3*
+  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+@@latex:}@@
+
+{{{pagebreak()}}}
+
+* {{{fa(Wrench)}}} Projects
+** Project 1 :ignore:
+{{{cvitem(Python Library,\textbf{Project 1}\hspace{2em}\faGithub\textnormal{ }\href{https://github.com/user-name/project1}{https://github.com/user-name/project1})}}}
+{{{cvlistitem(Project 1 description)}}}
+** Project 2 :ignore:
+{{{cvitem(Python Library,\textbf{Project 2}\hspace{2em}\faGithub\textnormal{ }\href{https://github.com/user-name/project2}{https://github.com/user-name/project2})}}}
+{{{cvlistitem(Project 2 description)}}}
+** Project 3 :ignore:
+{{{cvitem(Python Library,\textbf{Project 3}\hspace{2em}\faGithub\textnormal{ }\href{https://github.com/user-name/project3}{https://github.com/user-name/project3})}}}
+{{{cvlistitem(Project 3 description)}}}
+** Project 4 :ignore:
+{{{cvitem(Python Library,\textbf{Project 4}\hspace{2em}\faGithub\textnormal{ }\href{https://github.com/user-name/project4}{https://github.com/user-name/project4})}}}
+{{{cvlistitem(Project 4 description)}}}
+** Project 5 :ignore:
+{{{cvitem(Python Library,\textbf{Project 5}\hspace{2em}\faGithub\textnormal{ }\href{https://github.com/user-name/project5}{https://github.com/user-name/project5})}}}
+{{{cvlistitem(Project 5 description)}}}
+
+* {{{fa(GraduationCap)}}} Education
 
 @@latex:\cventry{\calendarsymbol 2022--2024}{Ph.D. in Computer Science\textnormal{ | }}{University\textnormal{ | }}{\addresssymbol City, State.}{}{Group, Department@@
 - Thesis on Emacs-based resume generation
 - Published 3 papers on LaTeX automation
 @@latex:}@@
 
-* Experience
-
-@@latex:\cventry{\calendarsymbol 2018--2020}{Senior Developer\textnormal{ | }}{Tech Corp\textnormal{ | }}{\addresssymbol City, State.}{}{Group, Department@@
-- Led team of 5 developers
-- Implemented CI/CD pipeline {{{cvtags(Python,Docker,Git)}}}
-@@latex:}@@
-
-@@latex:\cventry{\calendarsymbol 2015--2018}{Software Engineer\textnormal{ | }}{Start-up Inc\textnormal{ | }}{\addresssymbol City, State.}{}{Group, Department@@
-- Full-stack development {{{cvltags(JavaScript,4,React,3,Node.js,4)}}}
-@@latex:}@@
-
-* Skills
-
-** Programming
-{{{cvtags(Python,Elisp,JavaScript,LaTeX,C++,Java)}}}
-
-** Tools & Technologies
-{{{cvltags(Emacs,5,Git,4,Docker,3,AWS,4)}}}
-
-* Languages
+* {{{fa(Language)}}} Languages
 {{{cvdoubleitem(English,Native,Spanish,Intermediate)}}}

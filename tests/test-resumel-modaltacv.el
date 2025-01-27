@@ -29,8 +29,8 @@
     (make-directory output-dir t)
     (with-current-buffer (find-file-noselect org-file)
       ;; Set LaTeX export settings
-      (setq-local org-latex-pdf-process
-                  (list (format "latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -output-directory=%s %%f" output-dir)))
+      ;; (setq-local org-latex-pdf-process
+      ;;             (list (format "latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -output-directory=%s %%f" output-dir)))
       (setq-local org-latex-output-directory output-dir)
 
       ;; Export to PDF and capture any error details
@@ -68,6 +68,22 @@
   (let* ((org-file (expand-file-name "modaltacv-basic.org" resumel-fixture-dir))
          (generated-pdf (resumel-test-export-org-to-pdf org-file))
          (expected-pdf (expand-file-name "modaltacv-basic.pdf" resumel-expected-dir)))
+    ;; Debug output
+    (message "Testing PDF paths:")
+    (message "Generated: %s" generated-pdf)
+    (message "Expected: %s" expected-pdf)
+    ;; Verify files exist
+    (should (file-exists-p generated-pdf))
+    (should (file-exists-p expected-pdf))
+    ;; Compare PDFs
+    (should (resumel-files-equal-p generated-pdf expected-pdf))))
+
+;; Test for complex export
+(ert-deftest resumel-test-modaltacv-complex-export ()
+  "Test complex resume export."
+  (let* ((org-file (expand-file-name "modaltacv-complex.org" resumel-fixture-dir))
+         (generated-pdf (resumel-test-export-org-to-pdf org-file))
+         (expected-pdf (expand-file-name "modaltacv-complex.pdf" resumel-expected-dir)))
     ;; Debug output
     (message "Testing PDF paths:")
     (message "Generated: %s" generated-pdf)
