@@ -20,7 +20,7 @@
 #+OPTIONS: toc:nil title:nil H:2
 #+AUTHOR: Firstname Lastname
 #+DATE:
-#+TITLE: World Expert \newline \small{Seeking a fantastic new role.} \newline \newline \small{Full CV \& references available upon request.}
+#+TITLE: World Expert \newline \newline \small{Seeking a fantastic new role.}
 
 * Title :ignore:
 @@latex:\small@@

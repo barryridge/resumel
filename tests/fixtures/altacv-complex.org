@@ -4,8 +4,8 @@
 #+LATEX_HEADER: \columnratio{0.6} % Set the left/right column width ratio to 6:4.
 #+LATEX_HEADER: \usepackage[bottom]{footmisc}
 #+AUTHOR: Test User
-#+INCLUDE: ../../templates/modaltacv/modaltacv.org
-#+EXPORT_FILE_NAME: ../results/modaltacv-complex.pdf
+#+INCLUDE: ../../templates/altacv/altacv.org
+#+EXPORT_FILE_NAME: ../results/altacv-complex.pdf
 #+OPTIONS: toc:nil title:nil H:2
 
 * CV Header :ignore:
@@ -33,7 +33,7 @@
 
 ** Personal Statement :ignore:
 #+begin_export latex
- \vspace{2.0em}
+ \vspace{1.0em}
  \begin{quote}
  Seeking a fantastic new role.
  \end{quote}

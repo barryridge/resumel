@@ -20,6 +20,13 @@ test: clean
 	       -l resumel.el \
 	       -l $(TEST_DIR)/test-resumel-moderncv.el \
 	       -f ert-run-tests-batch-and-exit
+	@echo "Running resumel altacv template tests..."
+	@emacs -Q --batch \
+	       $(OX_EXTRA_L_FLAGS) \
+	       -l ert \
+	       -l resumel.el \
+	       -l $(TEST_DIR)/test-resumel-altacv.el \
+	       -f ert-run-tests-batch-and-exit
 	@echo "Running resumel modaltacv template tests..."
 	@emacs -Q --batch \
 	       $(OX_EXTRA_L_FLAGS) \
