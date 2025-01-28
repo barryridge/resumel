@@ -6,9 +6,9 @@
 #+EMAIL: barry@barr.ai
 #+DATE: \today
 
-***** Overview
+* Overview
 
-****** resumel
+** resumel
 
 resumel is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates. It supports three templates:
 
@@ -18,7 +18,7 @@ resumel is an Emacs package for creating professional resumes and CVs using Org 
 
 Designed for extensibility, resumel allows easy addition of new templates by consolidating common macros.
 
-***** Features
+* Features
 
 - **Multiple Templates**: Choose from ModernCV, AltaCV, or modaltacv.
 - **Extensible**: Add new LaTeX templates effortlessly.
@@ -26,11 +26,11 @@ Designed for extensibility, resumel allows easy addition of new templates by con
 - **Automated Testing**: Verify exports with automated tests.
 - **Emacs Integration**: Compatible with Vanilla Emacs, Doom Emacs, Spacemacs, and more.
 
-***** How It Works
+* How It Works
 
 Write your resume in Org files using predefined macros for sections like skills, experience, and education. resumel exports these Org files to LaTeX, applying the selected template to generate a formatted PDF. Templates are modular, each in its directory with `.el` and `.org` files. Common macros are centralized in `resumel.org` for reuse across templates, simplifying the addition of new templates.
 
-***** Prerequisites
+* Prerequisites
 
 Ensure you have the following:
 
@@ -42,7 +42,7 @@ Ensure you have the following:
   - [MacTeX](http://www.tug.org/mactex/)
 - **diff-pdf**: For comparing PDFs during tests. [diff-pdf GitHub](https://github.com/vslavik/diff-pdf)
 
-***** Installation
+* Installation
 
 **Vanilla Emacs**
 
@@ -120,7 +120,7 @@ Ensure you have the following:
 
 Refer to your distribution's documentation for adding packages from GitHub or local directories. Generally, clone the repository, add it to the load path, and require the package in your configuration.
 
-***** Usage
+* Usage
 
 1. **Select a Template**
 
@@ -167,7 +167,7 @@ Refer to your distribution's documentation for adding packages from GitHub or lo
 
    PDFs are saved in `results/` by default.
 
-***** Running Tests
+* Running Tests
 
 1. **Navigate to Repository**
 
@@ -187,7 +187,7 @@ Refer to your distribution's documentation for adding packages from GitHub or lo
 
    Check the terminal for test outcomes. Ensure all tests pass.
 
-***** Adding New Templates
+* Adding New Templates
 
 1. **Create Template Directory**
 
@@ -218,19 +218,19 @@ Refer to your distribution's documentation for adding packages from GitHub or lo
 
    Create and export resumes to verify.
 
-***** Acknowledgements
+* Acknowledgements
 
 resumel builds on [Aiden Scannell's `my-org-resume`](https://github.com/aidenscannell/my-org-resume). Thanks to Aiden for the foundation.
 
-***** License
+* License
 
 resumel is licensed under the [MIT License](LICENSE).
 
-***** Contributing
+* Contributing
 
 Contributions are welcome! Fork the repository and submit pull requests for enhancements or fixes. Follow the project's coding standards and include relevant tests.
 
-***** Contact
+* Contact
 
 For questions or support, please open an issue on the [GitHub repository](https://github.com/barryridge/resumel).
 
