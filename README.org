@@ -1,0 +1,237 @@
+# resumel: A resume template package for Emacs Org Mode
+
+#+BEGIN_SRC org
+#+TITLE: resumel: a resume template package for Emacs Org Mode
+#+AUTHOR: Barry Ridge
+#+EMAIL: barry@barr.ai
+#+DATE: \today
+
+***** Overview
+
+****** resumel
+
+resumel is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates. It supports three templates:
+
+- **ModernCV**: Clean and professional design.
+- **AltaCV**: Modern, minimalist, and readable.
+- **modaltacv**: Combines elements from ModernCV and AltaCV.
+
+Designed for extensibility, resumel allows easy addition of new templates by consolidating common macros.
+
+***** Features
+
+- **Multiple Templates**: Choose from ModernCV, AltaCV, or modaltacv.
+- **Extensible**: Add new LaTeX templates effortlessly.
+- **Unified Macros**: Consistent formatting across templates.
+- **Automated Testing**: Verify exports with automated tests.
+- **Emacs Integration**: Compatible with Vanilla Emacs, Doom Emacs, Spacemacs, and more.
+
+***** How It Works
+
+Write your resume in Org files using predefined macros for sections like skills, experience, and education. resumel exports these Org files to LaTeX, applying the selected template to generate a formatted PDF. Templates are modular, each in its directory with `.el` and `.org` files. Common macros are centralized in `resumel.org` for reuse across templates, simplifying the addition of new templates.
+
+***** Prerequisites
+
+Ensure you have the following:
+
+- **Emacs**: Version 26.1+. [Download Emacs](https://www.gnu.org/software/emacs/download.html)
+- **Org Mode**: Included with recent Emacs versions. [Org Mode](https://orgmode.org/)
+- **LaTeX Distribution**:
+  - [TeX Live](https://www.tug.org/texlive/)
+  - [MiKTeX](https://miktex.org/)
+  - [MacTeX](http://www.tug.org/mactex/)
+- **diff-pdf**: For comparing PDFs during tests. [diff-pdf GitHub](https://github.com/vslavik/diff-pdf)
+
+***** Installation
+
+**Vanilla Emacs**
+
+1. **Clone the Repository**
+
+   ```shell
+   git clone https://github.com/barryridge/resumel.git
+   ```
+
+2. **Add to Load Path**
+
+   ```elisp
+   (add-to-list 'load-path "/path/to/resumel/")
+   ```
+
+3. **Load resumel**
+
+   ```elisp
+   (require 'resumel)
+   ```
+
+4. **Optional Key Binding**
+
+   ```elisp
+   (global-set-key (kbd "C-c r") 'resumel-export)
+   ```
+
+**Doom Emacs**
+
+1. **Add to `packages.el`**
+
+   ```elisp
+   (package! resumel :recipe (:host github :repo "barryridge/resumel"))
+   ```
+
+2. **Sync Packages**
+
+   ```shell
+   doom sync
+   ```
+
+3. **Configure in `config.el`**
+
+   ```elisp
+   (use-package resumel
+     :config
+     (require 'resumel))
+   ```
+
+4. **Optional Key Binding**
+
+   ```elisp
+   (map! :global "C-c r" #'resumel-export)
+   ```
+
+**Spacemacs**
+
+1. **Add to Configuration Layers**
+
+   Add `resumel` to `dotspacemacs-configuration-layers`:
+
+   ```elisp
+   dotspacemacs-configuration-layers
+   '(
+     ;; other layers
+     resumel
+     )
+   ```
+
+2. **Reload Configuration**
+
+   Press `SPC f e R`.
+
+**Other Emacs Distributions**
+
+Refer to your distribution's documentation for adding packages from GitHub or local directories. Generally, clone the repository, add it to the load path, and require the package in your configuration.
+
+***** Usage
+
+1. **Select a Template**
+
+   ```elisp
+   M-x resumel-select-template RET moderncv RET
+   ```
+
+   Options: `moderncv`, `altacv`, `modaltacv`.
+
+2. **Set Up resumel**
+
+   ```elisp
+   M-x resumel-setup RET
+   ```
+
+3. **Create Your Resume**
+
+   - Create a new Org file or use provided examples.
+   - Use macros for sections:
+
+     ```org
+     * Personal Information
+     \name{Firstname}{Lastname}
+     \address{City, State}{}
+     \phone[mobile]{+1 (555) 555-1234}
+     \email{user@foo.bar}
+     \homepage{www.foo.bar}
+     \social[linkedin]{user-name}
+     \social[github]{username}
+
+     * Skills
+     {{{cvtags(Python,Emacs,LaTeX)}}}
+
+     * Experience
+     {{{cvevent(Job Title, Company, Duration, Location)}}}
+     - Role description {{{cvtag(Project Management)}}}
+     ```
+
+4. **Export to PDF**
+
+   ```elisp
+   M-x resumel-export RET
+   ```
+
+   PDFs are saved in `results/` by default.
+
+***** Running Tests
+
+1. **Navigate to Repository**
+
+   ```shell
+   cd /path/to/resumel
+   ```
+
+2. **Run Tests**
+
+   ```shell
+   make test
+   ```
+
+   This cleans previous results, runs tests for each template, and compares PDFs using `diff-pdf`.
+
+3. **Review Results**
+
+   Check the terminal for test outcomes. Ensure all tests pass.
+
+***** Adding New Templates
+
+1. **Create Template Directory**
+
+   In `templates/`, create `newtemplate/`.
+
+2. **Add `.el` and `.org` Files**
+
+   - `newtemplate.el`: Define LaTeX classes.
+   - `newtemplate.org`: Template-specific macros.
+
+3. **Register the Template**
+
+   In `resumel.el`, add to `resumel-default-template`:
+
+   ```elisp
+   (defcustom resumel-default-template "moderncv"
+     "Default resume template to use."
+     :type '(choice (const "moderncv") (const "modaltacv") (const "newtemplate"))
+     :group 'resumel)
+   ```
+
+4. **Load and Test**
+
+   ```elisp
+   M-x resumel-select-template RET newtemplate RET
+   M-x resumel-setup RET
+   ```
+
+   Create and export resumes to verify.
+
+***** Acknowledgements
+
+resumel builds on [Aiden Scannell's `my-org-resume`](https://github.com/aidenscannell/my-org-resume). Thanks to Aiden for the foundation.
+
+***** License
+
+resumel is licensed under the [MIT License](LICENSE).
+
+***** Contributing
+
+Contributions are welcome! Fork the repository and submit pull requests for enhancements or fixes. Follow the project's coding standards and include relevant tests.
+
+***** Contact
+
+For questions or support, please open an issue on the [GitHub repository](https://github.com/barryridge/resumel).
+
+#+END_SRC
