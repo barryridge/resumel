@@ -41,104 +41,104 @@ Ensure you have the following:
 
 * Installation
 
-*Vanilla Emacs*
+** Vanilla Emacs
 
 1. **Clone the Repository**
 
-   ```shell
+   #+begin_src shell
    git clone https://github.com/barryridge/resumel.git
-   ```
+   #+end_src
 
 2. **Add to Load Path**
 
-   ```elisp
+   #+begin_src elisp
    (add-to-list 'load-path "/path/to/resumel/")
-   ```
+   #+end_src
 
 3. **Load resumel**
 
-   ```elisp
+   #+begin_src elisp
    (require 'resumel)
-   ```
+   #+end_src
 
 4. **Optional Key Binding**
 
-   ```elisp
+   #+begin_src shell
    (global-set-key (kbd "C-c r") 'resumel-export)
-   ```
+   #+end_src
 
-**Doom Emacs**
+** Doom Emacs
 
-1. **Add to `packages.el`**
+1. *Add to `packages.el`*
 
-   ```elisp
+   #+begin_src elisp
    (package! resumel :recipe (:host github :repo "barryridge/resumel"))
-   ```
+   #+end_src
 
-2. **Sync Packages**
+2. *Sync Packages*
 
-   ```shell
+   #+begin_src shell
    doom sync
-   ```
+   #+end_src
 
-3. **Configure in `config.el`**
+3. *Configure in `config.el`*
 
-   ```elisp
+   #+begin_src elisp
    (use-package resumel
      :config
      (require 'resumel))
-   ```
+   #+end_src
 
-4. **Optional Key Binding**
+4. *Optional Key Binding*
 
-   ```elisp
+   #+begin_src elisp
    (map! :global "C-c r" #'resumel-export)
-   ```
+   #+end_src
 
-**Spacemacs**
+** Spacemacs
 
-1. **Add to Configuration Layers**
+1. *Add to Configuration Layers*
 
-   Add `resumel` to `dotspacemacs-configuration-layers`:
+   Add =resumel= to =dotspacemacs-configuration-layers=:
 
-   ```elisp
+   #+begin_src elisp
    dotspacemacs-configuration-layers
    '(
      ;; other layers
      resumel
      )
-   ```
+   #+end_src
 
-2. **Reload Configuration**
+2. *Reload Configuration*
 
-   Press `SPC f e R`.
+   Press =SPC f e R=.
 
-**Other Emacs Distributions**
+** Other Emacs Distributions
 
 Refer to your distribution's documentation for adding packages from GitHub or local directories. Generally, clone the repository, add it to the load path, and require the package in your configuration.
 
 * Usage
 
-1. **Select a Template**
+1. *Select a Template*
 
-   ```elisp
+   #+begin_src elisp
    M-x resumel-select-template RET moderncv RET
-   ```
+   #+end_src
 
-   Options: `moderncv`, `altacv`, `modaltacv`.
+   Options: =moderncv=, =altacv=, =modaltacv=.
 
-2. **Set Up resumel**
+2. *Set Up resumel*
 
-   ```elisp
+   #+begin_src elisp
    M-x resumel-setup RET
-   ```
+   #+end_src
 
-3. **Create Your Resume**
+3. *Create Your Resume*
 
    - Create a new Org file or use provided examples.
    - Use macros for sections:
 
-     ```org
+     #+begin_src org
      * Personal Information
      \name{Firstname}{Lastname}
      \address{City, State}{}
@@ -154,74 +154,74 @@ Refer to your distribution's documentation for adding packages from GitHub or lo
      * Experience
      {{{cvevent(Job Title, Company, Duration, Location)}}}
      - Role description {{{cvtag(Project Management)}}}
-     ```
+     #+end_src
 
-4. **Export to PDF**
+4. *Export to PDF*
 
-   ```elisp
+   #+begin_src elisp
    M-x resumel-export RET
-   ```
+   #+end_src
 
-   PDFs are saved in `results/` by default.
+   PDFs are saved in =results/= by default.
 
-* Running Tests
+* Testing
 
-1. **Navigate to Repository**
+1. *Navigate to Repository*
 
-   ```shell
+   #+begin_src shell
    cd /path/to/resumel
-   ```
+   #+end_src
 
-2. **Run Tests**
+2. *Run Tests*
 
-   ```shell
+   #+begin_src shell
    make test
-   ```
+   #+end_src
 
-   This cleans previous results, runs tests for each template, and compares PDFs using `diff-pdf`.
+   This cleans previous results, runs tests for each template, and compares PDFs using =diff-pdf=.
 
-3. **Review Results**
+3. *Review Results*
 
    Check the terminal for test outcomes. Ensure all tests pass.
 
 * Adding New Templates
 
-1. **Create Template Directory**
+1. *Create Template Directory*
 
-   In `templates/`, create `newtemplate/`.
+   In =templates/=, create =newtemplate/=.
 
-2. **Add `.el` and `.org` Files**
+2. *Add =.el= and =.org= Files*
 
-   - `newtemplate.el`: Define LaTeX classes.
-   - `newtemplate.org`: Template-specific macros.
+   - =newtemplate.el=: Define LaTeX classes.
+   - =newtemplate.org=: Template-specific macros.
 
-3. **Register the Template**
+3. *Register the Template*
 
-   In `resumel.el`, add to `resumel-default-template`:
+   In =resumel.el=, add to =resumel-default-template=:
 
-   ```elisp
+   #+begin_src elisp
    (defcustom resumel-default-template "moderncv"
      "Default resume template to use."
      :type '(choice (const "moderncv") (const "modaltacv") (const "newtemplate"))
      :group 'resumel)
-   ```
+   #+end_src
 
-4. **Load and Test**
+4. *Load and Test*
 
-   ```elisp
+   #+begin_src elisp
    M-x resumel-select-template RET newtemplate RET
    M-x resumel-setup RET
-   ```
+   #+end_src
 
    Create and export resumes to verify.
 
 * Acknowledgements
 
-resumel builds on [Aiden Scannell's `my-org-resume`](https://github.com/aidenscannell/my-org-resume). Thanks to Aiden for the foundation.
+=resumel= builds on [[https://github.com/aidenscannell/my-org-resume][Aiden Scannell's =my-org-resume=]]. Thanks to Aiden for the foundation.
 
 * License
 
-resumel is licensed under the [MIT License](LICENSE).
+=resumel= is licensed under the [[LICENSE][MIT License]].
 
 * Contributing
 
@@ -229,4 +229,4 @@ Contributions are welcome! Fork the repository and submit pull requests for enha
 
 * Contact
 
-For questions or support, please open an issue on the [GitHub repository](https://github.com/barryridge/resumel).
+For questions or support, please open an issue on the [[https://github.com/barryridge/resumel/issues][GitHub repository]].
