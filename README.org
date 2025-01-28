@@ -43,25 +43,25 @@ Ensure you have the following:
 
 ** Vanilla Emacs
 
-1. **Clone the Repository**
+1. *Clone the Repository*
 
    #+begin_src shell
    git clone https://github.com/barryridge/resumel.git
    #+end_src
 
-2. **Add to Load Path**
+2. *Add to Load Path*
 
    #+begin_src elisp
    (add-to-list 'load-path "/path/to/resumel/")
    #+end_src
 
-3. **Load resumel**
+3. *Load resumel*
 
    #+begin_src elisp
    (require 'resumel)
    #+end_src
 
-4. **Optional Key Binding**
+4. *Optional Key Binding*
 
    #+begin_src shell
    (global-set-key (kbd "C-c r") 'resumel-export)
@@ -69,7 +69,7 @@ Ensure you have the following:
 
 ** Doom Emacs
 
-1. *Add to `packages.el`*
+1. *Add to packages.el*
 
    #+begin_src elisp
    (package! resumel :recipe (:host github :repo "barryridge/resumel"))
@@ -81,7 +81,7 @@ Ensure you have the following:
    doom sync
    #+end_src
 
-3. *Configure in `config.el`*
+3. *Configure in config.el*
 
    #+begin_src elisp
    (use-package resumel
@@ -190,7 +190,7 @@ Refer to your distribution's documentation for adding packages from GitHub or lo
 
    In =templates/=, create =newtemplate/=.
 
-2. *Add =.el= and =.org= Files*
+2. *Add .el and .org Files*
 
    - =newtemplate.el=: Define LaTeX classes.
    - =newtemplate.org=: Template-specific macros.
