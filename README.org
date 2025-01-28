@@ -41,7 +41,9 @@ Ensure you have the following:
 
 * Installation
 
+#+html: <details><summary>
 ** Vanilla Emacs
+#+html: </summary>
 
 1. *Clone the Repository*
 
@@ -67,7 +69,11 @@ Ensure you have the following:
    (global-set-key (kbd "C-c r") 'resumel-export)
    #+end_src
 
+#+html: </details>
+
+#+html: <details><summary>
 ** Doom Emacs
+#+html: </summary>
 
 1. *Add to packages.el*
 
@@ -95,7 +101,11 @@ Ensure you have the following:
    (map! :global "C-c r" #'resumel-export)
    #+end_src
 
+#+html: </details>
+
+#+html: <details><summary>
 ** Spacemacs
+#+html: </summary>
 
 1. *Add to Configuration Layers*
 
@@ -113,7 +123,11 @@ Ensure you have the following:
 
    Press =SPC f e R=.
 
+#+html: </details>
+
+#+html: <details><summary>
 ** Other Emacs Distributions
+#+html: </summary>
 
 Refer to your distribution's documentation for adding packages from GitHub or local directories. Generally, clone the repository, add it to the load path, and require the package in your configuration.
 
@@ -163,6 +177,8 @@ Refer to your distribution's documentation for adding packages from GitHub or lo
    #+end_src
 
    PDFs are saved in =results/= by default.
+
+#+html: </details>
 
 * Testing
 
