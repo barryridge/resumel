@@ -221,7 +221,7 @@ Refer to your distribution's documentation for adding packages from GitHub or lo
 
 * License
 
-=resumel= is licensed under the [[LICENSE][MIT License]].
+=resumel= is licensed under the [[LICENSE][GNU GPL]].
 
 * Contributing
 
