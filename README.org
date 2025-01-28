@@ -1,7 +1,4 @@
-# resumel: A resume template package for Emacs Org Mode
-
-#+BEGIN_SRC org
-#+TITLE: resumel: a resume template package for Emacs Org Mode
+#+TITLE: resumel: A resume template package for Emacs Org Mode
 #+AUTHOR: Barry Ridge
 #+EMAIL: barry@barr.ai
 #+DATE: \today
@@ -10,41 +7,41 @@
 
 ** resumel
 
-resumel is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates. It supports three templates:
+=resumel= is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates. It currently supports three templates:
 
-- **ModernCV**: Clean and professional design.
-- **AltaCV**: Modern, minimalist, and readable.
-- **modaltacv**: Combines elements from ModernCV and AltaCV.
+- *[[https://github.com/moderncv/moderncv][moderncv]]*: A popular LaTeX template known for its clean and professional design.
+- *[[https://github.com/liantze/AltaCV][AltaCV]]*: A modern and minimalist two-column LaTeX template.
+- *modaltacv*: ModernCV-ified AltaCV. A customized version that combines elements from both ModernCV and AltaCV.
 
 Designed for extensibility, resumel allows easy addition of new templates by consolidating common macros.
 
 * Features
 
-- **Multiple Templates**: Choose from ModernCV, AltaCV, or modaltacv.
-- **Extensible**: Add new LaTeX templates effortlessly.
-- **Unified Macros**: Consistent formatting across templates.
-- **Automated Testing**: Verify exports with automated tests.
-- **Emacs Integration**: Compatible with Vanilla Emacs, Doom Emacs, Spacemacs, and more.
+- *Multiple Templates*: Choose from =moderncv=, =altacv=, or =modaltacv=.
+- *Extensible*: Easily add new LaTeX templates.
+- *Unified Macros*: Consistent formatting across templates.
+- *Automated Testing*: Verify exports with automated tests.
+- *Emacs Integration*: Compatible with Vanilla Emacs, Doom Emacs, Spacemacs, and more.
 
 * How It Works
 
-Write your resume in Org files using predefined macros for sections like skills, experience, and education. resumel exports these Org files to LaTeX, applying the selected template to generate a formatted PDF. Templates are modular, each in its directory with `.el` and `.org` files. Common macros are centralized in `resumel.org` for reuse across templates, simplifying the addition of new templates.
+Write your resume in Org files using predefined macros for sections like skills, experience, and education. resumel exports these Org files to LaTeX, applying the selected template to generate a formatted PDF. Templates are modular, each in its directory with =.el= and =.org= files. Common macros are centralized in =resumel.org= for reuse across templates, simplifying the addition of new templates.
 
 * Prerequisites
 
 Ensure you have the following:
 
-- **Emacs**: Version 26.1+. [Download Emacs](https://www.gnu.org/software/emacs/download.html)
-- **Org Mode**: Included with recent Emacs versions. [Org Mode](https://orgmode.org/)
-- **LaTeX Distribution**:
-  - [TeX Live](https://www.tug.org/texlive/)
-  - [MiKTeX](https://miktex.org/)
-  - [MacTeX](http://www.tug.org/mactex/)
-- **diff-pdf**: For comparing PDFs during tests. [diff-pdf GitHub](https://github.com/vslavik/diff-pdf)
+- *Emacs*: Version 26.1+. [[https://www.gnu.org/software/emacs/download.html][Download Emacs]]
+- *Org Mode*: Included with recent Emacs versions. [[https://orgmode.org/][[Org Mode]]
+- *LaTeX Distribution*:
+  - [[https://www.tug.org/texlive/][TeX Live]]
+  - [[https://miktex.org/][MiKTeX]]
+  - [[http://www.tug.org/mactex/][MacTeX]]
+- *diff-pdf*: For comparing PDFs during tests. [[https://github.com/vslavik/diff-pdf][diff-pdf GitHub]]
 
 * Installation
 
-**Vanilla Emacs**
+*Vanilla Emacs*
 
 1. **Clone the Repository**
 
@@ -233,5 +230,3 @@ Contributions are welcome! Fork the repository and submit pull requests for enha
 * Contact
 
 For questions or support, please open an issue on the [GitHub repository](https://github.com/barryridge/resumel).
-
-#+END_SRC
