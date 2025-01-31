@@ -66,7 +66,7 @@ Ignores nil or empty entries."
 
 ;; Set the directory where resumel.el is located
 (defvar resumel-base-dir
-  (file-name-directory (or load-file-name buffer-file-name))
+  (file-name-directory (file-truename (or load-file-name buffer-file-name)))
   "Base directory for resumel package files.")
 
 ;; Set the directory where resumel templates are stored
