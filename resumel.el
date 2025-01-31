@@ -61,7 +61,7 @@ Ignores nil or empty entries."
 
 (defcustom resumel-default-template "moderncv"
   "Default resume template to use."
-  :type '(choice (const "moderncv") (const "modaltacv"))
+  :type '(choice (const "moderncv") (const "altacv") (const "modaltacv"))
   :group 'resumel)
 
 ;; Set the directory where resumel.el is located
@@ -99,7 +99,7 @@ Ignores nil or empty entries."
 (defun resumel-select-template (template)
   "Select a resume TEMPLATE to use for exports."
   (interactive
-   (list (completing-read "Select template: " '("moderncv" "modaltacv") nil t)))
+   (list (completing-read "Select template: " '("moderncv" "altacv" "modaltacv") nil t)))
   (setq resumel-default-template template)
   (message "resumel template set to: %s" template))
 
