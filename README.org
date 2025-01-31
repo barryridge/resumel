@@ -131,6 +131,8 @@ Ensure you have the following:
 
 Refer to your distribution's documentation for adding packages from GitHub or local directories. Generally, clone the repository, add it to the load path, and require the package in your configuration.
 
+#+html: </details>
+
 * Usage
 
 1. *Select a Template*
@@ -177,8 +179,6 @@ Refer to your distribution's documentation for adding packages from GitHub or lo
    #+end_src
 
    PDFs are saved in =results/= by default.
-
-#+html: </details>
 
 * Testing
 
@@ -233,7 +233,7 @@ Refer to your distribution's documentation for adding packages from GitHub or lo
 
 * Acknowledgements
 
-=resumel= builds on [[https://github.com/aidenscannell/my-org-resume][Aiden Scannell's =my-org-resume=]]. Thanks to Aiden for the foundation.
+=resumel= builds on Aidan Scannell's [[https://github.com/aidanscannell/my-org-resume][my-org-resume]]. Many thanks to Aidan for the laying the foundation.
 
 * License
 
