@@ -233,7 +233,7 @@ Refer to your distribution's documentation for adding packages from GitHub or lo
 
 * Acknowledgements
 
-=resumel= builds on [[https://github.com/aidenscannell/my-org-resume][Aiden Scannell's =my-org-resume=]]. Thanks to Aiden for the foundation.
+=resumel= builds on Aidan Scannell's [[https://github.com/aidanscannell/my-org-resume][my-org-resume]]. Many thanks to Aidan for the laying the foundation.
 
 * License
 
