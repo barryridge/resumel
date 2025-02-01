@@ -40,7 +40,7 @@
 \\definecolor{lightblue}{rgb}{0.22, 0.45, 0.70}
 \\definecolor{green}{rgb}{0.35, 0.70, 0.30}
 \\colorlet{color0}{black}
-\\colorlet{color1}{blue}
+\\colorlet{color1}{lightblue}
 \\colorlet{color2}{darkgrey}
 
 % Update fonts
