@@ -78,7 +78,12 @@ Ensure you have the following:
 1. *Add to packages.el*
 
    #+begin_src elisp
-   (package! resumel :recipe (:host github :repo "barryridge/resumel"))
+   (package! resumel
+   :recipe (:host github :repo "barryridge/resumel"
+           :files ("*.el"
+                   "*.org"
+                   "templates"
+                   )))
    #+end_src
 
 2. *Sync Packages*
