@@ -1,6 +1,8 @@
 * Config :noexport:
 ** LaTeX Config
 #+LATEX_CLASS: moderncv
+#+LATEX_HEADER: \moderncvcolor{blue}  % Options: 'black', 'blue' (default), 'burgundy', 'green', 'grey', 'orange', 'purple', 'red', 'cerulean'
+#+LATEX_HEADER: \moderncvstyle[]{classic} % Options: 'casual', 'classic' (default), 'banking', 'oldstyle', 'fancy', 'contemporary'
 #+LATEX_HEADER: \name{Complex}{Test}
 #+INCLUDE: ../../templates/moderncv/moderncv.org
 #+EXPORT_FILE_NAME: ../results/moderncv-complex.pdf
@@ -21,6 +23,20 @@
 #+AUTHOR: Firstname Lastname
 #+DATE:
 #+TITLE: World Expert \newline \newline \small{Seeking a fantastic new role.}
+
+* Color Customization :ignore:
+# colorlet macro: {{{colorlet(var,color)}}}
+#       var options:
+#               general: color0, color1, color2
+#               head and footer: lastnamecolor, namecolor, headrulecolor,
+#                                firstnamecolor, titlecolor, addresscolor,
+#                                quotecolor, pictureframecolor
+#               body: bodyrulecolor, sectioncolor, subsectioncolor, hintstylecolor
+#               letter: letterclosingcolor
+#               skillmatrix: skillmatrixfullcolor, skillmatrixemptycolor
+#       color options:
+#                black, red, darkgrey, orange, burgundy, purple, lightblue, green
+{{{colorlet(color1,lightblue)}}}
 
 * Title :ignore:
 @@latex:\small@@

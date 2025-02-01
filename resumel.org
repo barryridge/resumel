@@ -17,6 +17,8 @@
 #+MACRO: cal @@latex:\calendarsymbol@@
 #+MACRO: pin @@latex:\addresssymbol@@
 #+MACRO: fa @@latex:{\color{color1}$2\fa$1}@@
+#+MACRO: defcolor @@latex:\definecolor{$1}{$2}{$3}@@
+#+MACRO: colorlet @@latex:\colorlet{$1}{$2}@@
 #
 # Copyright (C) 2025 Barry Ridge
 #

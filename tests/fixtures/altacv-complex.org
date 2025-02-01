@@ -8,6 +8,14 @@
 #+EXPORT_FILE_NAME: ../results/altacv-complex.pdf
 #+OPTIONS: toc:nil title:nil H:2
 
+* Color Customization :ignore:
+# colorlet macro: {{{colorlet(var,color)}}}
+#       var options:
+#               name, tagline, heading, headingrule, subheading, accent, emphasis, body, color0, color1, color2
+#       color options:
+#               Black, SlateGrey, LightGrey, DarkPastelRed, PastelRed, Blue, DarkBlue, GoldenEarth, CoolSky, SoftSkyBlue
+{{{colorlet(name,Black)}}}
+
 * CV Header :ignore:
 ** Photo & Tagline :ignore:
 #+begin_export latex

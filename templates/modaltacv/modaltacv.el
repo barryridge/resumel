@@ -10,7 +10,7 @@
 % Use roboto and lato for fonts
 \\renewcommand{\\familydefault}{\\sfdefault}
 
-% Update colors
+% Update altacv colors
 \\definecolor{Black}{HTML}{000000}
 \\definecolor{SlateGrey}{HTML}{2E2E2E}
 \\definecolor{LightGrey}{HTML}{666666}
@@ -21,7 +21,7 @@
 \\definecolor{GoldenEarth}{HTML}{E7D192}
 \\definecolor{CoolSky}{HTML}{92CDE7}
 \\definecolor{SoftSkyBlue}{HTML}{97D5EF}
-% \\colorlet{name}{LightGrey}
+\\colorlet{name}{Black}
 \\colorlet{tagline}{LightGrey}
 \\colorlet{heading}{Blue}
 \\colorlet{headingrule}{Blue}

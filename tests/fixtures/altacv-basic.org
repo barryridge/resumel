@@ -1,9 +1,18 @@
+* Config :noexport:
 #+title: Test Resume
 #+LATEX_CLASS: altacv
 #+AUTHOR: Test User
 #+INCLUDE: ../../templates/altacv/altacv.org
 #+EXPORT_FILE_NAME: ../results/altacv-basic.pdf
 #+OPTIONS: toc:nil title:nil H:2
+
+* Color Customization :ignore:
+# colorlet macro: {{{colorlet(var,color)}}}
+#       var options:
+#               name, tagline, heading, headingrule, subheading, accent, emphasis, body, color0, color1, color2
+#       color options:
+#               Black, SlateGrey, LightGrey, DarkPastelRed, PastelRed, Blue, DarkBlue, GoldenEarth, CoolSky, SoftSkyBlue
+{{{colorlet(name,Black)}}}
 
 * General Purpose Macro Tests
 
