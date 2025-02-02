@@ -49,7 +49,7 @@
  \end{quote}
 #+end_export
 
-** Experience @@latex:{\Large \faBriefcase}@@
+** Experience {{{fa(Briefcase)}}}
 *** Job 1 :ignore:
 {{{cvevent(Job 1,\href{https://www.company-1-site.com}{Company 1}, \href{https://www.company-1-site.com/department/group}{Group}, \href{https://www.company-1-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
 
@@ -131,7 +131,7 @@
 # Switch to the right column - will automatically move to the next page.
 {{{switchcol}}}
 
-** Skills @@latex:{\Large \faCogs}@@
+** Skills {{{fa(Cogs)}}}
 *** Programming :ignore:
 *Programming*
 
@@ -159,7 +159,7 @@
 
 {{{vspace(-0.1cm)}}}
 
-** Education @@latex:{\Large \faGraduationCap}@@
+** Education {{{fa(GraduationCap)}}}
 {{{cvevent(\href{http://www.university-1.com/department}{Ph.D. in Doctorate Stuff},\href{http://www.university-1.com}{University One}, 1885--2025, City\, Country)}}}
 {{{cvthesis(https://www.thesis-1-link.com, Thesis One Title)}}}
 
@@ -178,7 +178,7 @@
 
 {{{vspace(-0.2cm)}}}
 
-** Projects @@latex:{\Large \faWrench}@@
+** Projects {{{fa(Wrench)}}}
 *** Project 1 :ignore:
 {{{cvproject(Project 1, Python Library, https://github.com/user-name/project1, https://github.com/user-name/project1)}}}
 {{{vspace(-0.5em)}}}
@@ -211,7 +211,7 @@
 # Switch to the left column - will automatically move to the next page.
 {{{switchcol}}}
 
-** Experience (Cont.) @@latex:{\Large \faBriefcase}@@
+** Experience (Cont.) {{{fa(Briefcase)}}}
 
 *** Job 5 :ignore:
 {{{cvevent(Job 5, \href{https://www.company-5-site.com}{Company 5}, \href{https://www.company-5-site.com/department/group}{Group}, \href{https://www.company-5-site.com/department}{Department}, May 9 1806 -- Apr 7 2025, City\, State)}}}
@@ -258,7 +258,7 @@
 # Switch to the right column
 {{{switchcol}}}
 
-** Projects (Cont.) @@latex:{\Large \faWrench}@@
+** Projects (Cont.) {{{fa(Wrench)}}}
 *** Project 6 :ignore:
 {{{cvproject(Project 6, ELisp Library, https://github.com/user-name/project6, https://github.com/user-name/project6)}}}
 {{{vspace(-0.3em)}}}
@@ -273,7 +273,7 @@
 
 {{{vspace(-0.2em)}}}
 
-** Awards @@latex:{\Large \faTrophy}@@
+** Awards {{{fa(Trophy)}}}
 {{{cvaward(\href{https://www.award-1.com}{Company 1} Award 1, Jun 1885, Award 1 description)}}}
 
 {{{cvaward(\href{https://www.award-2.com}{Company 2} Award 2, Jun 1885, Award 2 description)}}}
