@@ -251,6 +251,22 @@
 {{{divider}}}
 {{{vspace(-0.2cm)}}}
 
+** Wheel Chart {{{fa(ChartPie)}}}
+
+# Usage: wheelchart(outer wheel radius,inner wheel radius,
+#                   value 1,text width 1,color 1,detail 1,
+#                   ...
+#                   value 5,text width 5,color 5,detail 5,
+#
+# Note: Up to 5 wheel items can be inserted.  If more are required, adjust the
+#       wheelchart macro in resumel.org
+{{{wheelchart(1.5cm,0.5cm,
+  6,8em,accent!30,Sleep\, \\beautiful sleep,
+  3,8em,accent!40,Hopeful novelist by night,
+  8,8em,accent!60,Daytime job,
+  2,10em,accent,Sports and relaxation,
+  5,6em,accent!20,Spending time with family)}}}
+
 # ** Newpage :ignore:
 # {{{new-page}}}
 

@@ -52,7 +52,31 @@ Ignores nil or empty entries."
           ;; Build the final
           (push (format "\\cvtag{%s}[%s]" skill level) result))))
     (string-join (nreverse result) " ")))
-(require 'subr-x)  ;; For string-trim
+
+(defun expand-wheelchart (&rest args)
+  "Generate LaTeX wheelchart command from ARGS (outer-radius inner-radius value/text-width/color/detail...)"
+  (unless (>= (length args) 2)
+    (error "wheelchart requires at least outer and inner radius"))
+  (let* ((outer (pop args))
+         (inner (pop args))
+         (segments (cl-loop while (>= (length args) 4)
+                            for a = (pop args)
+                            for b = (pop args)
+                            for c = (pop args)
+                            for d = (pop args)
+                            when (and a b c d)
+                            collect (list a b c d))))
+    (concat "@@latex:\\wheelchart{" outer "}{" inner "}{%\n"
+            (mapconcat (lambda (s)
+                         (format "  %s/%s/%s/{%s}"
+                                 (nth 0 s)
+                                 (nth 1 s)
+                                 (nth 2 s)
+                                 (replace-regexp-in-string
+                                  "\\\\," "," (nth 3 s) t t)))
+                       segments
+                       ",\n")
+            "\n}@@")))
 
 (defgroup resumel nil
   "Customization group for resumel."
