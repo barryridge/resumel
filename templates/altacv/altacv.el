@@ -8,12 +8,17 @@
 \\geometry{left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm}
 
 % Update colors
+\\definecolor{Black}{HTML}{000000}
 \\definecolor{SlateGrey}{HTML}{2E2E2E}
 \\definecolor{LightGrey}{HTML}{666666}
 \\definecolor{DarkPastelRed}{HTML}{450808}
 \\definecolor{PastelRed}{HTML}{8F0D0D}
+\\definecolor{Blue}{HTML}{3872B2}
+\\definecolor{DarkBlue}{HTML}{1F4064}
 \\definecolor{GoldenEarth}{HTML}{E7D192}
-\\colorlet{name}{black}
+\\definecolor{CoolSky}{HTML}{92CDE7}
+\\definecolor{SoftSkyBlue}{HTML}{97D5EF}
+\\colorlet{name}{Black}
 \\colorlet{tagline}{PastelRed}
 \\colorlet{heading}{DarkPastelRed}
 \\colorlet{headingrule}{GoldenEarth}
@@ -21,9 +26,9 @@
 \\colorlet{accent}{PastelRed}
 \\colorlet{emphasis}{SlateGrey}
 \\colorlet{body}{LightGrey}
-\\colorlet{color0}{black}
+\\colorlet{color0}{Black}
 \\colorlet{color1}{DarkPastelRed}
-\\colorlet{color2}{darkgrey}
+\\colorlet{color2}{SlateGrey}
 
 % Update fonts
 \\renewcommand{\\familydefault}{\\sfdefault}
