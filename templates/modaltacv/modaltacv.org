@@ -12,5 +12,5 @@
 #+MACRO: cvskill @@latex:\cvskill{$1}{$2}@@
 #+MACRO: cvthesis @@latex:\faBook \emph{\href{$1}{$2}}@@
 #+MACRO: cvproject @@latex:\cvevent{\textbf{$1} {\small $2}}{\href{$3}{\faGithub $4}}{}{}@@
-#+MACRO: cvaward @@latex:\cvachievement{\faTrophy}{$1}{\small\cvDateMarker $2 | $3}{}@@
+#+MACRO: cvaward @@latex:\cvaward{$1}{$2}{$3}{\small\cvDateMarker $4 | $5}@@
 #+MACRO: wheelchart @@latex:\wheelchart{$1}{$2}{$3}@@

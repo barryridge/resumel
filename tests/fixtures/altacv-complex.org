@@ -287,12 +287,12 @@
 
 {{{vspace(-0.2em)}}}
 
-{{{cvaward(\href{https://www.award-1.com}{Company 1} Award 1, Jun 1885, Award 1 description)}}}
 ** Awards {{{fa(Trophy)}}}
+{{{cvachievement(\faTrophy,\href{https://www.award-1.com}{Company 1} Award 1,\small\cvDateMarker Jun 1885 | Award 1 description)}}}
 
-{{{cvaward(\href{https://www.award-2.com}{Company 2} Award 2, Jun 1885, Award 2 description)}}}
+{{{cvachievement(\faHeartbeat,\href{https://www.award-1.com}{Company 2} Award 2,\small\cvDateMarker Jun 1885 | Award 2 description)}}}
 
-{{{cvaward(\href{https://www.award-3.com}{Company 3} Award 3, Jun 1885, Award 3 description)}}}
+{{{cvachievement(\faHeartbeat,\href{https://www.award-1.com}{Company 3} Award 3,\small\cvDateMarker Jun 1885 | Award 3 description)}}}
 
 * Back Matter :ignore:
 {{{endparacol}}}

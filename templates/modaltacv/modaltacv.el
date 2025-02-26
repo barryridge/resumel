@@ -165,6 +165,18 @@
   }
 }
 
+% CV Award
+%
+% Modified altacv cvachievement command to override icon size
+%
+\\newcommand{\\cvaward}[4]{%
+  \\begin{tabularx}{\\linewidth}{@{}p{2em} @{\\hspace{1ex}} >{\\raggedright\\arraybackslash}X@{}}
+  \\multirow{2}{*}{#1\\color{accent}\\BeginAccSupp{method=escape,ActualText={#2: }}#2\\EndAccSupp{}} & \\bfseries\\textcolor{emphasis}{#3}\\\\
+  & #4
+  \\end{tabularx}%
+  \\smallskip
+}
+
 % C++ logo
 \\def\\Cplusplus{C{}\\texttt{++}}
 
