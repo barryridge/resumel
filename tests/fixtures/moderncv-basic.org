@@ -40,6 +40,8 @@
 - Address pin symbol: {{{pin}}}
 - Font Awesome symbols: {{{fa(Cogs)}}} {{{fa(GraduationCap)}}} {{{fa(GraduationCap)}}} {{{fa(Book)}}} {{{fa(Wrench)}}} {{{fa(Trophy)}}} {{{fa(ChalkboardTeacher)}}} {{{fa(Users)}}}
 - Font Awesome symbol in different sizes: {{{fa(Briefcase,\Huge)}}} {{{fa(Briefcase,\huge)}}} {{{fa(Briefcase,\Large)}}} {{{fa(Briefcase,\large)}}} {{{fa(Briefcase,\normalsize)}}} {{{fa(Briefcase,\small)}}} {{{fa(Briefcase,\footnotesize)}}} {{{fa(Briefcase,\scriptsize)}}} {{{fa(Briefcase,\tiny)}}}
+- Font Awesome symbol in different colors: {{{fa(Briefcase,\color{color1})}}} {{{fa(Briefcase,\color{black})}}} {{{fa(Briefcase,\color{red})}}} {{{fa(Briefcase,\color{darkgrey})}}} {{{fa(Briefcase,\color{orange})}}} {{{fa(Briefcase,\color{burgundy})}}} {{{fa(Briefcase,\color{purple})}}} {{{fa(Briefcase,\color{lightblue})}}} {{{fa(Briefcase,\color{green})}}}
+- Font Awesome symbol in different sizes and colors: {{{fa(Briefcase,\color{color1}\Huge)}}} {{{fa(Briefcase,\color{black}\huge)}}} {{{fa(Briefcase,\color{red}\Large)}}} {{{fa(Briefcase,\color{darkgrey}\large)}}} {{{fa(Briefcase,\color{orange}\normalsize)}}} {{{fa(Briefcase,\color{burgundy}\small)}}} {{{fa(Briefcase,\color{purple}\footnotesize)}}} {{{fa(Briefcase,\color{lightblue}\scriptsize)}}} {{{fa(Briefcase,\color{green}\tiny)}}}
 
 ** Dividers
 - Divider:
