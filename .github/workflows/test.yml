@@ -15,8 +15,9 @@ jobs:
         sudo apt-get install -y \
           texlive-full \
           latexmk \
-          diff-pdf \
+          homebrew \
           emacs
+        brew install diff-pdf
 
     - name: Install Emacs packages
       run: |
