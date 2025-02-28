@@ -26,7 +26,7 @@ jobs:
       run: |
         emacs --batch --eval "(package-refresh-contents)"
         emacs --batch --eval "(package-install 'org)"
-        emacs --batch --eval "(package-install 'ox-extra)"
+        emacs --batch --eval "(package-install 'org-contrib)"
 
     - name: Run tests
       run: |
