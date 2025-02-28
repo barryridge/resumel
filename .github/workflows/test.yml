@@ -24,6 +24,9 @@ jobs:
 
     - name: Install Emacs packages
       run: |
+        emacs --batch --eval "(require 'package)"
+        emacs --batch --eval "(add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)"
+        emacs --batch --eval "(package-initialize)"
         emacs --batch --eval "(package-refresh-contents)"
         emacs --batch --eval "(package-install 'org)"
         emacs --batch --eval "(package-install 'org-contrib)"
