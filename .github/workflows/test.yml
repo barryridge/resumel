@@ -42,6 +42,12 @@ jobs:
         echo "(require 'ox-extra)" >> $USER_EMACS_DIR/init.el
         echo "(ox-extras-activate '(ignore-headlines))" >> $USER_EMACS_DIR/init.el
 
+    - name: Debug CI Emacs Setup
+      run: |
+        echo "USER_EMACS_DIR is set to: $USER_EMACS_DIR"
+        echo "Listing contents of $USER_EMACS_DIR:"
+        ls -la $USER_EMACS_DIR
+
     - name: Run tests
       env:
         # Set Emacs to use the CI-specific user directory
