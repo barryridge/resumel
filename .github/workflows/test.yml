@@ -43,8 +43,8 @@ jobs:
         echo "(package-install 'org-contrib)" >> $USER_EMACS_DIR/init.el
         echo "(package-install 'org-plus-contrib)" >> $USER_EMACS_DIR/init.el
         echo "(require 'ox-extra)" >> $USER_EMACS_DIR/init.el
-        echo "(setq max-lisp-eval-depth 2000)" >> $USER_EMACS_DIR/.emacs.d/init.el
-        echo "(setq max-specpdl-size 15000)" >> $USER_EMACS_DIR/.emacs.d/init.el
+        echo "(setq max-lisp-eval-depth 2000)" >> $USER_EMACS_DIR/init.el
+        echo "(setq max-specpdl-size 15000)" >> $USER_EMACS_DIR/init.el
         echo "(ox-extras-activate '(ignore-headlines))" >> $USER_EMACS_DIR/init.el
 
     - name: Debug CI Emacs Setup
