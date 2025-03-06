@@ -36,12 +36,10 @@ jobs:
         echo "(add-to-list 'package-archives '(\"gnu\" . \"https://elpa.gnu.org/packages/\") t)" >> $USER_EMACS_DIR/init.el
         echo "(add-to-list 'package-archives '(\"org\" . \"https://orgmode.org/elpa/\") t)" >> $USER_EMACS_DIR/init.el
         echo "(add-to-list 'package-archives '(\"org-contrib\" . \"https://orgmode.org/elpa/\") t)" >> $USER_EMACS_DIR/init.el
-        echo "(add-to-list 'package-archives '(\"org-plus-contrib\" . \"https://orgmode.org/elpa/\") t)" >> $USER_EMACS_DIR/init.el
         echo "(package-initialize)" >> $USER_EMACS_DIR/init.el
         echo "(unless package-archive-contents (package-refresh-contents))" >> $USER_EMACS_DIR/init.el
         echo "(package-install 'org)" >> $USER_EMACS_DIR/init.el
         echo "(package-install 'org-contrib)" >> $USER_EMACS_DIR/init.el
-        echo "(package-install 'org-plus-contrib)" >> $USER_EMACS_DIR/init.el
         echo "(require 'ox-extra)" >> $USER_EMACS_DIR/init.el
         echo "(setq max-lisp-eval-depth 2000)" >> $USER_EMACS_DIR/init.el
         echo "(setq max-specpdl-size 15000)" >> $USER_EMACS_DIR/init.el

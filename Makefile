@@ -76,11 +76,12 @@ install-packages:
 			--eval "(require 'package)" \
 			--eval "(add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)" \
 			--eval "(add-to-list 'package-archives '(\"gnu\" . \"https://elpa.gnu.org/packages/\") t)" \
+			--eval "(add-to-list 'package-archives '(\"org\" . \"https://orgmode.org/elpa//\") t)" \
+			--eval "(add-to-list 'package-archives '(\"org-contrib\" . \"https://orgmode.org/elpa//\") t)" \
 			--eval "(package-initialize)" \
 			--eval "(unless package-archive-contents (package-refresh-contents))" \
 			--eval "(package-install 'org)" \
 			--eval "(package-install 'org-contrib)" \
-			--eval "(if (require 'ox-extra nil t) nil (package-install 'ox-extra))" \
 			--eval "(require 'ox-extra)" \
 			--eval "(ox-extras-activate '(ignore-headlines))"; \
 	fi
