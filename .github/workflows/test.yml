@@ -21,11 +21,15 @@ jobs:
           emacs \
           make \
           curl
-        # Install Homebrew (for diff-pdf)
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null 2>&1 || true
-        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/runner/.bashrc
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+    - name: Set up Homebrew
+      id: set-up-homebrew
+      uses: Homebrew/actions/setup-homebrew@master
+
+    - name: Install diff-pdf via Homebrew
+      run: |
         brew install diff-pdf
+        diff-pdf
 
     - name: Setup Emacs for CI
       run: |
