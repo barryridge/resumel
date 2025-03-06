@@ -51,7 +51,7 @@ jobs:
     - name: Run tests
       env:
         # Set Emacs to use the CI-specific user directory
-        EMACS_FLAGS: "--batch -l $USER_EMACS_DIR/init.el"
+        EMACS_FLAGS: "--batch -l ${USER_EMACS_DIR}/init.el"
         # Disable package installation in Makefile since packages are already installed
         LOAD_EMACS_PACKAGES: "false"
       run: |
