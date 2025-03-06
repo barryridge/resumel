@@ -20,7 +20,12 @@ jobs:
           latexmk \
           emacs \
           make \
-          curl
+          curl \
+          automake \
+          g++ \
+          libpoppler-glib-dev \
+          poppler-utils \
+          libwxgtk3.2-dev
 
     - name: Set up Homebrew
       id: set-up-homebrew
@@ -29,7 +34,6 @@ jobs:
     - name: Install diff-pdf via Homebrew
       run: |
         brew install diff-pdf
-        diff-pdf
 
     - name: Setup Emacs for CI
       run: |
@@ -58,13 +62,13 @@ jobs:
     - name: Run tests
       env:
         # Set up homebrew
-        PATH: /home/linuxbrew/.linuxbrew/bin:${PATH}
+        PATH: /home/linuxbrew/.linuxbrew/bin:${{ env.PATH }}
         # Set Emacs to use the CI-specific user directory
         EMACS_FLAGS: "--batch -l ${USER_EMACS_DIR}/init.el"
         # Disable package installation in Makefile since packages are already installed
         LOAD_EMACS_PACKAGES: "false"
       run: |
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        brew shellenv
         make test EMACS=emacs EMACS_FLAGS="${EMACS_FLAGS}" LOAD_EMACS_PACKAGES="false"
 
     - name: Upload test results
