@@ -34,6 +34,9 @@ jobs:
         echo "(require 'package)" >> $USER_EMACS_DIR/init.el
         echo "(add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)" >> $USER_EMACS_DIR/init.el
         echo "(add-to-list 'package-archives '(\"gnu\" . \"https://elpa.gnu.org/packages/\") t)" >> $USER_EMACS_DIR/init.el
+        echo "(add-to-list 'package-archives '(\"org\" . \"https://orgmode.org/elpa/\") t)" >> $USER_EMACS_DIR/init.el
+        echo "(add-to-list 'package-archives '(\"org-contrib\" . \"https://orgmode.org/elpa/\") t)" >> $USER_EMACS_DIR/init.el
+        echo "(add-to-list 'package-archives '(\"org-plus-contrib\" . \"https://orgmode.org/elpa/\") t)" >> $USER_EMACS_DIR/init.el
         echo "(package-initialize)" >> $USER_EMACS_DIR/init.el
         echo "(unless package-archive-contents (package-refresh-contents))" >> $USER_EMACS_DIR/init.el
         echo "(package-install 'org)" >> $USER_EMACS_DIR/init.el
