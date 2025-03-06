@@ -16,7 +16,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y \
-          texlive-full \
           latexmk \
           emacs \
           make \
@@ -26,6 +25,33 @@ jobs:
           libpoppler-glib-dev \
           poppler-utils \
           libwxgtk3.2-dev
+
+    - name: Set up TeX Live
+      uses: teatimeguest/setup-texlive-action@v3
+      with:
+        packages: |
+          scheme-basic
+          moderncv
+          altacv
+          paracol
+          etoolbox
+          lmodern
+          inputenc
+          fontenc
+          geometry
+          xcolor
+          tikz
+          amsmath
+          amsfonts
+          fontawesome5
+          hyperref
+          biblatex
+          pdfpages
+          titlesec
+          pdfcomment
+          fancyhdr
+          enumitem
+          csquotes
 
     - name: Set up Homebrew
       id: set-up-homebrew
