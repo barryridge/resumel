@@ -38,7 +38,7 @@ jobs:
         echo "(unless package-archive-contents (package-refresh-contents))" >> $USER_EMACS_DIR/init.el
         echo "(package-install 'org)" >> $USER_EMACS_DIR/init.el
         echo "(package-install 'org-contrib)" >> $USER_EMACS_DIR/init.el
-        echo "(package-install 'ox-extra)" >> $USER_EMACS_DIR/init.el
+        echo "(package-install 'org-plus-contrib)" >> $USER_EMACS_DIR/init.el
         echo "(require 'ox-extra)" >> $USER_EMACS_DIR/init.el
         echo "(ox-extras-activate '(ignore-headlines))" >> $USER_EMACS_DIR/init.el
 
