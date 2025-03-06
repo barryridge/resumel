@@ -94,7 +94,6 @@ jobs:
         # Disable package installation in Makefile since packages are already installed
         LOAD_EMACS_PACKAGES: "false"
       run: |
-        brew shellenv
         make test EMACS=emacs EMACS_FLAGS="${EMACS_FLAGS}" LOAD_EMACS_PACKAGES="false"
 
     - name: Upload test results
