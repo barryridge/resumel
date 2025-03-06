@@ -1,0 +1,59 @@
+name: Test resumel templates
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      # Define a separate Emacs user directory for CI
+      USER_EMACS_DIR: ${{ github.workspace }}/ci_emacs.d
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          texlive-full \
+          latexmk \
+          emacs \
+          make \
+          curl
+        # Install Homebrew (for diff-pdf)
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" < /dev/null 2>&1 || true
+        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/runner/.bashrc
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        brew install diff-pdf
+
+    - name: Setup Emacs for CI
+      run: |
+        mkdir -p $USER_EMACS_DIR/lisp
+        echo "(setq user-emacs-directory \"${USER_EMACS_DIR}\")" > $USER_EMACS_DIR/init.el
+        echo "(require 'package)" >> $USER_EMACS_DIR/init.el
+        echo "(add-to-list 'package-archives '(\"melpa\" . \"https://melpa.org/packages/\") t)" >> $USER_EMACS_DIR/init.el
+        echo "(add-to-list 'package-archives '(\"gnu\" . \"https://elpa.gnu.org/packages/\") t)" >> $USER_EMACS_DIR/init.el
+        echo "(package-initialize)" >> $USER_EMACS_DIR/init.el
+        echo "(unless package-archive-contents (package-refresh-contents))" >> $USER_EMACS_DIR/init.el
+        echo "(package-install 'org)" >> $USER_EMACS_DIR/init.el
+        echo "(package-install 'org-contrib)" >> $USER_EMACS_DIR/init.el
+        echo "(package-install 'ox-extra)" >> $USER_EMACS_DIR/init.el
+        echo "(require 'ox-extra)" >> $USER_EMACS_DIR/init.el
+        echo "(ox-extras-activate '(ignore-headlines))" >> $USER_EMACS_DIR/init.el
+
+    - name: Run tests
+      env:
+        # Set Emacs to use the CI-specific user directory
+        EMACS_FLAGS: "--batch -l $USER_EMACS_DIR/init.el"
+        # Disable package installation in Makefile since packages are already installed
+        LOAD_EMACS_PACKAGES: "false"
+      run: |
+        make test EMACS=emacs EMACS_FLAGS="${EMACS_FLAGS}" LOAD_EMACS_PACKAGES="false"
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: tests/results
