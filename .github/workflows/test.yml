@@ -87,8 +87,6 @@ jobs:
 
     - name: Run tests
       env:
-        # Set up homebrew
-        PATH: /home/linuxbrew/.linuxbrew/bin:${{ env.PATH }}
         # Set Emacs to use the CI-specific user directory
         EMACS_FLAGS: "--batch -l ${USER_EMACS_DIR}/init.el"
         # Disable package installation in Makefile since packages are already installed
