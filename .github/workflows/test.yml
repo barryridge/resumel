@@ -53,6 +53,34 @@ jobs:
           enumitem
           csquotes
           pdflscape
+          roboto
+          lato
+          footmisc
+          unicode-math
+          multibib
+          babel
+          ifxetex
+          ifluatex
+          luatextra
+          lualatex-math
+          shellesc
+          inputenx
+          fontenc
+          txfonts
+          marvosym
+          pifont
+          parskip
+          graphicx
+          caption
+          marvosym
+          latexsym
+          url
+          scrhack
+          xspace
+          mparhack
+          microtype
+          multicol
+          listings
 
     - name: Set up Homebrew
       id: set-up-homebrew
