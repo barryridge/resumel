@@ -52,6 +52,7 @@ jobs:
           fancyhdr
           enumitem
           csquotes
+          pdflscape
 
     - name: Set up Homebrew
       id: set-up-homebrew
