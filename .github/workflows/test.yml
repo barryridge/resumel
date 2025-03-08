@@ -82,6 +82,7 @@ jobs:
           multicol
           listings
           dashrule
+          ifmtarg
 
     - name: Set up Homebrew
       id: set-up-homebrew
