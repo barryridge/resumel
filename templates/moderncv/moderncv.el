@@ -61,6 +61,10 @@
   }
 }
 
+% Define divider (replicated from altacv)
+\\usepackage{dashrule}
+\\newcommand{\\divider}{\\textcolor{color2!30}{\\hdashrule{\\linewidth}{0.6pt}{0.5ex}}\\medskip}
+
 % CV Tags
 \\usepackage{tikz}
 
