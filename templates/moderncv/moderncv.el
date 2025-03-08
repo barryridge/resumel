@@ -12,6 +12,17 @@
 % Set default ModernCV color
 \\moderncvcolor{blue}
 
+
+% Redefine moderncv colors (they seem to not propagate from the package and cause xcolor 'Undefined color' errors)
+\\definecolor{black}{RGB}{0, 0, 0}
+\\definecolor{red}{rgb}{0.95, 0.20, 0.20}
+\\definecolor{darkgrey}{rgb}{0.45, 0.45, 0.45}
+\\definecolor{orange}{rgb}{0.95, 0.55, 0.15}
+\\definecolor{burgundy}{rgb}{0.596078, 0, 0}% 139/255 (0.545098) or 152/255 (0.596078)
+\\definecolor{purple}{rgb}{0.50, 0.33, 0.80}
+\\definecolor{lightblue}{rgb}{0.22, 0.45, 0.70}
+\\definecolor{green}{rgb}{0.35, 0.70, 0.30}
+
 % Set default ModernCV theme
 \\moderncvstyle{classic}
 
