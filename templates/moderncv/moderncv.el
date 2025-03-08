@@ -52,7 +52,6 @@
 
 % CV Tags
 \\usepackage{tikz}
-\\usepackage{xcolor}
 
 \\NewDocumentCommand{\\cvtag}{m O{5}}{%
   \\pgfmathsetmacro{\\skillIntensity}{20 + (#2 * 16)}%
