@@ -9,11 +9,11 @@
                '("moderncv"
                  "\\documentclass[11pt,letterpaper,sans]{moderncv}
 
-% Set default ModernCV theme
-\\moderncvstyle{classic}
-
 % Set default ModernCV color
 \\moderncvcolor{blue}
+
+% Set default ModernCV theme
+\\moderncvstyle{classic}
 
 % To make cover letter text justified
 \\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
