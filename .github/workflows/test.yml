@@ -81,6 +81,7 @@ jobs:
           microtype
           multicol
           listings
+          dashrule
 
     - name: Set up Homebrew
       id: set-up-homebrew
