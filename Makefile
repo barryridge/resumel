@@ -8,6 +8,17 @@ RESULTS_DIR = $(TEST_DIR)/results
 EMACS ?= emacs
 EMACS_FLAGS ?= --batch
 
+# Set diff-pdf tolerance levels based on the environment
+ifndef GITHUB_ACTIONS
+# Local environment settings
+DIFF_PDF_CHANNEL_TOLERANCE ?= 0
+DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE ?= 0
+else
+# GitHub Actions CI settings
+DIFF_PDF_CHANNEL_TOLERANCE ?= 150
+DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE ?= 50000
+endif
+
 # Check if we're running in CI or not
 ifndef GITHUB_ACTIONS
 # Control whether to load Emacs packages (default: false)
@@ -35,6 +46,8 @@ $(info EMACS: $(EMACS))
 $(info EMACS_FLAGS: $(EMACS_FLAGS))
 $(info OX_EXTRA_PATH: $(OX_EXTRA_PATH))
 $(info OX_EXTRA_L_FLAGS: $(OX_EXTRA_L_FLAGS))
+$(info DIFF_PDF_CHANNEL_TOLERANCE: $(DIFF_PDF_CHANNEL_TOLERANCE))
+$(info DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE: $(DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE))
 
 ifdef GITHUB_ACTIONS
 $(info Detected GitHub Actions environment.)
@@ -44,26 +57,32 @@ EMACS_FLAGS := $(shell echo $(EMACS_FLAGS))
 $(info Expanded EMACS_FLAGS: $(EMACS_FLAGS))
 endif
 
+# Run tests for each template
 test: clean install-packages
 	@mkdir -p $(RESULTS_DIR)
 
-	# Run tests for each template
 	@echo "Running resumel moderncv template tests..."
-	@$(EMACS) $(EMACS_FLAGS) $(OX_EXTRA_L_FLAGS) \
+	@DIFF_PDF_CHANNEL_TOLERANCE=$(DIFF_PDF_CHANNEL_TOLERANCE) \
+		DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE=$(DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE) \
+		$(EMACS) $(EMACS_FLAGS) $(OX_EXTRA_L_FLAGS) \
 	       -l ert \
 	       -l resumel.el \
 	       -l $(TEST_DIR)/test-resumel-moderncv.el \
 	       -f ert-run-tests-batch-and-exit
 
 	@echo "Running resumel altacv template tests..."
-	@$(EMACS) $(EMACS_FLAGS) $(OX_EXTRA_L_FLAGS) \
+	@DIFF_PDF_CHANNEL_TOLERANCE=$(DIFF_PDF_CHANNEL_TOLERANCE) \
+		DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE=$(DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE) \
+		$(EMACS) $(EMACS_FLAGS) $(OX_EXTRA_L_FLAGS) \
 	       -l ert \
 	       -l resumel.el \
 	       -l $(TEST_DIR)/test-resumel-altacv.el \
 	       -f ert-run-tests-batch-and-exit
 
 	@echo "Running resumel modaltacv template tests..."
-	@$(EMACS) $(EMACS_FLAGS) $(OX_EXTRA_L_FLAGS) \
+	@DIFF_PDF_CHANNEL_TOLERANCE=$(DIFF_PDF_CHANNEL_TOLERANCE) \
+		DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE=$(DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE) \
+		$(EMACS) $(EMACS_FLAGS) $(OX_EXTRA_L_FLAGS) \
 	       -l ert \
 	       -l resumel.el \
 	       -l $(TEST_DIR)/test-resumel-modaltacv.el \

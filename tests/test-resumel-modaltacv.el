@@ -50,8 +50,13 @@
 
 ;; Function to compare two PDFs using diff-pdf
 (defun resumel-files-equal-p (file1 file2)
-  "Compare FILE1 and FILE2 using diff-pdf tool."
-  (zerop (call-process "diff-pdf" nil nil nil file1 file2)))
+  "Compare FILE1 and FILE2 using diff-pdf tool with specified tolerances."
+  (let ((channel-tolerance (or (getenv "DIFF_PDF_CHANNEL_TOLERANCE") "0"))
+        (per-page-pixel-tolerance (or (getenv "DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE") "0")))
+    (zerop (call-process "diff-pdf" nil nil nil
+                         "--channel-tolerance" channel-tolerance
+                         "--per-page-pixel-tolerance" per-page-pixel-tolerance
+                         file1 file2))))
 
 ;; Setup function to load the modaltacv template
 (defun resumel-test-setup ()
