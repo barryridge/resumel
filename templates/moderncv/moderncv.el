@@ -1,6 +1,5 @@
 (unless (assoc "moderncv" org-latex-classes)
 
-;; Set resumel-template-class buffer-locally
 (setq resumel-template-class "moderncv")
 
 ;; Disable Org's hyperref template - let moderncv handle it
@@ -8,13 +7,17 @@
 (setq org-latex-default-packages-alist nil)
 (setq org-latex-packages-alist nil)
 
-(add-to-list 'org-latex-classes
-               '("moderncv"
-                 "\\documentclass[11pt,letterpaper,sans]{moderncv}
+(let* ((moderncv-color (or (cdr (assoc "MODERNCV_COLOR" resumel-template-vars)) "blue"))
+       (moderncv-style (or (cdr (assoc "MODERNCV_STYLE" resumel-template-vars)) "classic"))
+       (moderncv-firstname (or (cdr (assoc "MODERNCV_FIRSTNAME" resumel-template-vars)) "classic"))
+       (moderncv-lastname (or (cdr (assoc "MODERNCV_LASTNAME" resumel-template-vars)) "classic"))
+       (geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "scale=0.75, top=2cm, bottom=2cm, left=2.05cm, right=2.05cm")))
+  (add-to-list 'org-latex-classes
+               `("moderncv"
+                 ,(concat "\\documentclass[11pt,letterpaper,sans]{moderncv}
 
 % Set default ModernCV color
-\\moderncvcolor{blue}
-
+\\moderncvcolor{" moderncv-color "}
 
 % Redefine moderncv colors (they seem to not propagate from the package and cause xcolor 'Undefined color' errors)
 \\definecolor{black}{RGB}{0, 0, 0}
@@ -27,7 +30,7 @@
 \\definecolor{green}{rgb}{0.35, 0.70, 0.30}
 
 % Set default ModernCV theme
-\\moderncvstyle{classic}
+\\moderncvstyle{" moderncv-style "}
 
 % To make cover letter text justified
 \\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
@@ -43,7 +46,8 @@
 \\usepackage[T1]{fontenc}
 
 % Page layout adjustments
-\\usepackage[scale=0.75]{geometry}
+"
+"\\usepackage[" geometry "]{geometry}
 
 % Math and symbol support
 \\usepackage{amsmath}
@@ -100,11 +104,15 @@
 % For pdf attachments
 \\usepackage{pdfpages}
 
-% Adjust the page margins
-\\geometry{top=2cm, bottom=2cm, left=2.05cm, right=2.05cm}
+% Set name (moderncv will throw errors if this is not set in the header)
+\\name{" moderncv-firstname "}{" moderncv-lastname "}
 
-"
+")
                  ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}"))))
+                 ("\\subsection{%s}" . "\\subsection*{%s}")))
+
+  ;; Debug message to confirm addition
+  ;; (message "[resumel - DEBUG]: Added 'moderncv' to org-latex-classes: %s" (assoc "moderncv" org-latex-classes))
+))
 
 (provide 'resumel-moderncv)

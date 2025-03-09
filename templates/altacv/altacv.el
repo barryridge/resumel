@@ -1,17 +1,28 @@
 (unless (assoc "altacv" org-latex-classes)
 
-;; Set resumel-template-class buffer-locally
 (setq resumel-template-class "altacv")
 
-(setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "xmpi" "run.xml" "bcf")))
+(let* ((altacv-columnratio (or (cdr (assoc "ALTACV_COLUMNRATIO" resumel-template-vars)) "0.6"))
+       (geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm")))
   (add-to-list 'org-latex-classes
-               '("altacv"
-                 "\\documentclass[10pt,letterpaper,ragged2e,withhyper]{altacv}
+               `("altacv"
+                 ,(concat "\\documentclass[10pt,letterpaper,ragged2e,withhyper]{altacv}
 
-% Update layout
-\\geometry{left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm}
+% Layout
+"
+"\\geometry{" geometry "}
 
-% Update colors
+% Use paracol for column layout
+\\usepackage{paracol}
+
+% Set the left/right column width ratio
+\\columnratio{" altacv-columnratio "}
+
+% Fonts
+\\usepackage[rm]{roboto}
+\\usepackage[defaultsans]{lato}
+
+% Colors
 \\definecolor{Black}{HTML}{000000}
 \\definecolor{SlateGrey}{HTML}{2E2E2E}
 \\definecolor{LightGrey}{HTML}{666666}
@@ -77,16 +88,13 @@
 \\usepackage{amsmath}
 \\usepackage{amsfonts}
 
-"
+")
 
-               ("\\cvsection{%s}" . "\\cvsection*{%s}")
-               ("\\cvsubsection{%s}" . "\\cvsubsection*{%s}"))))
+                 ("\\cvsection{%s}" . "\\cvsection*{%s}")
+                 ("\\cvsubsection{%s}" . "\\cvsubsection*{%s}")))
 
-(setq org-latex-packages-alist 'nil)
-(setq org-latex-default-packages-alist
-      '(("rm" "roboto"  t)
-        ("defaultsans" "lato" t)
-        ("" "paracol" t)
-        ))
+  ;; Debug message to confirm addition
+  ;; (message "[resumel - DEBUG]: Added 'altacv' to org-latex-classes: %s" (assoc "altacv" org-latex-classes))
+))
 
 (provide 'resumel-altacv)

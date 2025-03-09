@@ -1,20 +1,27 @@
 (unless (assoc "modaltacv" org-latex-classes)
 
-;; Set resumel-template-class buffer-locally
-(setq resumel-template-class "altacv")
+(setq resumel-template-class "modaltacv")
 
-(setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "xmpi" "run.xml" "bcf")))
+(let* ((modaltacv-columnratio (or (cdr (assoc "MODALTACV_COLUMNRATIO" resumel-template-vars)) "0.6"))
+       (geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm")))
   (add-to-list 'org-latex-classes
-               '("altacv"
-                 "\\documentclass[10pt,letterpaper,ragged2e,withhyper]{altacv}
+               `("modaltacv"
+                 ,(concat "\\documentclass[10pt,letterpaper,ragged2e,withhyper]{altacv}
 
-% Page layout adjustments
-\\geometry{left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm}
+% Layout
+\\geometry{" geometry "}
 
-% Use roboto and lato for fonts
+% Use paracol for column layout
+\\usepackage{paracol}
+
+% Set the left/right column width ratio
+\\columnratio{" modaltacv-columnratio "}
+
+% Fonts
+\\usepackage{lmodern}
 \\renewcommand{\\familydefault}{\\sfdefault}
 
-% Update altacv colors
+% Colors
 \\definecolor{Black}{HTML}{000000}
 \\definecolor{SlateGrey}{HTML}{2E2E2E}
 \\definecolor{LightGrey}{HTML}{666666}
@@ -230,15 +237,14 @@
 % }
 % \\setlength{\\bibitemsep}{0.25\\baselineskip}
 % \\setlength{\\bibhang}{1.25em}
-"
+
+")
 
                ("\\cvsection{%s}" . "\\cvsection*{%s}")
-               ("\\cvsubsection{%s}" . "\\cvsubsection*{%s}"))))
+               ("\\cvsubsection{%s}" . "\\cvsubsection*{%s}")))
 
-(setq org-latex-packages-alist 'nil)
-(setq org-latex-default-packages-alist
-      '(("" "lmodern" t)  ; Load lmodern package for Latin Modern fonts
-        ("" "paracol" t)  ; Keep paracol for column layout
-        ))
+  ;; Debug message to confirm addition
+  ;; (message "[resumel - DEBUG]: Added 'modaltacv' to org-latex-classes: %s" (assoc "modaltacv" org-latex-classes))
+))
 
 (provide 'resumel-modaltacv)
