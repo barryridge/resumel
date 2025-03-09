@@ -9,7 +9,6 @@
 #+TITLE: Test Resume
 #+AUTHOR: Test User
 #+DATE: <1955-11-05 Sat>
-#+INCLUDE: ../../templates/altacv/altacv.org
 #+EXPORT_FILE_NAME: ../results/altacv-complex.pdf
 #+LATEX_HEADER: \columnratio{0.6} % Set the left/right column width ratio to 6:4.
 #+LATEX_HEADER: \usepackage[bottom]{footmisc}
