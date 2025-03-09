@@ -2,15 +2,22 @@
 
 (setq resumel-template-class "altacv")
 
-(let* ((altacv-columnratio (or (cdr (assoc "ALTACV_COLUMNRATIO" resumel-template-vars)) "0.6"))
-       (geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm")))
+(let* ((geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm"))
+       (main-font-xelatex (or (cdr (assoc "MAIN_FONT_XELATEX" resumel-template-vars)) "Roboto Slab"))
+       (sans-font-xelatex (or (cdr (assoc "SANS_FONT_XELATEX" resumel-template-vars)) "Lato"))
+       (mono-font-xelatex (or (cdr (assoc "MONO_FONT_XELATEX" resumel-template-vars)) "Fira Code"))
+       (math-font-xelatex (or (cdr (assoc "MATH_FONT_XELATEX" resumel-template-vars)) "TeX Gyre Termes Math"))
+       (main-font-pdflatex (or (cdr (assoc "MAIN_FONT_PDFLATEX" resumel-template-vars)) "roboto"))
+       (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lato"))
+       (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "sourcecodepro"))
+       (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (altacv-columnratio (or (cdr (assoc "ALTACV_COLUMNRATIO" resumel-template-vars)) "0.6")))
   (add-to-list 'org-latex-classes
                `("altacv"
                  ,(concat "\\documentclass[10pt,letterpaper,ragged2e,withhyper]{altacv}
 
 % Layout
-"
-"\\geometry{" geometry "}
+\\geometry{" geometry "}
 
 % Use paracol for column layout
 \\usepackage{paracol}
@@ -19,8 +26,21 @@
 \\columnratio{" altacv-columnratio "}
 
 % Fonts
-\\usepackage[rm]{roboto}
-\\usepackage[defaultsans]{lato}
+\\ifxetexorluatex
+  % If using xelatex or lualatex:
+  \\setmainfont{" main-font-xelatex "} % Main (serif/roman) font
+  \\setsansfont{" sans-font-xelatex "} % Sans-serif font
+  % \\setmonofont{" mono-font-xelatex "} % Monospace font
+  % \\setmathfont{" math-font-xelatex "} % Math font (compatible with Roboto Slab)
+  \\renewcommand{\\familydefault}{\\sfdefault}
+\\else
+  % If using pdflatex:
+  \\usepackage[rm]{" main-font-pdflatex "} % Main (serif/roman) font
+  \\usepackage[defaultsans]{" sans-font-pdflatex "} % Sans-serif font
+  % \\usepackage[ttdefault]{" mono-font-pdflatex "} % Monospace font
+  % \\usepackage{" math-font-pdflatex "} % Math font
+  \\renewcommand{\\familydefault}{\\sfdefault}
+\\fi
 
 % Colors
 \\definecolor{Black}{HTML}{000000}

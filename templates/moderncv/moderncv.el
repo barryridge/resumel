@@ -7,11 +7,19 @@
 (setq org-latex-default-packages-alist nil)
 (setq org-latex-packages-alist nil)
 
-(let* ((moderncv-color (or (cdr (assoc "MODERNCV_COLOR" resumel-template-vars)) "blue"))
+(let* ((geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "scale=0.75, top=2cm, bottom=2cm, left=2.05cm, right=2.05cm"))
+       (main-font-xelatex (or (cdr (assoc "MAIN_FONT_XELATEX" resumel-template-vars)) "Latin Modern Roman"))
+       (sans-font-xelatex (or (cdr (assoc "SANS_FONT_XELATEX" resumel-template-vars)) "Latin Modern Sans"))
+       (mono-font-xelatex (or (cdr (assoc "MONO_FONT_XELATEX" resumel-template-vars)) "Latin Modern Mono"))
+       (math-font-xelatex (or (cdr (assoc "MATH_FONT_XELATEX" resumel-template-vars)) "Latin Modern Math"))
+       (main-font-pdflatex (or (cdr (assoc "MAIN_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
+       (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
+       (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
+       (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (moderncv-color (or (cdr (assoc "MODERNCV_COLOR" resumel-template-vars)) "blue"))
        (moderncv-style (or (cdr (assoc "MODERNCV_STYLE" resumel-template-vars)) "classic"))
-       (moderncv-firstname (or (cdr (assoc "MODERNCV_FIRSTNAME" resumel-template-vars)) "classic"))
-       (moderncv-lastname (or (cdr (assoc "MODERNCV_LASTNAME" resumel-template-vars)) "classic"))
-       (geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "scale=0.75, top=2cm, bottom=2cm, left=2.05cm, right=2.05cm")))
+       (moderncv-firstname (or (cdr (assoc "MODERNCV_FIRSTNAME" resumel-template-vars)) ""))
+       (moderncv-lastname (or (cdr (assoc "MODERNCV_LASTNAME" resumel-template-vars)) "")))
   (add-to-list 'org-latex-classes
                `("moderncv"
                  ,(concat "\\documentclass[11pt,letterpaper,sans]{moderncv}
@@ -32,6 +40,9 @@
 % Set default ModernCV theme
 \\moderncvstyle{" moderncv-style "}
 
+% Layout
+\\usepackage[" geometry "]{geometry}
+
 % To make cover letter text justified
 \\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
 \\makeatletter
@@ -41,13 +52,27 @@
   {}{}% <success><failure>
 \\makeatother
 
-% Set up fonts
-\\usepackage[utf8]{inputenc}
-\\usepackage[T1]{fontenc}
+% Fonts
+\\ifxetexorluatex
+  \\usepackage{fontspec}
+  \\usepackage{unicode-math}
+  \\defaultfontfeatures{Ligatures=TeX}
+  \\setmainfont{" main-font-xelatex "}
+  \\setsansfont{" sans-font-xelatex "}
+  \\setmonofont{" mono-font-xelatex "}
+  \\setmathfont{" math-font-xelatex "}
 
-% Page layout adjustments
-"
-"\\usepackage[" geometry "]{geometry}
+  % you may also consider Fira Sans Light for a extra modern look
+  %\\setsansfont[ItalicFont={Fira Sans Light Italic},%
+  %           BoldFont={Fira Sans},%
+  %           BoldItalicFont={Fira Sans Italic}]%
+  %           {Fira Sans Light}%
+\\else
+  \\usepackage[utf8]{inputenc}
+  \\usepackage[T1]{fontenc}
+  \\usepackage{" math-font-pdflatex "}
+\\fi
+
 
 % Math and symbol support
 \\usepackage{amsmath}

@@ -1,6 +1,10 @@
 * Config :noexport:
 #+RESUMEL_TEMPLATE: altacv
 #+RESUMEL_GEOMETRY: left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm
+#+RESUMEL_MAIN_FONT_XELATEX: Roboto Slab
+#+RESUMEL_SANS_FONT_XELATEX: Lato
+#+RESUMEL_MAIN_FONT_PDFLATEX: roboto
+#+RESUMEL_SANS_FONT_PDFLATEX: lato
 #+TITLE: Test Resume
 #+AUTHOR: Test User
 #+DATE: <1955-11-05 Sat>
