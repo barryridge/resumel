@@ -127,18 +127,64 @@ Ignores nil or empty entries."
   (setq resumel-default-template template)
   (message "resumel template set to: %s" template))
 
+(defvar resumel-selected-template resumel-default-template
+  "Currently selected resume template.")
+
 (defun resumel-setup ()
   "Set up resumel with the selected template."
   (interactive)
-  (ox-extras-activate '(latex-header-blocks ignore-headlines))
-  (resumel--load-template resumel-default-template)
-  (message "resumel setup complete with template: %s" resumel-default-template))
+  ;; Initialize template variable
+  (let ((template nil))
+    ;; Parse the Org buffer and search for RESUMEL_TEMPLATE keyword
+    (org-element-map (org-element-parse-buffer 'element) 'keyword
+      (lambda (el)
+        (when (string= (org-element-property :key el) "RESUMEL_TEMPLATE")
+          (setq template (org-element-property :value el)))))
+    ;; If the keyword is found, use it; otherwise, use the default
+    (setq resumel-selected-template (or template resumel-default-template))
+    ;; Activate necessary org-export extras
+    (ox-extras-activate '(latex-header-blocks ignore-headlines))
+    ;; Load the selected template
+    (resumel--load-template resumel-selected-template)
+    ;; Ensure resumel-template-class is defined
+    (unless resumel-template-class
+      (error "resumel-template-class is not defined in template %s" resumel-selected-template))
+    ;; Set org-latex-default-class in the current buffer
+    (setq-local org-latex-default-class resumel-template-class)
+    (message "resumel setup complete with template: %s" resumel-selected-template)))
+
+(defun resumel-setup ()
+  "Set up resumel with the selected template."
+  (interactive)
+  ;; Read the RESUMEL_TEMPLATE keyword from the buffer
+  (let ((template (save-excursion
+                    (goto-char (point-min))
+                    (if (re-search-forward "^#\\+RESUMEL_TEMPLATE:[ \t]+\\(.*\\)$" nil t)
+                        (match-string 1)
+                      nil))))
+    ;; If the keyword is found, use it; otherwise, use the default
+    (setq resumel-selected-template (or template resumel-default-template))
+    ;; Activate necessary org-export extras
+    (ox-extras-activate '(latex-header-blocks ignore-headlines))
+    ;; Load the selected template
+    (resumel--load-template resumel-selected-template)
+    ;; Ensure resumel-template-class is defined
+    (unless (boundp 'resumel-template-class)
+      (error "resumel-template-class is not defined in template %s" resumel-selected-template))
+    ;; Set org-latex-default-class in the current buffer
+    (setq-local org-latex-default-class resumel-template-class)
+    (message "resumel setup complete with template: %s" resumel-selected-template)))
 
 ;;;###autoload
 (defun resumel-export ()
   "Export the current Org buffer to PDF using the selected resumel template."
   (interactive)
+  ;; Ensure we're in an Org buffer
+  (unless (derived-mode-p 'org-mode)
+    (error "resumel-export must be called from an Org buffer"))
+  ;; Setup resumel
   (resumel-setup)
+  ;; Export to PDF
   (org-latex-export-to-pdf))
 
 (provide 'resumel)

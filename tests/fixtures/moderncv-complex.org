@@ -1,12 +1,13 @@
 * Config :noexport:
-** LaTeX Config
-#+LATEX_CLASS: moderncv
+#+RESUMEL_TEMPLATE: moderncv
+#+TITLE: World Expert \newline \newline \small{Seeking a fantastic new role.}
+#+AUTHOR: Firstname Lastname
+#+DATE: <1955-11-05 Sat>
+#+INCLUDE: ../../templates/moderncv/moderncv.org
+#+EXPORT_FILE_NAME: ../results/moderncv-complex.pdf
 #+LATEX_HEADER: \moderncvcolor{blue}  % Options: 'black', 'blue' (default), 'burgundy', 'green', 'grey', 'orange', 'purple', 'red', 'cerulean'
 #+LATEX_HEADER: \moderncvstyle[]{classic} % Options: 'casual', 'classic' (default), 'banking', 'oldstyle', 'fancy', 'contemporary'
 #+LATEX_HEADER: \name{Complex}{Test}
-#+INCLUDE: ../../templates/moderncv/moderncv.org
-#+EXPORT_FILE_NAME: ../results/moderncv-complex.pdf
-#+OPTIONS: toc:nil title:nil H:2
 #+LATEX_HEADER: \geometry{scale=0.75}
 #+LATEX_HEADER: \name{Firstname}{Lastname}
 #+LATEX_HEADER: \address{City, State}{}
@@ -15,14 +16,9 @@
 #+LATEX_HEADER: \homepage{www.foo.bar}
 #+LATEX_HEADER: \social[linkedin]{user-name}
 #+LATEX_HEADER: \social[github]{username}
-
-** Exporter Settings
 #+cite_export: bibtex
 #+BIBLIOGRAPHY: nil
 #+OPTIONS: toc:nil title:nil H:2
-#+AUTHOR: Firstname Lastname
-#+DATE:
-#+TITLE: World Expert \newline \newline \small{Seeking a fantastic new role.}
 
 * Color Customization :ignore:
 # colorlet macro: {{{colorlet(var,color)}}}

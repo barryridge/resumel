@@ -1,5 +1,8 @@
 (unless (assoc "moderncv" org-latex-classes)
 
+;; Set resumel-template-class buffer-locally
+(setq resumel-template-class "moderncv")
+
 ;; Disable Org's hyperref template - let moderncv handle it
 (setq org-latex-hyperref-template nil)
 (setq org-latex-default-packages-alist nil)
