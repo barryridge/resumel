@@ -37,9 +37,6 @@
             ;; Call resumel-setup before exporting
             (resumel-setup)
             (org-latex-export-to-pdf)
-            ;; Save LaTeX log to a file
-            (when (file-exists-p (concat output-dir "/" base-name ".log"))
-              (copy-file (concat output-dir "/" base-name ".log") (concat output-dir "/" base-name "-latex.log") t))
             (unless (file-exists-p pdf-file)
               (message "LaTeX Output:\n%s" (with-current-buffer "*Org PDF LaTeX Output*" (buffer-string)))
               (error "File \"%s\" wasn't produced. See \"*Org PDF LaTeX Output*\" for details" pdf-file))
@@ -63,12 +60,14 @@
 
 ;; List of test cases
 (defvar resumel-test-cases
-  '(("moderncv-basic.org" "moderncv-basic.pdf")
+  '(
+    ("moderncv-basic.org" "moderncv-basic.pdf")
     ("moderncv-complex.org" "moderncv-complex.pdf")
     ("altacv-basic.org" "altacv-basic.pdf")
     ("altacv-complex.org" "altacv-complex.pdf")
     ("modaltacv-basic.org" "modaltacv-basic.pdf")
-    ("modaltacv-complex.org" "modaltacv-complex.pdf"))
+    ("modaltacv-complex.org" "modaltacv-complex.pdf")
+    )
   "List of test cases. Each entry is a list of Org file and expected PDF file.")
 
 ;; Define a test for each test case

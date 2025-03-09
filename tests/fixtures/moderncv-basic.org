@@ -1,13 +1,17 @@
 * Config :noexport:
 #+RESUMEL_TEMPLATE: moderncv
+#+RESUMEL_GEOMETRY: scale=0.75, top=2cm, bottom=2cm, left=2.05cm, right=2.05cm
+# RESUMEL_MODERNCV_COLOR Options: 'black', 'blue' (default), 'burgundy', 'green', 'grey', 'orange', 'purple', 'red', 'cerulean'
+#+RESUMEL_MODERNCV_COLOR: blue
+# RESUMEL_MODERNCV_STYLE Options: 'casual', 'classic' (default), 'banking', 'oldstyle', 'fancy', 'contemporary'
+#+RESUMEL_MODERNCV_STYLE: classic
+#+RESUMEL_MODERNCV_FIRSTNAME: Firstname
+#+RESUMEL_MODERNCV_LASTNAME: Lastname
 #+TITLE: Test Resume
 #+AUTHOR: Firstname Lastname
 #+DATE: <1955-11-05 Sat>
 #+INCLUDE: ../../templates/moderncv/moderncv.org
 #+EXPORT_FILE_NAME: ../results/moderncv-basic.pdf
-#+LATEX_HEADER: \moderncvcolor{blue}  % Options: 'black', 'blue' (default), 'burgundy', 'green', 'grey', 'orange', 'purple', 'red', 'cerulean'
-#+LATEX_HEADER: \moderncvstyle[]{classic} % Options: 'casual', 'classic' (default), 'banking', 'oldstyle', 'fancy', 'contemporary'
-#+LATEX_HEADER: \name{Firstname}{Lastname}
 #+CITE_EXPORT: bibtex
 #+BIBLIOGRAPHY: nil
 #+OPTIONS: toc:nil title:nil H:2
