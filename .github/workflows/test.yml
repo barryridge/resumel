@@ -24,7 +24,8 @@ jobs:
           g++ \
           libpoppler-glib-dev \
           poppler-utils \
-          libwxgtk3.2-dev
+          libwxgtk3.2-dev \
+          git
 
     - name: Set up TeX Live
       uses: teatimeguest/setup-texlive-action@v3
@@ -32,7 +33,6 @@ jobs:
         packages: |
           scheme-basic
           moderncv
-          altacv
           paracol
           etoolbox
           lmodern
@@ -84,6 +84,15 @@ jobs:
           dashrule
           ifmtarg
           newtxmath
+
+    - name: Clone AltaCV Repository
+      run: |
+        mkdir -p $HOME/texmf/tex/latex
+        git clone https://github.com/liantze/AltaCV.git $HOME/texmf/tex/latex/altacv
+
+    - name: Refresh TeX Live Filename Database
+      run: |
+        sudo mktexlsr
 
     - name: Set up Homebrew
       id: set-up-homebrew
