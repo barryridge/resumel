@@ -63,30 +63,12 @@ test: clean install-packages
 
 	@echo "Running resumel moderncv template tests..."
 	@DIFF_PDF_CHANNEL_TOLERANCE=$(DIFF_PDF_CHANNEL_TOLERANCE) \
-		DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE=$(DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE) \
-		$(EMACS) $(EMACS_FLAGS) $(OX_EXTRA_L_FLAGS) \
-	       -l ert \
-	       -l resumel.el \
-	       -l $(TEST_DIR)/test-resumel-moderncv.el \
-	       -f ert-run-tests-batch-and-exit
-
-	@echo "Running resumel altacv template tests..."
-	@DIFF_PDF_CHANNEL_TOLERANCE=$(DIFF_PDF_CHANNEL_TOLERANCE) \
-		DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE=$(DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE) \
-		$(EMACS) $(EMACS_FLAGS) $(OX_EXTRA_L_FLAGS) \
-	       -l ert \
-	       -l resumel.el \
-	       -l $(TEST_DIR)/test-resumel-altacv.el \
-	       -f ert-run-tests-batch-and-exit
-
-	@echo "Running resumel modaltacv template tests..."
-	@DIFF_PDF_CHANNEL_TOLERANCE=$(DIFF_PDF_CHANNEL_TOLERANCE) \
-		DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE=$(DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE) \
-		$(EMACS) $(EMACS_FLAGS) $(OX_EXTRA_L_FLAGS) \
-	       -l ert \
-	       -l resumel.el \
-	       -l $(TEST_DIR)/test-resumel-modaltacv.el \
-	       -f ert-run-tests-batch-and-exit
+	 	DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE=$(DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE) \
+	 	$(EMACS) $(EMACS_FLAGS) $(OX_EXTRA_L_FLAGS) \
+	        -l ert \
+	        -l resumel.el \
+	        -l $(TEST_DIR)/test-resumel.el \
+	        -f ert-run-tests-batch-and-exit
 
 install-packages:
 	@if [ "$(LOAD_EMACS_PACKAGES)" = "true" ]; then \

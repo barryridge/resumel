@@ -1,28 +1,31 @@
 * Config :noexport:
-** LaTeX Config
-#+LATEX_CLASS: moderncv
-#+LATEX_HEADER: \moderncvcolor{blue}  % Options: 'black', 'blue' (default), 'burgundy', 'green', 'grey', 'orange', 'purple', 'red', 'cerulean'
-#+LATEX_HEADER: \moderncvstyle[]{classic} % Options: 'casual', 'classic' (default), 'banking', 'oldstyle', 'fancy', 'contemporary'
-#+LATEX_HEADER: \name{Complex}{Test}
+#+RESUMEL_TEMPLATE: moderncv
+#+RESUMEL_GEOMETRY: scale=0.75, top=2cm, bottom=2cm, left=2.05cm, right=2.05cm
+#+RESUMEL_MAIN_FONT_XELATEX: Latin Modern Roman
+#+RESUMEL_SANS_FONT_XELATEX: Latin Modern Sans
+#+RESUMEL_MAIN_FONT_PDFLATEX: lmodern
+# RESUMEL_MODERNCV_COLOR Options: 'black', 'blue' (default), 'burgundy', 'green', 'grey', 'orange', 'purple', 'red', 'cerulean'
+#+RESUMEL_MODERNCV_COLOR: blue
+# RESUMEL_MODERNCV_STYLE Options: 'casual', 'classic' (default), 'banking', 'oldstyle', 'fancy', 'contemporary'
+#+RESUMEL_MODERNCV_STYLE: classic
+#+RESUMEL_MODERNCV_FIRSTNAME: Firstname
+#+RESUMEL_MODERNCV_LASTNAME: Lastname
+#+TITLE: World Expert \newline \newline \small{Seeking a fantastic new role.}
+#+AUTHOR: Firstname Lastname
+#+DATE: <1955-11-05 Sat>
 #+INCLUDE: ../../templates/moderncv/moderncv.org
 #+EXPORT_FILE_NAME: ../results/moderncv-complex.pdf
-#+OPTIONS: toc:nil title:nil H:2
-#+LATEX_HEADER: \geometry{scale=0.75}
-#+LATEX_HEADER: \name{Firstname}{Lastname}
-#+LATEX_HEADER: \address{City, State}{}
-#+LATEX_HEADER: \phone[mobile]{+1 (555) 555-1234}
-#+LATEX_HEADER: \email{user@foo.bar}
-#+LATEX_HEADER: \homepage{www.foo.bar}
-#+LATEX_HEADER: \social[linkedin]{user-name}
-#+LATEX_HEADER: \social[github]{username}
-
-** Exporter Settings
 #+cite_export: bibtex
 #+BIBLIOGRAPHY: nil
 #+OPTIONS: toc:nil title:nil H:2
-#+AUTHOR: Firstname Lastname
-#+DATE:
-#+TITLE: World Expert \newline \newline \small{Seeking a fantastic new role.}
+
+* Personal Information :ignore:
+\address{City, State}{}
+\phone[mobile]{+1 (555) 555-1234}
+\email{user@foo.bar}
+\homepage{www.foo.bar}
+\social[linkedin]{user-name}
+\social[github]{username}
 
 * Color Customization :ignore:
 # colorlet macro: {{{colorlet(var,color)}}}

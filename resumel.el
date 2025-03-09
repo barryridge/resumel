@@ -117,7 +117,13 @@ Ignores nil or empty entries."
     ;; Load the template Emacs Lisp file
     (load-file template-el)
     ;; Load the template Org macros
-    (org-babel-load-file template-org)))
+    (org-babel-load-file template-org)
+    ;; Debug messages
+    ;; (message "[resumel - DEBUG]: resumel--load-template - template: %s" template)
+    ;; (message "[resumel - DEBUG]: resumel--load-template - template-el: %s" template-el)
+    ;; (message "[resumel - DEBUG]: resumel--load-template - template-org: %s" template-org)
+    ;; (message "[resumel - DEBUG]: resumel--load-template - base-org: %s" base-org)
+    ))
 
 ;;;###autoload
 (defun resumel-select-template (template)
@@ -127,18 +133,59 @@ Ignores nil or empty entries."
   (setq resumel-default-template template)
   (message "resumel template set to: %s" template))
 
+(defvar resumel-template-class nil
+  "LaTeX class name used by the current resumel template.")
+
+(defvar resumel-selected-template resumel-default-template
+  "Currently selected resume template.")
+
 (defun resumel-setup ()
   "Set up resumel with the selected template."
   (interactive)
-  (ox-extras-activate '(latex-header-blocks ignore-headlines))
-  (resumel--load-template resumel-default-template)
-  (message "resumel setup complete with template: %s" resumel-default-template))
+  (let ((template nil)
+        (vars '()))
+    ;; Parse the Org buffer and collect RESUMEL_* keywords
+    (let ((parsed (org-element-parse-buffer)))
+      (org-element-map parsed 'keyword
+        (lambda (el)
+          (let ((key (org-element-property :key el))
+                (value (org-element-property :value el)))
+            (when (and key (string-prefix-p "RESUMEL_" key))
+              (if (string= key "RESUMEL_TEMPLATE")
+                  (setq template value)
+                ;; Remove 'RESUMEL_' prefix and store the variable
+                (push (cons (substring key (length "RESUMEL_")) (string-trim value)) vars)))))))
+    ;; Set the selected template, defaulting if necessary
+    (setq resumel-selected-template (or template resumel-default-template))
+    ;; Store variables in a buffer-local variable
+    (setq-local resumel-template-vars (nreverse vars))
+    ;; Activate necessary org-export extras
+    (ox-extras-activate '(latex-header-blocks ignore-headlines))
+    ;; Load the selected template
+    (resumel--load-template resumel-selected-template)
+    ;; Ensure resumel-template-class is defined
+    (unless (boundp 'resumel-template-class)
+      (error "resumel-template-class is not defined in template %s" resumel-selected-template))
+    ;; Set org-latex-default-class in the current buffer
+    (setq-local org-latex-default-class resumel-template-class)
+    ;; Debug messages
+    ;; (message "[resumel - DEBUG]: resumel-default-template: %s" resumel-default-template)
+    ;; (message "[resumel - DEBUG]: resumel-selected-template: %s" resumel-selected-template)
+    ;; (message "[resumel - DEBUG]: Available LaTeX classes: %s" (mapcar #'car org-latex-classes))
+    ;; (message "[resumel - DEBUG]: resumel-template-class: %s" resumel-template-class)
+    ;; (message "[resumel - DEBUG]: org-latex-default-class: %s" org-latex-default-class)
+    (message "resumel setup complete with template: %s" resumel-selected-template)))
 
 ;;;###autoload
 (defun resumel-export ()
   "Export the current Org buffer to PDF using the selected resumel template."
   (interactive)
+  ;; Ensure we're in an Org buffer
+  (unless (derived-mode-p 'org-mode)
+    (error "resumel-export must be called from an Org buffer"))
+  ;; Setup resumel
   (resumel-setup)
+  ;; Export to PDF
   (org-latex-export-to-pdf))
 
 (provide 'resumel)

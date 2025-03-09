@@ -1,7 +1,13 @@
 * Config :noexport:
-#+title: Test Resume
-#+LATEX_CLASS: altacv
+#+RESUMEL_TEMPLATE: altacv
+#+RESUMEL_GEOMETRY: left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm
+#+RESUMEL_MAIN_FONT_XELATEX: Roboto Slab
+#+RESUMEL_SANS_FONT_XELATEX: Lato
+#+RESUMEL_MAIN_FONT_PDFLATEX: roboto
+#+RESUMEL_SANS_FONT_PDFLATEX: lato
+#+TITLE: Test Resume
 #+AUTHOR: Test User
+#+DATE: <1955-11-05 Sat>
 #+INCLUDE: ../../templates/altacv/altacv.org
 #+EXPORT_FILE_NAME: ../results/altacv-basic.pdf
 #+OPTIONS: toc:nil title:nil H:2

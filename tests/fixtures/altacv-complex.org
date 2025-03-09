@@ -1,11 +1,18 @@
 * Config :noexport:
-#+title: Test Resume
-#+LATEX_CLASS: altacv
-#+LATEX_HEADER: \columnratio{0.6} % Set the left/right column width ratio to 6:4.
-#+LATEX_HEADER: \usepackage[bottom]{footmisc}
+#+RESUMEL_TEMPLATE: altacv
+#+RESUMEL_GEOMETRY: left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm
+#+RESUMEL_ALTACV_COLUMNRATIO: 0.6
+#+RESUMEL_MAIN_FONT_XELATEX: Roboto Slab
+#+RESUMEL_SANS_FONT_XELATEX: Lato
+#+RESUMEL_MAIN_FONT_PDFLATEX: roboto
+#+RESUMEL_SANS_FONT_PDFLATEX: lato
+#+TITLE: Test Resume
 #+AUTHOR: Test User
+#+DATE: <1955-11-05 Sat>
 #+INCLUDE: ../../templates/altacv/altacv.org
 #+EXPORT_FILE_NAME: ../results/altacv-complex.pdf
+#+LATEX_HEADER: \columnratio{0.6} % Set the left/right column width ratio to 6:4.
+#+LATEX_HEADER: \usepackage[bottom]{footmisc}
 #+OPTIONS: toc:nil title:nil H:2
 
 * Color Customization :ignore:

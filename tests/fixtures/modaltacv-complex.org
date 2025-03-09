@@ -1,9 +1,13 @@
 * Config :noexport:
-#+title: Test Resume
-#+LATEX_CLASS: altacv
-#+LATEX_HEADER: \columnratio{0.6} % Set the left/right column width ratio to 6:4.
-#+LATEX_HEADER: \usepackage[bottom]{footmisc}
+#+RESUMEL_TEMPLATE: modaltacv
+#+RESUMEL_MODALTACV_COLUMNRATIO: 0.6
+#+RESUMEL_MAIN_FONT_XELATEX: Latin Modern Roman
+#+RESUMEL_SANS_FONT_XELATEX: Latin Modern Sans
+#+RESUMEL_MAIN_FONT_PDFLATEX: lmodern
+#+RESUMEL_SANS_FONT_PDFLATEX: lmodern
+#+TITLE: Test Resume
 #+AUTHOR: Test User
+#+DATE: <1955-11-05 Sat>
 #+INCLUDE: ../../templates/modaltacv/modaltacv.org
 #+EXPORT_FILE_NAME: ../results/modaltacv-complex.pdf
 #+OPTIONS: toc:nil title:nil H:2

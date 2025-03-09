@@ -1,16 +1,48 @@
 (unless (assoc "modaltacv" org-latex-classes)
-(setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "xmpi" "run.xml" "bcf")))
+
+(setq resumel-template-class "modaltacv")
+
+(let* ((geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm"))
+       (main-font-xelatex (or (cdr (assoc "MAIN_FONT_XELATEX" resumel-template-vars)) "Latin Modern Roman"))
+       (sans-font-xelatex (or (cdr (assoc "SANS_FONT_XELATEX" resumel-template-vars)) "Latin Modern Sans"))
+       (mono-font-xelatex (or (cdr (assoc "MONO_FONT_XELATEX" resumel-template-vars)) "Latin Modern Mono"))
+       (math-font-xelatex (or (cdr (assoc "MATH_FONT_XELATEX" resumel-template-vars)) "Latin Modern Math"))
+       (main-font-pdflatex (or (cdr (assoc "MAIN_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
+       (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
+       (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
+       (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (modaltacv-columnratio (or (cdr (assoc "MODALTACV_COLUMNRATIO" resumel-template-vars)) "0.6")))
   (add-to-list 'org-latex-classes
-               '("altacv"
-                 "\\documentclass[10pt,letterpaper,ragged2e,withhyper]{altacv}
+               `("modaltacv"
+                 ,(concat "\\documentclass[10pt,letterpaper,ragged2e,withhyper]{altacv}
 
-% Page layout adjustments
-\\geometry{left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm}
+% Layout
+\\geometry{" geometry "}
 
-% Use roboto and lato for fonts
-\\renewcommand{\\familydefault}{\\sfdefault}
+% Use paracol for column layout
+\\usepackage{paracol}
 
-% Update altacv colors
+% Set the left/right column width ratio
+\\columnratio{" modaltacv-columnratio "}
+
+% Fonts
+\\ifxetexorluatex
+  % If using xelatex or lualatex:
+  \\setmainfont{" main-font-xelatex "} % Main (serif/roman) font
+  \\setsansfont{" sans-font-xelatex "} % Sans-serif font
+  % \\setmonofont{" mono-font-xelatex "} % Monospace font
+  % \\setmathfont{" math-font-xelatex "} % Math font (compatible with Roboto Slab)
+  \\renewcommand{\\familydefault}{\\sfdefault}
+\\else
+  % If using pdflatex:
+  \\usepackage[rm]{" main-font-pdflatex "} % Main (serif/roman) font
+  \\usepackage[defaultsans]{" sans-font-pdflatex "} % Sans-serif font
+  % \\usepackage[ttdefault]{" mono-font-pdflatex "} % Monospace font
+  % \\usepackage{" math-font-pdflatex "} % Math font
+  \\renewcommand{\\familydefault}{\\sfdefault}
+\\fi
+
+% Colors
 \\definecolor{Black}{HTML}{000000}
 \\definecolor{SlateGrey}{HTML}{2E2E2E}
 \\definecolor{LightGrey}{HTML}{666666}
@@ -226,15 +258,14 @@
 % }
 % \\setlength{\\bibitemsep}{0.25\\baselineskip}
 % \\setlength{\\bibhang}{1.25em}
-"
+
+")
 
                ("\\cvsection{%s}" . "\\cvsection*{%s}")
-               ("\\cvsubsection{%s}" . "\\cvsubsection*{%s}"))))
+               ("\\cvsubsection{%s}" . "\\cvsubsection*{%s}")))
 
-(setq org-latex-packages-alist 'nil)
-(setq org-latex-default-packages-alist
-      '(("" "lmodern" t)  ; Load lmodern package for Latin Modern fonts
-        ("" "paracol" t)  ; Keep paracol for column layout
-        ))
+  ;; Debug message to confirm addition
+  ;; (message "[resumel - DEBUG]: Added 'modaltacv' to org-latex-classes: %s" (assoc "modaltacv" org-latex-classes))
+))
 
 (provide 'resumel-modaltacv)

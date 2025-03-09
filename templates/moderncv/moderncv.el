@@ -1,17 +1,31 @@
 (unless (assoc "moderncv" org-latex-classes)
 
+(setq resumel-template-class "moderncv")
+
 ;; Disable Org's hyperref template - let moderncv handle it
 (setq org-latex-hyperref-template nil)
 (setq org-latex-default-packages-alist nil)
 (setq org-latex-packages-alist nil)
 
-(add-to-list 'org-latex-classes
-               '("moderncv"
-                 "\\documentclass[11pt,letterpaper,sans]{moderncv}
+(let* ((geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "scale=0.75, top=2cm, bottom=2cm, left=2.05cm, right=2.05cm"))
+       (main-font-xelatex (or (cdr (assoc "MAIN_FONT_XELATEX" resumel-template-vars)) "Latin Modern Roman"))
+       (sans-font-xelatex (or (cdr (assoc "SANS_FONT_XELATEX" resumel-template-vars)) "Latin Modern Sans"))
+       (mono-font-xelatex (or (cdr (assoc "MONO_FONT_XELATEX" resumel-template-vars)) "Latin Modern Mono"))
+       (math-font-xelatex (or (cdr (assoc "MATH_FONT_XELATEX" resumel-template-vars)) "Latin Modern Math"))
+       (main-font-pdflatex (or (cdr (assoc "MAIN_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
+       (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
+       (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
+       (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (moderncv-color (or (cdr (assoc "MODERNCV_COLOR" resumel-template-vars)) "blue"))
+       (moderncv-style (or (cdr (assoc "MODERNCV_STYLE" resumel-template-vars)) "classic"))
+       (moderncv-firstname (or (cdr (assoc "MODERNCV_FIRSTNAME" resumel-template-vars)) ""))
+       (moderncv-lastname (or (cdr (assoc "MODERNCV_LASTNAME" resumel-template-vars)) "")))
+  (add-to-list 'org-latex-classes
+               `("moderncv"
+                 ,(concat "\\documentclass[11pt,letterpaper,sans]{moderncv}
 
 % Set default ModernCV color
-\\moderncvcolor{blue}
-
+\\moderncvcolor{" moderncv-color "}
 
 % Redefine moderncv colors (they seem to not propagate from the package and cause xcolor 'Undefined color' errors)
 \\definecolor{black}{RGB}{0, 0, 0}
@@ -24,7 +38,10 @@
 \\definecolor{green}{rgb}{0.35, 0.70, 0.30}
 
 % Set default ModernCV theme
-\\moderncvstyle{classic}
+\\moderncvstyle{" moderncv-style "}
+
+% Layout
+\\usepackage[" geometry "]{geometry}
 
 % To make cover letter text justified
 \\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
@@ -35,12 +52,27 @@
   {}{}% <success><failure>
 \\makeatother
 
-% Set up fonts
-\\usepackage[utf8]{inputenc}
-\\usepackage[T1]{fontenc}
+% Fonts
+\\ifxetexorluatex
+  \\usepackage{fontspec}
+  \\usepackage{unicode-math}
+  \\defaultfontfeatures{Ligatures=TeX}
+  \\setmainfont{" main-font-xelatex "}
+  \\setsansfont{" sans-font-xelatex "}
+  \\setmonofont{" mono-font-xelatex "}
+  \\setmathfont{" math-font-xelatex "}
 
-% Page layout adjustments
-\\usepackage[scale=0.75]{geometry}
+  % you may also consider Fira Sans Light for a extra modern look
+  %\\setsansfont[ItalicFont={Fira Sans Light Italic},%
+  %           BoldFont={Fira Sans},%
+  %           BoldItalicFont={Fira Sans Italic}]%
+  %           {Fira Sans Light}%
+\\else
+  \\usepackage[utf8]{inputenc}
+  \\usepackage[T1]{fontenc}
+  \\usepackage{" math-font-pdflatex "}
+\\fi
+
 
 % Math and symbol support
 \\usepackage{amsmath}
@@ -97,11 +129,15 @@
 % For pdf attachments
 \\usepackage{pdfpages}
 
-% Adjust the page margins
-\\geometry{top=2cm, bottom=2cm, left=2.05cm, right=2.05cm}
+% Set name (moderncv will throw errors if this is not set in the header)
+\\name{" moderncv-firstname "}{" moderncv-lastname "}
 
-"
+")
                  ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}"))))
+                 ("\\subsection{%s}" . "\\subsection*{%s}")))
+
+  ;; Debug message to confirm addition
+  ;; (message "[resumel - DEBUG]: Added 'moderncv' to org-latex-classes: %s" (assoc "moderncv" org-latex-classes))
+))
 
 (provide 'resumel-moderncv)

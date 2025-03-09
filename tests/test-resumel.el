@@ -29,18 +29,18 @@
     (make-directory output-dir t)
     (with-current-buffer (find-file-noselect org-file)
       ;; Set LaTeX export settings
-      ;; (setq-local org-latex-pdf-process
-      ;;             (list (format "latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -output-directory=%s %%f" output-dir)))
       (setq-local org-latex-output-directory output-dir)
 
       ;; Export to PDF and capture any error details
       (condition-case err
           (progn
+            ;; Call resumel-setup before exporting
+            (resumel-setup)
             (org-latex-export-to-pdf)
             (unless (file-exists-p pdf-file)
               (message "LaTeX Output:\n%s" (with-current-buffer "*Org PDF LaTeX Output*" (buffer-string)))
               (error "File \"%s\" wasn't produced. See \"*Org PDF LaTeX Output*\" for details" pdf-file))
-            pdf-file)  ; Return pdf-file inside let*
+            pdf-file)  ; Return pdf-file
         (error
          (message "Export error: %S" err)
          (when (get-buffer "*Org PDF LaTeX Output*")
@@ -58,43 +58,34 @@
                          "--per-page-pixel-tolerance" per-page-pixel-tolerance
                          file1 file2))))
 
-;; Setup function to load the altacv template
-(defun resumel-test-setup ()
-  "Setup resumel with the altacv template for testing."
-  (resumel-select-template "altacv")
-  (resumel-setup))
+;; List of test cases
+(defvar resumel-test-cases
+  '(
+    ("moderncv-basic.org" "moderncv-basic.pdf")
+    ("moderncv-complex.org" "moderncv-complex.pdf")
+    ("altacv-basic.org" "altacv-basic.pdf")
+    ("altacv-complex.org" "altacv-complex.pdf")
+    ("modaltacv-basic.org" "modaltacv-basic.pdf")
+    ("modaltacv-complex.org" "modaltacv-complex.pdf")
+    )
+  "List of test cases. Each entry is a list of Org file and expected PDF file.")
 
-;; Run setup before tests
-(resumel-test-setup)
-
-;; Test for basic export
-(ert-deftest resumel-test-altacv-basic-export ()
-  "Test basic resume export."
-  (let* ((org-file (expand-file-name "altacv-basic.org" resumel-fixture-dir))
-         (generated-pdf (resumel-test-export-org-to-pdf org-file))
-         (expected-pdf (expand-file-name "altacv-basic.pdf" resumel-expected-dir)))
-    ;; Debug output
-    (message "Testing PDF paths:")
-    (message "Generated: %s" generated-pdf)
-    (message "Expected: %s" expected-pdf)
-    ;; Verify files exist
-    (should (file-exists-p generated-pdf))
-    (should (file-exists-p expected-pdf))
-    ;; Compare PDFs
-    (should (resumel-files-equal-p generated-pdf expected-pdf))))
-
-;; Test for complex export
-(ert-deftest resumel-test-altacv-complex-export ()
-  "Test complex resume export."
-  (let* ((org-file (expand-file-name "altacv-complex.org" resumel-fixture-dir))
-         (generated-pdf (resumel-test-export-org-to-pdf org-file))
-         (expected-pdf (expand-file-name "altacv-complex.pdf" resumel-expected-dir)))
-    ;; Debug output
-    (message "Testing PDF paths:")
-    (message "Generated: %s" generated-pdf)
-    (message "Expected: %s" expected-pdf)
-    ;; Verify files exist
-    (should (file-exists-p generated-pdf))
-    (should (file-exists-p expected-pdf))
-    ;; Compare PDFs
-    (should (resumel-files-equal-p generated-pdf expected-pdf))))
+;; Define a test for each test case
+(dolist (test-case resumel-test-cases)
+  (let ((org-file (car test-case))
+        (expected-pdf (cadr test-case)))
+    (eval
+     `(ert-deftest ,(intern (format "resumel-test-%s" (file-name-base org-file))) ()
+        ,(format "Test export of %s and compare with %s" org-file expected-pdf)
+        (let* ((org-file-path (expand-file-name ,org-file resumel-fixture-dir))
+               (generated-pdf (resumel-test-export-org-to-pdf org-file-path))
+               (expected-pdf-path (expand-file-name ,expected-pdf resumel-expected-dir)))
+          ;; Debug output
+          (message "Testing PDF paths:")
+          (message "Generated: %s" generated-pdf)
+          (message "Expected: %s" expected-pdf-path)
+          ;; Verify files exist
+          (should (file-exists-p generated-pdf))
+          (should (file-exists-p expected-pdf-path))
+          ;; Compare PDFs
+          (should (resumel-files-equal-p generated-pdf expected-pdf-path)))))))
