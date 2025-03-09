@@ -60,14 +60,12 @@
 
 ;; List of test cases
 (defvar resumel-test-cases
-  '(
-    ("moderncv-basic.org" "moderncv-basic.pdf")
+  '(("moderncv-basic.org" "moderncv-basic.pdf")
     ("moderncv-complex.org" "moderncv-complex.pdf")
     ("altacv-basic.org" "altacv-basic.pdf")
     ("altacv-complex.org" "altacv-complex.pdf")
     ("modaltacv-basic.org" "modaltacv-basic.pdf")
-    ("modaltacv-complex.org" "modaltacv-complex.pdf")
-    )
+    ("modaltacv-complex.org" "modaltacv-complex.pdf"))
   "List of test cases. Each entry is a list of Org file and expected PDF file.")
 
 ;; Define a test for each test case
