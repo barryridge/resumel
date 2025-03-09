@@ -5,7 +5,7 @@
 ;; Author: Barry Ridge <barry@barr.ai>
 ;; Maintainer: Barry Ridge <barry@barr.ai>
 ;; Created: January 04, 2025
-;; Modified: January 04, 2025
+;; Modified: March 09, 2025
 ;; Version: 0.0.1
 ;; Keywords: bib convenience docs tex wp
 ;; Homepage: https://github.com/barryridge/resumel
@@ -15,7 +15,7 @@
 ;;
 ;;; Commentary:
 ;;
-;;  Description
+;;  resumel is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates.
 ;;
 ;;; Code:
 ;;;
