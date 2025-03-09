@@ -20,7 +20,7 @@
   (let* ((base-name (file-name-base org-file))
          (pdf-file (expand-file-name (concat base-name ".pdf") resumel-results-dir))
          (output-dir resumel-results-dir))
-    ;; Debug output
+    ;; Debug messages
     (message "Exporting: %s" org-file)
     (message "Output PDF: %s" pdf-file)
     (message "Output directory: %s" output-dir)
@@ -36,6 +36,10 @@
           (progn
             ;; Call resumel-setup before exporting
             (resumel-setup)
+            ;; Debug messages
+            (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-default-class: %s" org-latex-default-class)
+            (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-packages-alist: %s" org-latex-packages-alist)
+            (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-pdf-process: %s" org-latex-pdf-process)
             (org-latex-export-to-pdf)
             (unless (file-exists-p pdf-file)
               (message "LaTeX Output:\n%s" (with-current-buffer "*Org PDF LaTeX Output*" (buffer-string)))

@@ -209,6 +209,11 @@ Ignores nil or empty entries."
     (error "resumel-export must be called from an Org buffer"))
   ;; Setup resumel
   (resumel-setup)
+  ;; Debug messages
+  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-default-class: %s" org-latex-default-class)
+  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-packages-alist: %s" org-latex-packages-alist)
+  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-packages-extra: %s" org-latex-packages-extra)
+  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-pdf-process: %s" org-latex-pdf-process)
   ;; Export to PDF
   (org-latex-export-to-pdf))
 
