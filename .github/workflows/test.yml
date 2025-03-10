@@ -49,6 +49,7 @@ jobs:
           fontawesome5
           hyperref
           biblatex
+          biblatex-ieee
           pdfpages
           titlesec
           pdfcomment
@@ -133,6 +134,8 @@ jobs:
           uniquecounter
           colorprofiles
           cmap
+          wrapfig
+          fontaxes
 
     - name: Clone AltaCV Repository
       run: |
