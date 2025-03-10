@@ -137,6 +137,7 @@ jobs:
           wrapfig
           fontaxes
           ulem
+          capt-of
 
     - name: Clone AltaCV Repository
       run: |
