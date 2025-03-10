@@ -26,7 +26,7 @@
 \\columnratio{" modaltacv-columnratio "}
 
 % Fonts
-\\ifxetexorluatex
+\\iftutex
   % If using xelatex or lualatex:
   \\setmainfont{" main-font-xelatex "} % Main (serif/roman) font
   \\setsansfont{" sans-font-xelatex "} % Sans-serif font
@@ -35,8 +35,8 @@
   \\renewcommand{\\familydefault}{\\sfdefault}
 \\else
   % If using pdflatex:
-  \\usepackage[rm]{" main-font-pdflatex "} % Main (serif/roman) font
-  \\usepackage[defaultsans]{" sans-font-pdflatex "} % Sans-serif font
+  \\usepackage{" main-font-pdflatex "} % Main (serif/roman) font
+  % \\usepackage[defaultsans]{" sans-font-pdflatex "} % Sans-serif font
   % \\usepackage[ttdefault]{" mono-font-pdflatex "} % Monospace font
   % \\usepackage{" math-font-pdflatex "} % Math font
   \\renewcommand{\\familydefault}{\\sfdefault}

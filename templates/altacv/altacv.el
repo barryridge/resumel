@@ -26,7 +26,7 @@
 \\columnratio{" altacv-columnratio "}
 
 % Fonts
-\\ifxetexorluatex
+\\iftutex
   % If using xelatex or lualatex:
   \\setmainfont{" main-font-xelatex "} % Main (serif/roman) font
   \\setsansfont{" sans-font-xelatex "} % Sans-serif font

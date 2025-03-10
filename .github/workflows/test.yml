@@ -8,6 +8,8 @@ jobs:
     env:
       # Define a separate Emacs user directory for CI
       USER_EMACS_DIR: ${{ github.workspace }}/ci_emacs.d
+      # Set TEXMFHOME to a directory within the workspace
+      TEXMFHOME: ${{ github.workspace }}/texmf
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -24,7 +26,8 @@ jobs:
           g++ \
           libpoppler-glib-dev \
           poppler-utils \
-          libwxgtk3.2-dev
+          libwxgtk3.2-dev \
+          git
 
     - name: Set up TeX Live
       uses: teatimeguest/setup-texlive-action@v3
@@ -32,7 +35,6 @@ jobs:
         packages: |
           scheme-basic
           moderncv
-          altacv
           paracol
           etoolbox
           lmodern
@@ -41,11 +43,13 @@ jobs:
           geometry
           xcolor
           tikz
+          tikzfill
           amsmath
           amsfonts
           fontawesome5
           hyperref
           biblatex
+          biblatex-ieee
           pdfpages
           titlesec
           pdfcomment
@@ -71,11 +75,11 @@ jobs:
           pifont
           parskip
           graphicx
+          graphics
           caption
           marvosym
           latexsym
           url
-          scrhack
           xspace
           mparhack
           microtype
@@ -83,6 +87,66 @@ jobs:
           listings
           dashrule
           ifmtarg
+          newtxmath
+          extsizes
+          pdfx
+          accsupp
+          scrhack
+          koma-script
+          xparse
+          everyshi
+          xmpincl
+          iftex
+          fontspec
+          ragged2e
+          pgf
+          trig
+          tcolorbox
+          verbatim
+          environ
+          trimspaces
+          l3kernel
+          l3packages
+          adjustbox
+          collectbox
+          xkeyval
+          multirow
+          tools
+          changepage
+          logreq
+          base
+          kvsetkeys
+          kvdefinekeys
+          pdfescape
+          ltxcmds
+          pdftexcmds
+          infwarerr
+          hycolor
+          auxhook
+          refcount
+          gettitlestring
+          kvoptions
+          intcalc
+          bitset
+          bigintcalc
+          stringenc
+          rerunfilecheck
+          uniquecounter
+          colorprofiles
+          cmap
+          wrapfig
+          fontaxes
+          ulem
+          capt-of
+
+    - name: Clone AltaCV Repository
+      run: |
+        mkdir -p $TEXMFHOME/tex/latex
+        git clone https://github.com/liantze/AltaCV.git $TEXMFHOME/tex/latex/altacv
+
+    - name: Refresh TeX Live Filename Database
+      run: |
+        mktexlsr $TEXMFHOME
 
     - name: Set up Homebrew
       id: set-up-homebrew
@@ -113,8 +177,11 @@ jobs:
     - name: Debug CI Emacs Setup
       run: |
         echo "USER_EMACS_DIR is set to: $USER_EMACS_DIR"
+        echo "TEXMFHOME is set to: $TEXMFHOME"
         echo "Listing contents of $USER_EMACS_DIR:"
         ls -la $USER_EMACS_DIR
+        echo "Listing contents of $TEXMFHOME/tex/latex/altacv:"
+        ls -la $TEXMFHOME/tex/latex/altacv
 
     - name: Run tests
       env:

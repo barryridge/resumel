@@ -13,7 +13,6 @@
 #+TITLE: Test Resume
 #+AUTHOR: Firstname Lastname
 #+DATE: <1955-11-05 Sat>
-#+INCLUDE: ../../templates/moderncv/moderncv.org
 #+EXPORT_FILE_NAME: ../results/moderncv-basic.pdf
 #+CITE_EXPORT: bibtex
 #+BIBLIOGRAPHY: nil

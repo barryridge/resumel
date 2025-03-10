@@ -5,7 +5,7 @@
 ;; Author: Barry Ridge <barry@barr.ai>
 ;; Maintainer: Barry Ridge <barry@barr.ai>
 ;; Created: January 04, 2025
-;; Modified: January 04, 2025
+;; Modified: March 09, 2025
 ;; Version: 0.0.1
 ;; Keywords: bib convenience docs tex wp
 ;; Homepage: https://github.com/barryridge/resumel
@@ -15,7 +15,7 @@
 ;;
 ;;; Commentary:
 ;;
-;;  Description
+;;  resumel is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates.
 ;;
 ;;; Code:
 ;;;
@@ -98,6 +98,28 @@ Ignores nil or empty entries."
   (expand-file-name "templates" resumel-base-dir)
   "Directory where resumel templates are stored.")
 
+;; Helper function for including template Org file
+(defun resumel-insert-template-include ()
+  "Insert #+INCLUDE directive for the selected template's org file."
+  (let* ((template resumel-selected-template)
+         (template-dir (expand-file-name template resumel-templates-dir))
+         (template-org (expand-file-name (format "%s.org" template) template-dir))
+         (include-line (format "#+INCLUDE: \"%s\"\n" template-org)))
+    (unless (file-exists-p template-org)
+      (error "Template Org file not found: %s" template-org))
+    (save-excursion
+      (goto-char (point-min))
+      ;; Check if the INCLUDE already exists to avoid duplication
+      (unless (re-search-forward (format "^#\\+INCLUDE: \"%s\"" template-org) nil t)
+        ;; Insert after the initial configuration block if present
+        (if (re-search-forward "^\\* Config" nil t)
+            (progn
+              (goto-char (line-end-position))
+              (insert "\n" include-line))
+          ;; Otherwise, insert at the beginning
+          (goto-char (point-min))
+          (insert include-line))))))
+
 ;; Load a resumel template
 (defun resumel--load-template (template) "Load the specified TEMPLATE from `resumel-templates-dir`."
   (let* ((base-org (expand-file-name "resumel.org" resumel-base-dir))
@@ -163,6 +185,8 @@ Ignores nil or empty entries."
     (ox-extras-activate '(latex-header-blocks ignore-headlines))
     ;; Load the selected template
     (resumel--load-template resumel-selected-template)
+    ;; Insert the #+INCLUDE directive for the template's .org file
+    (resumel-insert-template-include)
     ;; Ensure resumel-template-class is defined
     (unless (boundp 'resumel-template-class)
       (error "resumel-template-class is not defined in template %s" resumel-selected-template))
@@ -185,6 +209,11 @@ Ignores nil or empty entries."
     (error "resumel-export must be called from an Org buffer"))
   ;; Setup resumel
   (resumel-setup)
+  ;; Debug messages
+  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-default-class: %s" org-latex-default-class)
+  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-packages-alist: %s" org-latex-packages-alist)
+  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-packages-extra: %s" org-latex-packages-extra)
+  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-pdf-process: %s" org-latex-pdf-process)
   ;; Export to PDF
   (org-latex-export-to-pdf))
 

@@ -8,7 +8,6 @@
 #+TITLE: Test Resume
 #+AUTHOR: Test User
 #+DATE: <1955-11-05 Sat>
-#+INCLUDE: ../../templates/modaltacv/modaltacv.org
 #+EXPORT_FILE_NAME: ../results/modaltacv-complex.pdf
 #+OPTIONS: toc:nil title:nil H:2
 

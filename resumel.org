@@ -1,4 +1,23 @@
 # resumel.org --- Description -*- lexical-binding: t; -*-
+#
+# Copyright (C) 2025 Barry Ridge
+#
+# Author: Barry Ridge <barry@barr.ai>
+# Maintainer: Barry Ridge <barry@barr.ai>
+# Created: January 04, 2025
+# Modified: March 09, 2025
+# Version: 0.0.1
+# Keywords: bib convenience docs tex wp
+# Homepage: https://github.com/barryridge/resumel
+# Package-Requires: ((emacs "24.3"))
+#
+# This file is not part of GNU Emacs.
+#
+#  Commentary:
+#
+#  resumel is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates.
+#
+#  Code:
 # ------------------------------------------------------------------------------
 # General Purpose Macros:
 # ------------------------------------------------------------------------------
@@ -19,25 +38,6 @@
 #+MACRO: fa @@latex:{$2\fa$1}@@
 #+MACRO: defcolor @@latex:\definecolor{$1}{$2}{$3}@@
 #+MACRO: colorlet @@latex:\colorlet{$1}{$2}@@
-#
-# Copyright (C) 2025 Barry Ridge
-#
-# Author: Barry Ridge <barry@barr.ai>
-# Maintainer: Barry Ridge <barry@barr.ai>
-# Created: January 04, 2025
-# Modified: January 04, 2025
-# Version: 0.0.1
-# Keywords: bib convenience docs tex wp
-# Homepage: https://github.com/barryridge/resumel
-# Package-Requires: ((emacs "24.3"))
-#
-# This file is not part of GNU Emacs.
-#
-#  Commentary:
-#
-#  Description
-#
-#  Code:
 
 # ------------------------------------------------------------------------------
 # CV Macros:
