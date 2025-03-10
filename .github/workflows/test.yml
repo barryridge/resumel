@@ -87,6 +87,10 @@ jobs:
           ifmtarg
           newtxmath
           extsizes
+          pdfx
+          accsupp
+          scrlfile
+          xparse
 
     - name: Clone AltaCV Repository
       run: |
