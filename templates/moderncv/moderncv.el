@@ -53,7 +53,7 @@
 \\makeatother
 
 % Fonts
-\\ifxetexorluatex
+\\iftutex
   \\usepackage{fontspec}
   \\usepackage{unicode-math}
   \\defaultfontfeatures{Ligatures=TeX}
