@@ -136,6 +136,7 @@ jobs:
           cmap
           wrapfig
           fontaxes
+          ulem
 
     - name: Clone AltaCV Repository
       run: |
