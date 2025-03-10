@@ -8,6 +8,8 @@ jobs:
     env:
       # Define a separate Emacs user directory for CI
       USER_EMACS_DIR: ${{ github.workspace }}/ci_emacs.d
+      # Set TEXMFHOME to a directory within the workspace
+      TEXMFHOME: ${{ github.workspace }}/texmf
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -87,12 +89,12 @@ jobs:
 
     - name: Clone AltaCV Repository
       run: |
-        mkdir -p $HOME/texmf/tex/latex
-        git clone https://github.com/liantze/AltaCV.git $HOME/texmf/tex/latex/altacv
+        mkdir -p $TEXMFHOME/tex/latex
+        git clone https://github.com/liantze/AltaCV.git $TEXMFHOME/tex/latex/altacv
 
     - name: Refresh TeX Live Filename Database
       run: |
-        sudo mktexlsr
+        mktexlsr $TEXMFHOME
 
     - name: Set up Homebrew
       id: set-up-homebrew
@@ -123,8 +125,11 @@ jobs:
     - name: Debug CI Emacs Setup
       run: |
         echo "USER_EMACS_DIR is set to: $USER_EMACS_DIR"
+        echo "TEXMFHOME is set to: $TEXMFHOME"
         echo "Listing contents of $USER_EMACS_DIR:"
         ls -la $USER_EMACS_DIR
+        echo "Listing contents of $TEXMFHOME/tex/latex/altacv:"
+        ls -la $TEXMFHOME/tex/latex/altacv
 
     - name: Run tests
       env:
