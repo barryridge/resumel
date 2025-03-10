@@ -43,6 +43,7 @@ jobs:
           geometry
           xcolor
           tikz
+          tikzfill
           amsmath
           amsfonts
           fontawesome5
@@ -73,11 +74,11 @@ jobs:
           pifont
           parskip
           graphicx
+          graphics
           caption
           marvosym
           latexsym
           url
-          scrhack
           xspace
           mparhack
           microtype
@@ -89,9 +90,48 @@ jobs:
           extsizes
           pdfx
           accsupp
-          scrlfile
+          scrhack
+          koma-script
           xparse
           everyshi
+          xmpincl
+          iftex
+          fontspec
+          ragged2e
+          pgf
+          trig
+          tcolorbox
+          verbatim
+          environ
+          trimspaces
+          l3kernel
+          l3packages
+          adjustbox
+          collectbox
+          xkeyval
+          multirow
+          tools
+          changepage
+          logreq
+          base
+          kvsetkeys
+          kvdefinekeys
+          pdfescape
+          ltxcmds
+          pdftexcmds
+          infwarerr
+          hycolor
+          auxhook
+          refcount
+          gettitlestring
+          kvoptions
+          intcalc
+          bitset
+          bigintcalc
+          stringenc
+          rerunfilecheck
+          uniquecounter
+          colorprofiles
 
     - name: Clone AltaCV Repository
       run: |
