@@ -132,6 +132,7 @@ jobs:
           rerunfilecheck
           uniquecounter
           colorprofiles
+          cmap
 
     - name: Clone AltaCV Repository
       run: |
