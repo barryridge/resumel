@@ -86,6 +86,7 @@ jobs:
           dashrule
           ifmtarg
           newtxmath
+          extsizes
 
     - name: Clone AltaCV Repository
       run: |
