@@ -261,8 +261,8 @@
 
 ")
 
-               ("\\cvsection{%s}" . "\\cvsection*{%s}")
-               ("\\cvsubsection{%s}" . "\\cvsubsection*{%s}")))
+               ("\n\\cvsection{%s}" . "\n\\cvsection*{%s}")
+               ("\n\\cvsubsection{%s}" . "\n\\cvsubsection*{%s}")))
 
   ;; Debug message to confirm addition
   ;; (message "[resumel - DEBUG]: Added 'modaltacv' to org-latex-classes: %s" (assoc "modaltacv" org-latex-classes))
