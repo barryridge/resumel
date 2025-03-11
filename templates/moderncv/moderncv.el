@@ -133,8 +133,8 @@
 \\name{" moderncv-firstname "}{" moderncv-lastname "}
 
 ")
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")))
+                 ("\n\\section{%s}" . "\n\\section*{%s}")
+                 ("\n\\subsection{%s}" . "\n\\subsection*{%s}")))
 
   ;; Debug message to confirm addition
   ;; (message "[resumel - DEBUG]: Added 'moderncv' to org-latex-classes: %s" (assoc "moderncv" org-latex-classes))

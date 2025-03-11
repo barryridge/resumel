@@ -110,8 +110,8 @@
 
 ")
 
-                 ("\\cvsection{%s}" . "\\cvsection*{%s}")
-                 ("\\cvsubsection{%s}" . "\\cvsubsection*{%s}")))
+                 ("\n\\cvsection{%s}" . "\n\\cvsection*{%s}")
+                 ("\n\\cvsubsection{%s}" . "\n\\cvsubsection*{%s}")))
 
   ;; Debug message to confirm addition
   ;; (message "[resumel - DEBUG]: Added 'altacv' to org-latex-classes: %s" (assoc "altacv" org-latex-classes))
