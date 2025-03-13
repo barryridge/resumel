@@ -124,24 +124,26 @@ text-width color detail value text-width color detail...)."
 
 ;; Load a resumel template
 (defun resumel--load-template (template) "Load the specified TEMPLATE from `resumel-templates-dir`."
-  (let* ((base-org (expand-file-name "resumel.org" resumel-base-dir))
+  (let* (
+         ;; (base-org (expand-file-name "resumel.org" resumel-base-dir))
          (template-dir (expand-file-name template resumel-templates-dir))
          (template-el (expand-file-name (format "%s.el" template) template-dir))
-         (template-org (expand-file-name (format "%s.org" template) template-dir)))
+         ;; (template-org (expand-file-name (format "%s.org" template) template-dir))
+         )
     ;; Check if central macros file exists
-    (unless (file-exists-p base-org)
-      (error "Base macros file not found: %s" base-org))
+    ;; (unless (file-exists-p base-org)
+    ;;   (error "Base macros file not found: %s" base-org))
     ;; Load central macros
-    (org-babel-load-file base-org)
+    ;; (org-babel-load-file base-org)
     ;; Check if template files exist
     (unless (file-exists-p template-el)
       (error "Template Emacs Lisp file not found: %s" template-el))
-    (unless (file-exists-p template-org)
-      (error "Template Org file not found: %s" template-org))
+    ;; (unless (file-exists-p template-org)
+    ;;   (error "Template Org file not found: %s" template-org))
     ;; Load the template Emacs Lisp file
     (load-file template-el)
     ;; Load the template Org macros
-    (org-babel-load-file template-org)
+    ;; (org-babel-load-file template-org)
     ))
 
 ;;;###autoload
