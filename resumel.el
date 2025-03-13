@@ -5,11 +5,11 @@
 ;; Author: Barry Ridge <barry@barr.ai>
 ;; Maintainer: Barry Ridge <barry@barr.ai>
 ;; Created: January 04, 2025
-;; Modified: March 09, 2025
+;; Modified: March 13, 2025
 ;; Version: 0.0.1
-;; Keywords: bib convenience docs tex wp
+;; Keywords: convenience docs tex wp
 ;; Homepage: https://github.com/barryridge/resumel
-;; Package-Requires: ((emacs "24.3"))
+;; Package-Requires: ((emacs "24.4"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -24,9 +24,9 @@
 (require 'ox-extra)      ;; For ignore-headlines
 (require 'subr-x)        ;; For string-trim
 
-(defun expand-cvtags (&rest strings)
-  "Return a string of \\cvtag{...} expansions from each argument in STRINGS.
-Ignores nil or empty entries."
+(defun resumel-expand-cvtags (&rest strings)
+  "Return a string of \\cvtag{...} expansions from each argument in
+STRINGS (skill skill skill...).  Ignores nil or empty entries."
   ;; Remove any nil arguments
   (setq strings (delete nil strings))
   ;; Trim leading/trailing whitespace
@@ -39,8 +39,9 @@ Ignores nil or empty entries."
              strings
              " "))
 
-(defun expand-cvltags (&rest strings)
-  "Return a string of \\cvtag{Skill}[Level] expansions for each 'Skill,Level' argument pair in STRINGS."
+(defun resumel-expand-cvltags (&rest strings)
+  "Return a string of \\cvtag{Skill}[Level] expansions for each (skill level)
+argument pair in STRINGS (skill level skill level...)."
   (let (result)
     ;; While we have at least 2 arguments left...
     (while (>= (length strings) 2)
@@ -53,10 +54,11 @@ Ignores nil or empty entries."
           (push (format "\\cvtag{%s}[%s]" skill level) result))))
     (string-join (nreverse result) " ")))
 
-(defun expand-wheelchart (&rest args)
-  "Generate LaTeX wheelchart command from ARGS (outer-radius inner-radius value/text-width/color/detail...)"
+(defun resumel-expand-wheelchart (&rest args)
+  "Generate LaTeX wheelchart command from ARGS (outer-radius inner-radius value
+text-width color detail value text-width color detail...)."
   (unless (>= (length args) 2)
-    (error "wheelchart requires at least outer and inner radius"))
+    (error "Resumel: resumel-expand-wheelchart requires at least outer and inner radius"))
   (let* ((outer (pop args))
          (inner (pop args))
          (segments (cl-loop while (>= (length args) 4)
@@ -122,29 +124,26 @@ Ignores nil or empty entries."
 
 ;; Load a resumel template
 (defun resumel--load-template (template) "Load the specified TEMPLATE from `resumel-templates-dir`."
-  (let* ((base-org (expand-file-name "resumel.org" resumel-base-dir))
+  (let* (
+         ;; (base-org (expand-file-name "resumel.org" resumel-base-dir))
          (template-dir (expand-file-name template resumel-templates-dir))
          (template-el (expand-file-name (format "%s.el" template) template-dir))
-         (template-org (expand-file-name (format "%s.org" template) template-dir)))
+         ;; (template-org (expand-file-name (format "%s.org" template) template-dir))
+         )
     ;; Check if central macros file exists
-    (unless (file-exists-p base-org)
-      (error "Base macros file not found: %s" base-org))
+    ;; (unless (file-exists-p base-org)
+    ;;   (error "Base macros file not found: %s" base-org))
     ;; Load central macros
-    (org-babel-load-file base-org)
+    ;; (org-babel-load-file base-org)
     ;; Check if template files exist
     (unless (file-exists-p template-el)
       (error "Template Emacs Lisp file not found: %s" template-el))
-    (unless (file-exists-p template-org)
-      (error "Template Org file not found: %s" template-org))
+    ;; (unless (file-exists-p template-org)
+    ;;   (error "Template Org file not found: %s" template-org))
     ;; Load the template Emacs Lisp file
     (load-file template-el)
     ;; Load the template Org macros
-    (org-babel-load-file template-org)
-    ;; Debug messages
-    ;; (message "[resumel - DEBUG]: resumel--load-template - template: %s" template)
-    ;; (message "[resumel - DEBUG]: resumel--load-template - template-el: %s" template-el)
-    ;; (message "[resumel - DEBUG]: resumel--load-template - template-org: %s" template-org)
-    ;; (message "[resumel - DEBUG]: resumel--load-template - base-org: %s" base-org)
+    ;; (org-babel-load-file template-org)
     ))
 
 ;;;###autoload
@@ -189,34 +188,27 @@ Ignores nil or empty entries."
     (resumel-insert-template-include)
     ;; Ensure resumel-template-class is defined
     (unless (boundp 'resumel-template-class)
-      (error "resumel-template-class is not defined in template %s" resumel-selected-template))
+      (error "Resumel: resumel-template-class is not defined in template %s" resumel-selected-template))
     ;; Set org-latex-default-class in the current buffer
     (setq-local org-latex-default-class resumel-template-class)
-    ;; Debug messages
-    ;; (message "[resumel - DEBUG]: resumel-default-template: %s" resumel-default-template)
-    ;; (message "[resumel - DEBUG]: resumel-selected-template: %s" resumel-selected-template)
-    ;; (message "[resumel - DEBUG]: Available LaTeX classes: %s" (mapcar #'car org-latex-classes))
-    ;; (message "[resumel - DEBUG]: resumel-template-class: %s" resumel-template-class)
-    ;; (message "[resumel - DEBUG]: org-latex-default-class: %s" org-latex-default-class)
     (message "resumel setup complete with template: %s" resumel-selected-template)))
 
 ;;;###autoload
 (defun resumel-export ()
   "Export the current Org buffer to PDF using the selected resumel template."
   (interactive)
-  ;; Ensure we're in an Org buffer
   (unless (derived-mode-p 'org-mode)
-    (error "resumel-export must be called from an Org buffer"))
-  ;; Setup resumel
-  (resumel-setup)
-  ;; Debug messages
-  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-default-class: %s" org-latex-default-class)
-  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-packages-alist: %s" org-latex-packages-alist)
-  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-packages-extra: %s" org-latex-packages-extra)
-  ;; (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-pdf-process: %s" org-latex-pdf-process)
-  ;; Export to PDF
-  (org-latex-export-to-pdf))
+    (error "Resumel export must be called from an Org buffer"))
+  (let ((orig-buf (current-buffer)))
+    ;; Create a new temporary buffer and insert a copy of the original content
+    (with-temp-buffer
+      (insert-buffer-substring orig-buf)
+      ;; Switch to Org-mode in the temporary buffer
+      (org-mode)
+      ;; Set up resumel in the temporary buffer
+      (resumel-setup)
+      ;; Export to PDF
+      (org-latex-export-to-pdf))))
 
 (provide 'resumel)
-
 ;;; resumel.el ends here
