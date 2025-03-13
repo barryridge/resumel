@@ -5,9 +5,9 @@
 ;; Author: Barry Ridge <barry@barr.ai>
 ;; Maintainer: Barry Ridge <barry@barr.ai>
 ;; Created: January 04, 2025
-;; Modified: March 09, 2025
+;; Modified: March 13, 2025
 ;; Version: 0.0.1
-;; Keywords: bib convenience docs tex wp
+;; Keywords: convenience docs tex wp
 ;; Homepage: https://github.com/barryridge/resumel
 ;; Package-Requires: ((emacs "24.4"))
 ;;
@@ -188,7 +188,7 @@ text-width color detail value text-width color detail...)."
     (resumel-insert-template-include)
     ;; Ensure resumel-template-class is defined
     (unless (boundp 'resumel-template-class)
-      (error "resumel-template-class is not defined in template %s" resumel-selected-template))
+      (error "Resumel: resumel-template-class is not defined in template %s" resumel-selected-template))
     ;; Set org-latex-default-class in the current buffer
     (setq-local org-latex-default-class resumel-template-class)
     (message "resumel setup complete with template: %s" resumel-selected-template)))
@@ -208,9 +208,7 @@ text-width color detail value text-width color detail...)."
       ;; Set up resumel in the temporary buffer
       (resumel-setup)
       ;; Export to PDF
-      (org-latex-export-to-pdf)
-      )))
+      (org-latex-export-to-pdf))))
 
 (provide 'resumel)
-
 ;;; resumel.el ends here
