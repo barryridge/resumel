@@ -24,9 +24,9 @@
 (require 'ox-extra)      ;; For ignore-headlines
 (require 'subr-x)        ;; For string-trim
 
-(defun expand-cvtags (&rest strings)
-  "Return a string of \\cvtag{...} expansions from each argument in STRINGS.
-Ignores nil or empty entries."
+(defun resumel-expand-cvtags (&rest strings)
+  "Return a string of \\cvtag{...} expansions from each argument in
+STRINGS (skill skill skill...).  Ignores nil or empty entries."
   ;; Remove any nil arguments
   (setq strings (delete nil strings))
   ;; Trim leading/trailing whitespace
@@ -39,8 +39,9 @@ Ignores nil or empty entries."
              strings
              " "))
 
-(defun expand-cvltags (&rest strings)
-  "Return a string of \\cvtag{Skill}[Level] expansions for each 'Skill,Level' argument pair in STRINGS."
+(defun resumel-expand-cvltags (&rest strings)
+  "Return a string of \\cvtag{Skill}[Level] expansions for each (skill level)
+argument pair in STRINGS (skill level skill level...)."
   (let (result)
     ;; While we have at least 2 arguments left...
     (while (>= (length strings) 2)
@@ -53,10 +54,11 @@ Ignores nil or empty entries."
           (push (format "\\cvtag{%s}[%s]" skill level) result))))
     (string-join (nreverse result) " ")))
 
-(defun expand-wheelchart (&rest args)
-  "Generate LaTeX wheelchart command from ARGS (outer-radius inner-radius value/text-width/color/detail...)"
+(defun resumel-expand-wheelchart (&rest args)
+  "Generate LaTeX wheelchart command from ARGS (outer-radius inner-radius value
+text-width color detail value text-width color detail...)."
   (unless (>= (length args) 2)
-    (error "wheelchart requires at least outer and inner radius"))
+    (error "Resumel: resumel-expand-wheelchart requires at least outer and inner radius"))
   (let* ((outer (pop args))
          (inner (pop args))
          (segments (cl-loop while (>= (length args) 4)

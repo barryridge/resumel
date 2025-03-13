@@ -44,11 +44,11 @@
 # ------------------------------------------------------------------------------
 #+MACRO: cvtag @@latex:\cvtag{$1}@@
 #+MACRO: cvltag @@latex:\cvtag{$1}[$2]@@
-#+MACRO: expand-cvtags @@latex:(expand-cvtags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10)@@
-#+MACRO: cvtags (eval (expand-cvtags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10))
-#+MACRO: expand-cvltags @@latex:(expand-cvltags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20)@@
+#+MACRO: resumel-expand-cvtags @@latex:(resumel-expand-cvtags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10)@@
+#+MACRO: cvtags (eval (resumel-expand-cvtags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10))
+#+MACRO: resumel-expand-cvltags @@latex:(resumel-expand-cvltags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20)@@
 
 # resumel.org ends here
-#+MACRO: cvltags (eval (expand-cvltags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20))
-#+MACRO: expand-wheelchart @@latex:(expand-wheelchart $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20 $21 $22)@@
-#+MACRO: wheelchart (eval (expand-wheelchart $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20 $21 $22))
+#+MACRO: cvltags (eval (resumel-expand-cvltags $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20))
+#+MACRO: resumel-expand-wheelchart @@latex:(resumel-expand-wheelchart $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20 $21 $22)@@
+#+MACRO: wheelchart (eval (resumel-expand-wheelchart $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19 $20 $21 $22))
