@@ -1,5 +1,3 @@
-(unless (assoc "altacv" org-latex-classes)
-
 (let* ((geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm"))
        (main-font-xelatex (or (cdr (assoc "MAIN_FONT_XELATEX" resumel-template-vars)) "Roboto Slab"))
        (sans-font-xelatex (or (cdr (assoc "SANS_FONT_XELATEX" resumel-template-vars)) "Lato"))
@@ -10,6 +8,7 @@
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "sourcecodepro"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
        (altacv-columnratio (or (cdr (assoc "ALTACV_COLUMNRATIO" resumel-template-vars)) "0.6")))
+
   (add-to-list 'org-latex-classes
                `("altacv"
                  ,(concat "\\documentclass[10pt,letterpaper,ragged2e,withhyper]{altacv}
@@ -109,6 +108,6 @@
 ")
 
                  ("\n\\cvsection{%s}" . "\n\\cvsection*{%s}")
-                 ("\n\\cvsubsection{%s}" . "\n\\cvsubsection*{%s}")))))
+                 ("\n\\cvsubsection{%s}" . "\n\\cvsubsection*{%s}"))))
 
 (provide 'resumel-altacv)
