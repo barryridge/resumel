@@ -20,10 +20,10 @@
   (let* ((base-name (file-name-base org-file))
          (pdf-file (expand-file-name (concat base-name ".pdf") resumel-results-dir))
          (output-dir resumel-results-dir))
-    ;; Debug messages
-    (message "Exporting: %s" org-file)
-    (message "Output PDF: %s" pdf-file)
-    (message "Output directory: %s" output-dir)
+    ;; Print test info
+    (message "Resumel Test - Exporting: %s" org-file)
+    (message "Resumel Test - Output PDF: %s" pdf-file)
+    (message "Resumel Test - Output directory: %s" output-dir)
 
     ;; Ensure output directory exists
     (make-directory output-dir t)
@@ -36,10 +36,7 @@
           (progn
             ;; Call resumel-setup before exporting
             (resumel-setup)
-            ;; Debug messages
-            (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-default-class: %s" org-latex-default-class)
-            (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-packages-alist: %s" org-latex-packages-alist)
-            (message "[resumel - DEBUG]: Org LaTeX Export Settings: org-latex-pdf-process: %s" org-latex-pdf-process)
+            ;; Export to PDF
             (org-latex-export-to-pdf)
             (unless (file-exists-p pdf-file)
               (message "LaTeX Output:\n%s" (with-current-buffer "*Org PDF LaTeX Output*" (buffer-string)))
@@ -64,7 +61,8 @@
 
 ;; List of test cases
 (defvar resumel-test-cases
-  '(("moderncv-basic.org" "moderncv-basic.pdf")
+  '(("moderncv-basic-blue.org" "moderncv-basic-blue.pdf")
+    ("moderncv-basic-green.org" "moderncv-basic-green.pdf")
     ("moderncv-complex.org" "moderncv-complex.pdf")
     ("altacv-basic.org" "altacv-basic.pdf")
     ("altacv-complex.org" "altacv-complex.pdf")

@@ -1,5 +1,3 @@
-(unless (assoc "moderncv" org-latex-classes)
-
 ;; Disable Org's hyperref template - let moderncv handle it
 (setq org-latex-hyperref-template nil)
 (setq org-latex-default-packages-alist nil)
@@ -18,8 +16,9 @@
        (moderncv-style (or (cdr (assoc "MODERNCV_STYLE" resumel-template-vars)) "classic"))
        (moderncv-firstname (or (cdr (assoc "MODERNCV_FIRSTNAME" resumel-template-vars)) ""))
        (moderncv-lastname (or (cdr (assoc "MODERNCV_LASTNAME" resumel-template-vars)) "")))
+
   (add-to-list 'org-latex-classes
-               `("moderncv"
+               `("resumel-moderncv"
                  ,(concat "\\documentclass[11pt,letterpaper,sans]{moderncv}
 
 % Set default ModernCV color
@@ -132,6 +131,6 @@
 
 ")
                  ("\n\\section{%s}" . "\n\\section*{%s}")
-                 ("\n\\subsection{%s}" . "\n\\subsection*{%s}")))))
+                 ("\n\\subsection{%s}" . "\n\\subsection*{%s}"))))
 
 (provide 'resumel-moderncv)

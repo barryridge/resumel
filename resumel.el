@@ -9,7 +9,7 @@
 ;; Version: 0.0.1
 ;; Keywords: convenience docs tex wp
 ;; Homepage: https://github.com/barryridge/resumel
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "25.1"))
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
@@ -122,6 +122,14 @@ text-width color detail value text-width color detail...)."
           (goto-char (point-min))
           (insert include-line))))))
 
+;; Remove existing template entries from org­latex­classes
+(defun resumel--remove-existing-template (template)
+  "Remove any existing entry from `org-latex-classes` that has the key TEMPLATE."
+  (setq org-latex-classes
+        (seq-remove (lambda (entry)
+                      (string= (car entry) template))
+                    org-latex-classes)))
+
 ;; Load a resumel template
 (defun resumel--load-template (template) "Load the specified TEMPLATE from `resumel-templates-dir`."
   (let* ((template-dir (expand-file-name template resumel-templates-dir))
@@ -129,6 +137,8 @@ text-width color detail value text-width color detail...)."
     ;; Check if template .el files exist
     (unless (file-exists-p template-el)
       (error "Template Emacs Lisp file not found: %s" template-el))
+    ;; Remove any existing entry from org-latex-classes
+    (resumel--remove-existing-template (format "resumel-%s" template))
     ;; Load the template .el file
     (load-file template-el)))
 
@@ -170,7 +180,7 @@ text-width color detail value text-width color detail...)."
     ;; Insert the #+INCLUDE directive for the template's .org file
     (resumel-insert-template-include)
     ;; Set org-latex-default-class in the current buffer
-    (setq-local org-latex-default-class resumel-selected-template)
+    (setq-local org-latex-default-class (format "resumel-%s" resumel-selected-template))
     (message "resumel setup complete with template: %s" resumel-selected-template)))
 
 ;;;###autoload
