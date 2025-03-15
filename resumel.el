@@ -86,7 +86,7 @@ text-width color detail value text-width color detail...)."
   :prefix "resumel-")
 
 (defcustom resumel-default-template "moderncv"
-  "Default resume template to use."
+  "Default resumel template to use."
   :type '(choice (const "moderncv") (const "altacv") (const "modaltacv"))
   :group 'resumel)
 
@@ -134,14 +134,14 @@ text-width color detail value text-width color detail...)."
 
 ;;;###autoload
 (defun resumel-select-template (template)
-  "Select a resume TEMPLATE to use for exports."
+  "Select a resumel TEMPLATE to use for exports."
   (interactive
    (list (completing-read "Select template: " '("moderncv" "altacv" "modaltacv") nil t)))
   (setq resumel-default-template template)
   (message "resumel template set to: %s" template))
 
 (defvar-local resumel-selected-template resumel-default-template
-  "Currently selected resume template.")
+  "Currently selected resumel template.")
 
 (defun resumel-setup ()
   "Set up resumel with the selected template."
