@@ -1,7 +1,5 @@
 (unless (assoc "altacv" org-latex-classes)
 
-(setq resumel-template-class "altacv")
-
 (let* ((geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm"))
        (main-font-xelatex (or (cdr (assoc "MAIN_FONT_XELATEX" resumel-template-vars)) "Roboto Slab"))
        (sans-font-xelatex (or (cdr (assoc "SANS_FONT_XELATEX" resumel-template-vars)) "Lato"))
@@ -111,10 +109,6 @@
 ")
 
                  ("\n\\cvsection{%s}" . "\n\\cvsection*{%s}")
-                 ("\n\\cvsubsection{%s}" . "\n\\cvsubsection*{%s}")))
-
-  ;; Debug message to confirm addition
-  ;; (message "[resumel - DEBUG]: Added 'altacv' to org-latex-classes: %s" (assoc "altacv" org-latex-classes))
-))
+                 ("\n\\cvsubsection{%s}" . "\n\\cvsubsection*{%s}")))))
 
 (provide 'resumel-altacv)

@@ -5,7 +5,7 @@
 ;; Author: Barry Ridge <barry@barr.ai>
 ;; Maintainer: Barry Ridge <barry@barr.ai>
 ;; Created: January 04, 2025
-;; Modified: March 13, 2025
+;; Modified: March 15, 2025
 ;; Version: 0.0.1
 ;; Keywords: convenience docs tex wp
 ;; Homepage: https://github.com/barryridge/resumel
@@ -86,7 +86,7 @@ text-width color detail value text-width color detail...)."
   :prefix "resumel-")
 
 (defcustom resumel-default-template "moderncv"
-  "Default resume template to use."
+  "Default resumel template to use."
   :type '(choice (const "moderncv") (const "altacv") (const "modaltacv"))
   :group 'resumel)
 
@@ -134,17 +134,14 @@ text-width color detail value text-width color detail...)."
 
 ;;;###autoload
 (defun resumel-select-template (template)
-  "Select a resume TEMPLATE to use for exports."
+  "Select a resumel TEMPLATE to use for exports."
   (interactive
    (list (completing-read "Select template: " '("moderncv" "altacv" "modaltacv") nil t)))
   (setq resumel-default-template template)
   (message "resumel template set to: %s" template))
 
-(defvar resumel-template-class nil
-  "LaTeX class name used by the current resumel template.")
-
-(defvar resumel-selected-template resumel-default-template
-  "Currently selected resume template.")
+(defvar-local resumel-selected-template resumel-default-template
+  "Currently selected resumel template.")
 
 (defun resumel-setup ()
   "Set up resumel with the selected template."
@@ -172,11 +169,8 @@ text-width color detail value text-width color detail...)."
     (resumel--load-template resumel-selected-template)
     ;; Insert the #+INCLUDE directive for the template's .org file
     (resumel-insert-template-include)
-    ;; Ensure resumel-template-class is defined
-    (unless (boundp 'resumel-template-class)
-      (error "Resumel: resumel-template-class is not defined in template %s" resumel-selected-template))
     ;; Set org-latex-default-class in the current buffer
-    (setq-local org-latex-default-class resumel-template-class)
+    (setq-local org-latex-default-class resumel-selected-template)
     (message "resumel setup complete with template: %s" resumel-selected-template)))
 
 ;;;###autoload
