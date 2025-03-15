@@ -1,7 +1,5 @@
 (unless (assoc "moderncv" org-latex-classes)
 
-(setq resumel-template-class "moderncv")
-
 ;; Disable Org's hyperref template - let moderncv handle it
 (setq org-latex-hyperref-template nil)
 (setq org-latex-default-packages-alist nil)
@@ -134,10 +132,6 @@
 
 ")
                  ("\n\\section{%s}" . "\n\\section*{%s}")
-                 ("\n\\subsection{%s}" . "\n\\subsection*{%s}")))
-
-  ;; Debug message to confirm addition
-  ;; (message "[resumel - DEBUG]: Added 'moderncv' to org-latex-classes: %s" (assoc "moderncv" org-latex-classes))
-))
+                 ("\n\\subsection{%s}" . "\n\\subsection*{%s}")))))
 
 (provide 'resumel-moderncv)

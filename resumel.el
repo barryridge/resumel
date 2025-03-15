@@ -5,7 +5,7 @@
 ;; Author: Barry Ridge <barry@barr.ai>
 ;; Maintainer: Barry Ridge <barry@barr.ai>
 ;; Created: January 04, 2025
-;; Modified: March 13, 2025
+;; Modified: March 15, 2025
 ;; Version: 0.0.1
 ;; Keywords: convenience docs tex wp
 ;; Homepage: https://github.com/barryridge/resumel
@@ -140,10 +140,7 @@ text-width color detail value text-width color detail...)."
   (setq resumel-default-template template)
   (message "resumel template set to: %s" template))
 
-(defvar resumel-template-class nil
-  "LaTeX class name used by the current resumel template.")
-
-(defvar resumel-selected-template resumel-default-template
+(defvar-local resumel-selected-template resumel-default-template
   "Currently selected resume template.")
 
 (defun resumel-setup ()
@@ -172,11 +169,8 @@ text-width color detail value text-width color detail...)."
     (resumel--load-template resumel-selected-template)
     ;; Insert the #+INCLUDE directive for the template's .org file
     (resumel-insert-template-include)
-    ;; Ensure resumel-template-class is defined
-    (unless (boundp 'resumel-template-class)
-      (error "Resumel: resumel-template-class is not defined in template %s" resumel-selected-template))
     ;; Set org-latex-default-class in the current buffer
-    (setq-local org-latex-default-class resumel-template-class)
+    (setq-local org-latex-default-class resumel-selected-template)
     (message "resumel setup complete with template: %s" resumel-selected-template)))
 
 ;;;###autoload
