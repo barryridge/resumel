@@ -10,7 +10,7 @@
        (altacv-columnratio (or (cdr (assoc "ALTACV_COLUMNRATIO" resumel-template-vars)) "0.6")))
 
   (add-to-list 'org-latex-classes
-               `("altacv"
+               `("resumel-altacv"
                  ,(concat "\\documentclass[10pt,letterpaper,ragged2e,withhyper]{altacv}
 
 % Layout

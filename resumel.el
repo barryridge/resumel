@@ -138,7 +138,7 @@ text-width color detail value text-width color detail...)."
     (unless (file-exists-p template-el)
       (error "Template Emacs Lisp file not found: %s" template-el))
     ;; Remove any existing entry from org-latex-classes
-    (resumel--remove-existing-template template)
+    (resumel--remove-existing-template (format "resumel-%s" template))
     ;; Load the template .el file
     (load-file template-el)))
 
@@ -180,7 +180,7 @@ text-width color detail value text-width color detail...)."
     ;; Insert the #+INCLUDE directive for the template's .org file
     (resumel-insert-template-include)
     ;; Set org-latex-default-class in the current buffer
-    (setq-local org-latex-default-class resumel-selected-template)
+    (setq-local org-latex-default-class (format "resumel-%s" resumel-selected-template))
     (message "resumel setup complete with template: %s" resumel-selected-template)))
 
 ;;;###autoload

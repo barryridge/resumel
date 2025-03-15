@@ -18,7 +18,7 @@
        (moderncv-lastname (or (cdr (assoc "MODERNCV_LASTNAME" resumel-template-vars)) "")))
 
   (add-to-list 'org-latex-classes
-               `("moderncv"
+               `("resumel-moderncv"
                  ,(concat "\\documentclass[11pt,letterpaper,sans]{moderncv}
 
 % Set default ModernCV color
