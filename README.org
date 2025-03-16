@@ -3,6 +3,8 @@
 #+EMAIL: barry@barr.ai
 #+DATE: \today
 
+[[https://github.com/barryridge/resumel/actions/workflows/test.yml][https://github.com/barryridge/resumel/actions/workflows/test.yml/badge.svg]]
+
 * Overview
 
 ** resumel
