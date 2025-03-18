@@ -4,6 +4,7 @@
 (setq org-latex-packages-alist nil)
 
 (let* ((geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "scale=0.75, top=2cm, bottom=2cm, left=2.05cm, right=2.05cm"))
+       (documentclass-options (or (cdr (assoc "DOCUMENTCLASS_OPTIONS" resumel-template-vars)) "11pt,letterpaper,sans"))
        (main-font-xelatex (or (cdr (assoc "MAIN_FONT_XELATEX" resumel-template-vars)) "Latin Modern Roman"))
        (sans-font-xelatex (or (cdr (assoc "SANS_FONT_XELATEX" resumel-template-vars)) "Latin Modern Sans"))
        (mono-font-xelatex (or (cdr (assoc "MONO_FONT_XELATEX" resumel-template-vars)) "Latin Modern Mono"))
@@ -19,7 +20,7 @@
 
   (add-to-list 'org-latex-classes
                `("resumel-moderncv"
-                 ,(concat "\\documentclass[11pt,letterpaper,sans]{moderncv}
+                 ,(concat "\\documentclass[" documentclass-options "]{moderncv}
 
 % Set default ModernCV color
 \\moderncvcolor{" moderncv-color "}
