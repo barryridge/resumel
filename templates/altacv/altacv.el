@@ -1,4 +1,5 @@
 (let* ((geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm"))
+       (documentclass-options (or (cdr (assoc "DOCUMENTCLASS_OPTIONS" resumel-template-vars)) "10pt,letterpaper,ragged2e,withhyper"))
        (main-font-xelatex (or (cdr (assoc "MAIN_FONT_XELATEX" resumel-template-vars)) "Roboto Slab"))
        (sans-font-xelatex (or (cdr (assoc "SANS_FONT_XELATEX" resumel-template-vars)) "Lato"))
        (mono-font-xelatex (or (cdr (assoc "MONO_FONT_XELATEX" resumel-template-vars)) "Fira Code"))
@@ -11,7 +12,7 @@
 
   (add-to-list 'org-latex-classes
                `("resumel-altacv"
-                 ,(concat "\\documentclass[10pt,letterpaper,ragged2e,withhyper]{altacv}
+                 ,(concat "\\documentclass[" documentclass-options "]{altacv}
 
 % Layout
 \\geometry{" geometry "}
