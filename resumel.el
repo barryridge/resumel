@@ -87,7 +87,7 @@ text-width color detail value text-width color detail...)."
 
 (defcustom resumel-default-template "moderncv"
   "Default resumel template to use."
-  :type '(choice (const "moderncv") (const "altacv") (const "modaltacv"))
+  :type '(choice (const "moderncv") (const "altacv") (const "modaltacv") (const "awesomecv"))
   :group 'resumel)
 
 ;; Set the directory where resumel.el is located
@@ -146,7 +146,7 @@ text-width color detail value text-width color detail...)."
 (defun resumel-select-template (template)
   "Select a resumel TEMPLATE to use for exports."
   (interactive
-   (list (completing-read "Select template: " '("moderncv" "altacv" "modaltacv") nil t)))
+   (list (completing-read "Select template: " '("moderncv" "altacv" "modaltacv" "awesomecv") nil t)))
   (setq resumel-default-template template)
   (message "resumel template set to: %s" template))
 
