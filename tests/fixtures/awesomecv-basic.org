@@ -1,0 +1,94 @@
+* Config :noexport:
+#+RESUMEL_TEMPLATE: awesomecv
+# RESUMEL_AWESOMECV_COLOR Options: awesome-emerald, awesome-skyblue, awesome-red (default), awesome-pink, awesome-orange, awesome-nephritis, awesome-concrete, awesome-darknight
+#+RESUMEL_AWESOMECV_COLOR: awesome-red
+#+TITLE: Test Resume
+#+AUTHOR: Test User
+#+DATE: <1955-11-05 Sat>
+#+EXPORT_FILE_NAME: ../results/awesomecv-basic.pdf
+#+OPTIONS: toc:nil title:nil H:2
+
+* Color Customization :ignore:
+# colorlet macro: {{{colorlet(var,color)}}}
+#       var options:
+#               name, tagline, heading, headingrule, subheading, accent, emphasis, body, color0, color1, color2
+#       color options:
+#               Black, SlateGrey, LightGrey, DarkPastelRed, PastelRed, Blue, DarkBlue, GoldenEarth, CoolSky, SoftSkyBlue
+# {{{colorlet(name,Black)}}}
+
+* General Purpose Macro Tests
+
+** Text
+
+- Bold text with Org emphasis: *bold*
+- Bold text with 'bf' macro: {{{bf(bold)}}}
+- Italic text with Org emphasis: /italic/
+- Italic text with 'it' macro: {{{it(italic)}}}
+
+** Hyperlinks
+- A hyperlink with Org: [[https://www.foo.bar][www.foo.bar]]
+- A hyperlink with 'href' macro: {{{href(https://www.foo.bar,www.foo.bar)}}}
+
+** Symbols
+- Calendar symbol: {{{cal}}}
+- Address pin symbol: {{{pin}}}
+- Font Awesome symbols: {{{fa(Cogs)}}} {{{fa(GraduationCap)}}} {{{fa(GraduationCap)}}} {{{fa(Book)}}} {{{fa(Wrench)}}} {{{fa(Trophy)}}} {{{fa(ChalkboardTeacher)}}} {{{fa(Users)}}}
+- Font Awesome symbol in different sizes: {{{fa(Briefcase,\Huge)}}} {{{fa(Briefcase,\huge)}}} {{{fa(Briefcase,\Large)}}} {{{fa(Briefcase,\large)}}} {{{fa(Briefcase,\normalsize)}}} {{{fa(Briefcase,\small)}}} {{{fa(Briefcase,\footnotesize)}}} {{{fa(Briefcase,\scriptsize)}}} {{{fa(Briefcase,\tiny)}}}
+- Font Awesome symbol in different colors: {{{fa(Briefcase,\color{color1})}}} {{{fa(Briefcase,\color{black})}}} {{{fa(Briefcase,\color{darkgray})}}} {{{fa(Briefcase,\color{gray})}}} {{{fa(Briefcase,\color{lightgray})}}} {{{fa(Briefcase,\color{green})}}} {{{fa(Briefcase,\color{orange})}}} {{{fa(Briefcase,\color{purple})}}} {{{fa(Briefcase,\color{red})}}} {{{fa(Briefcase,\color{blue})}}} {{{fa(Briefcase,\color{awesome-emerald})}}}
+- Font Awesome symbol in different sizes and colors: {{{fa(Briefcase,\color{color1}\Huge)}}} {{{fa(Briefcase,\color{awesome-emerald}\huge)}}} {{{fa(Briefcase,\color{awesome-darknight}\Large)}}} {{{fa(Briefcase,\color{awesome-skyblue}\large)}}} {{{fa(Briefcase,\color{awesome-red}\normalsize)}}} {{{fa(Briefcase,\color{awesome-pink}\small)}}} {{{fa(Briefcase,\color{awesome-orange}\footnotesize)}}} {{{fa(Briefcase,\color{awesome-nephritis}\scriptsize)}}} {{{fa(Briefcase,\color{awesome-concrete}\tiny)}}}
+
+** Dividers
+- Divider:
+{{{divider}}}
+
+-  Paragraph Divider:
+{{{par-div}}}
+
+** Spacing
+- 1cm vspace:
+
+{{{vspace(1cm)}}}
+
+- 1cm hspace: From here... {{{hspace(1cm)}}} ...to here.
+
+** Tables
+- Org table:
+
+|--------------+--------------+--------------|
+| Row 1, Col 1 | Row 1, Col 2 | Row 1, Col 3 |
+| Row 2, Col 1 | Row 2, Col 2 | Row 2, Col 3 |
+|--------------+--------------+--------------|
+
+- Macro table:
+
+@@latex:\begin{tabular}{@{}l@{\hspace{10pt}}l@{\hspace{10pt}}l@{\hspace{10pt}}l@{}}@@
+Row 1, Col 1 {{{amp()}}} Row 1, Col 2 {{{amp()}}} Row 1, Col 3 {{{endl()}}}
+Row 2, Col 1 {{{amp()}}} Row 2, Col 2 {{{amp()}}} Row 2, Col 3 {{{endl()}}}
+@@latex:\end{tabular}@@
+
+* CV Macro Tests
+
+** Skill Tags
+{{{cvtags(Python,Emacs,LaTeX,\Cplusplus,Shell)}}}
+
+** Skill Tags with Skill Levels
+{{{cvltags(Python,5,Emacs,4,LaTeX,3,\Cplusplus,2,Shell,1)}}}
+
+# ** Event
+# {{{cvevent(Job Title 1,Company 1,Month 20XX -- Ongoing,Location)}}}
+
+** Honors
+@@latex:\begin{cvhonors}@@
+{{{cvhonor(\faTrophy Fantastic Achievement 1,Event 1,Location 1,Date 1)}}}
+{{{cvhonor(\faTrophy Fantastic Achievement 2,Event 2,Location 2,Date 2)}}}
+{{{cvhonor(\faTrophy Fantastic Achievement 3,Event 3,Location 3,Date 3)}}}
+@@latex:\end{cvhonors}@@
+
+** Skills
+@@latex:\begin{cvskills}@@
+{{{cvskill(Skill 1,1)}}}
+{{{cvskill(Skill 2,2)}}}
+{{{cvskill(Skill 3,3)}}}
+{{{cvskill(Skill 4,4)}}}
+{{{cvskill(Skill 5,5)}}}
+@@latex:\end{cvskills}@@
