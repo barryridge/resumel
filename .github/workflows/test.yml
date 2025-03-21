@@ -33,6 +33,8 @@ jobs:
       uses: teatimeguest/setup-texlive-action@v3
       with:
         packages: |
+          latexmk
+          xetex
           scheme-basic
           moderncv
           paracol
