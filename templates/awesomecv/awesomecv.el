@@ -1,4 +1,5 @@
-(let* ((geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm"))
+(let* ((compiler (or (cdr (assoc "COMPILER" resumel-template-vars)) "xelatex"))
+       (geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm"))
        (documentclass-options (or (cdr (assoc "DOCUMENTCLASS_OPTIONS" resumel-template-vars)) "10pt,letterpaper,ragged2e,withhyper"))
        (main-font-xelatex (or (cdr (assoc "MAIN_FONT_XELATEX" resumel-template-vars)) "Roboto Slab"))
        (sans-font-xelatex (or (cdr (assoc "SANS_FONT_XELATEX" resumel-template-vars)) "Lato"))
@@ -9,6 +10,8 @@
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "sourcecodepro"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
        (awesomecv-color (or (cdr (assoc "AWESOMECV_COLOR" resumel-template-vars)) "awesome-red")))
+
+  (setq org-latex-compiler compiler)
 
   (add-to-list 'org-latex-classes
                `("resumel-awesomecv"
