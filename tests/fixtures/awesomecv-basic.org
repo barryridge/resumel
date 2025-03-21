@@ -74,14 +74,23 @@ Row 2, Col 1 {{{amp()}}} Row 2, Col 2 {{{amp()}}} Row 2, Col 3 {{{endl()}}}
 ** Skill Tags with Skill Levels
 {{{cvltags(Python,5,Emacs,4,LaTeX,3,\Cplusplus,2,Shell,1)}}}
 
-# ** Event
-# {{{cvevent(Job Title 1,Company 1,Month 20XX -- Ongoing,Location)}}}
+** Entries
+@@latex:\begin{cventries}@@
+\cventry{Job Title 1}{Organization 1}{Location 1}{Dates 1}{Description 1}
+\cventry{Job Title 2}{Organization 2}{Location 2}{Dates 2}{Description 2}
+\cventry{Job Title 3}{Organization 3}{Location 3}{Dates 3}{Description 3}
+@@latex:\end{cventries}@@
+
+** Paragraphs
+@@latex:\begin{cvparagraph}@@
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+@@latex:\end{cvparagraph}@@
 
 ** Honors
 @@latex:\begin{cvhonors}@@
-{{{cvhonor(\faTrophy Fantastic Achievement 1,Event 1,Location 1,Date 1)}}}
-{{{cvhonor(\faTrophy Fantastic Achievement 2,Event 2,Location 2,Date 2)}}}
-{{{cvhonor(\faTrophy Fantastic Achievement 3,Event 3,Location 3,Date 3)}}}
+{{{cvhonor(\faTrophy\;Fantastic Achievement 1,Event 1,Location 1,Date 1)}}}
+{{{cvhonor(\faTrophy\;Fantastic Achievement 2,Event 2,Location 2,Date 2)}}}
+{{{cvhonor(\faTrophy\;Fantastic Achievement 3,Event 3,Location 3,Date 3)}}}
 @@latex:\end{cvhonors}@@
 
 ** Skills
