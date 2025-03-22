@@ -9,7 +9,9 @@
        (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lato"))
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "sourcecodepro"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
-       (awesomecv-color (or (cdr (assoc "AWESOMECV_COLOR" resumel-template-vars)) "awesome-red")))
+       (awesomecv-color (or (cdr (assoc "AWESOMECV_COLOR" resumel-template-vars)) "awesome-red"))
+       (awesomecv-section-color-highlight (or (cdr (assoc "AWESOMECV_SECTION_COLOR_HIGHLIGHT" resumel-template-vars)) "true"))
+       (awesomecv-header-social-sep (or (cdr (assoc "AWESOMECV_HEADER_SOCIAL_SEP" resumel-template-vars)) "\\quad\\textbar\\quad")))
 
   (setq org-latex-compiler compiler)
 
@@ -58,10 +60,10 @@
 \\colorlet{color2}{gray}
 
 % Set false if you don't want to highlight section with awesome color
-\\setbool{acvSectionColorHighlight}{true}
+\\setbool{acvSectionColorHighlight}{" awesomecv-section-color-highlight "}
 
 % If you would like to change the social information separator from a pipe (|) to something else
-\\renewcommand{\\acvHeaderSocialSep}{\\quad\\textbar\\quad}
+\\renewcommand{\\acvHeaderSocialSep}{" awesomecv-header-social-sep "}
 
 % Define divider (replicated from altacv)
 \\usepackage{dashrule}
