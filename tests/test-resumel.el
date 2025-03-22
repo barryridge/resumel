@@ -68,7 +68,8 @@
     ("altacv-complex.org" "altacv-complex.pdf")
     ("modaltacv-basic.org" "modaltacv-basic.pdf")
     ("modaltacv-complex.org" "modaltacv-complex.pdf")
-    ("awesomecv-basic.org" "awesomecv-basic.pdf"))
+    ("awesomecv-basic.org" "awesomecv-basic.pdf")
+    ("awesomecv-complex.org" "awesomecv-complex.pdf"))
   "List of test cases. Each entry is a list of Org file and expected PDF file.")
 
 ;; Define a test for each test case

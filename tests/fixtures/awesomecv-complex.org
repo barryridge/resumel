@@ -1,0 +1,166 @@
+* Config :noexport:
+#+RESUMEL_TEMPLATE: awesomecv
+# RESUMEL_AWESOMECV_COLOR Options: awesome-emerald, awesome-skyblue, awesome-red (default), awesome-pink, awesome-orange, awesome-nephritis, awesome-concrete, awesome-darknight
+#+RESUMEL_AWESOMECV_COLOR: awesome-red
+#+TITLE: Test Resume
+#+AUTHOR: Test User
+#+DATE: <1955-11-05 Sat>
+#+EXPORT_FILE_NAME: ../results/awesomecv-complex.pdf
+#+OPTIONS: toc:nil title:nil H:2
+#+cite_export: bibtex
+#+BIBLIOGRAPHY: nil
+#+OPTIONS: toc:nil title:nil H:2
+
+* Personal Information :ignore:
+\name{Firstname}{Lastname}
+\position{World Expert}
+\address{Street, City, State, Country}
+\mobile{+1 (555) 555-1234}
+\email{user@foo.bar}
+\homepage{www.foo.bar}
+\linkedin{user-name}
+\github{username}
+
+* Quote :ignore:
+\quote{``Change the world that you be in to see the want."}
+
+* Header :ignore:
+# Print the header with above personal information
+# Give optional argument to change alignment(C: center, L: left, R: right)
+@@latex:\makecvheader[C]@@
+
+* Footer :ignore:
+# Print the footer with 3 arguments(<left>, <center>, <right>)
+# Leave any of these blank if they are not needed
+@@latex:\makecvfooter{\today}{Firstname Lastname~~~·~~~Résumé}{\thepage}@@
+
+* Color Customization :ignore:
+# colorlet macro: {{{colorlet(var,color)}}}
+#       var options:
+#               general: color0, color1, color2,
+#               awesomecv: darktext, text, graytext, lighttext, sectiondivider
+#       color options:
+#               white, black, darkgray, gray, lightgray, green, orange, purple, red, blue,
+#               awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange,
+#               awesome-nephritis, awesome-concrete, awesome-darknight
+#
+{{{colorlet(color1,awesome-red)}}}
+
+* Skills
+
+** Programming
+{{{cvtags(Python,Elisp,JavaScript,LaTeX,C++,Java)}}}
+
+** Tools & Technologies
+{{{cvltags(Emacs,5,Git,4,Docker,3,AWS,2)}}}
+
+* Education
+
+@@latex:\begin{cventries}@@
+
+@@latex:\cventry{Ph.D. in Doctorate Stuff}{University One\textnormal{ | }Group One, Department One}{City, State.}{2022--2025}{@@
+- Thesis on Emacs-based resume generation.
+- Published 3 papers on LaTeX automation.
+@@latex:}@@
+
+@@latex:\cventry{M.Sc. in Masters Stuff}{University Two\textnormal{ | }Group Two, Department Two}{City, State.}{2020--2022}{@@
+- Took graduate classes on ELisp programming.
+- Mentored several undergraduate students on the text editor wars.
+@@latex:}@@
+
+@@latex:\cventry{B.Sc. in Bachelors Stuff}{University Three\textnormal{ | }Group Three, Department Three}{City, State.}{2016--2020}{@@
+- Took multiple courses on functional programming and typesetting.
+- Led student project on involuntary servitude.
+@@latex:}@@
+
+@@latex:\end{cventries}@@
+
+* Experience
+
+@@latex:\begin{cventries}@@
+
+** Job 1 :ignore:
+@@latex:\cventry{Senior Developer \& General Guru}{Tech Corp\textnormal{ | }Group, Department}{City, State.}{2018--2020}{@@
+- Led team of 5 developers
+- Implemented CI/CD pipeline {{{cvtags(Python,Docker,Git)}}}
+@@latex:}@@
+
+** Job 2 :ignore:
+@@latex:\cventry{Software Engineer \& Elite Hacker}{Start-up Inc\textnormal{ | }Group, Department}{City, State.}{2015--2018}{@@
+- Full-stack development {{{cvltags(JavaScript,4,React,3,Node.js,4)}}}
+@@latex:}@@
+
+** Job 3 :ignore:
+@@latex:\cventry{VP Underlings}{\href{https://www.company-3-site.com}{Company 3}\textnormal{ | }\href{https://www.company-3-site.com/department/group}{Group}, \href{https://www.company-3-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
+- *Role 1*
+  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 2*
+  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 3*
+  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+@@latex:}@@
+
+** Job 4 :ignore:
+@@latex:\cventry{Senior Underling}{\href{https://www.company-4-site.com}{Company 4}\textnormal{ | }\href{https://www.company-4-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
+- *Role 1*
+  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 2*
+  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 3*
+  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+@@latex:}@@
+
+** Job 5 :ignore:
+@@latex:\cventry{Junior Underling}{\href{https://www.company-5-site.com}{Company 5}\textnormal{ | }\href{https://www.company-5-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
+- *Role 1*
+  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 2*
+  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- *Role 3*
+  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+@@latex:}@@
+
+@@latex:\end{cventries}@@
+
+# {{{pagebreak()}}}
+
+* Projects
+
+@@latex:\begin{cventries}@@
+
+** Project 1 :ignore:
+@@latex:\cventry{Python Library}{\textbf{Project 1}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project1}{https://github.com/user-name/project1}}{}{}{@@
+- Project 1 description.
+@@latex:}@@
+
+** Project 2 :ignore:
+@@latex:\cventry{\Cplusplus Library}{\textbf{Project 2}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project2}{https://github.com/user-name/project2}}{}{}{@@
+- Project 2 description.
+@@latex:}@@
+
+** Project 3 :ignore:
+@@latex:\cventry{Rust Library}{\textbf{Project 3}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project3}{https://github.com/user-name/project3}}{}{}{@@
+- Project 3 description.
+@@latex:}@@
+
+** Project 4 :ignore:
+@@latex:\cventry{Java Library}{\textbf{Project 4}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project4}{https://github.com/user-name/project4}}{}{}{@@
+- Project 4 description.
+@@latex:}@@
+
+** Project 5 :ignore:
+@@latex:\cventry{Haskell Library}{\textbf{Project 5}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project5}{https://github.com/user-name/project5}}{}{}{@@
+- Project 5 description.
+@@latex:}@@
+
+@@latex:\end{cventries}@@
+
+* Honors
+@@latex:\begin{cvhonors}@@
+{{{cvhonor(\faTrophy\;Fantastic Achievement 1,Event 1,Location 1,Date 1)}}}
+{{{cvhonor(\faTrophy\;Fantastic Achievement 2,Event 2,Location 2,Date 2)}}}
+{{{cvhonor(\faTrophy\;Fantastic Achievement 3,Event 3,Location 3,Date 3)}}}
+@@latex:\end{cvhonors}@@
+
+# * {{{fa(Language)}}} Languages
+# {{{cvdoubleitem(English,Native,Spanish,Intermediate)}}}
