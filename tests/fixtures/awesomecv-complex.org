@@ -61,19 +61,22 @@
 @@latex:\cventry{Ph.D. in Doctorate Stuff}{University One\textnormal{ | }Group One, Department One}{City, State.}{2022--2025}{@@
 - Thesis on Emacs-based resume generation.
 - Published 3 papers on LaTeX automation.
-@@latex:}\par@@
+@@latex:}@@
+@@latex:\\@@
 
 ** Masters :ignore:
 @@latex:\cventry{M.Sc. in Masters Stuff}{University Two\textnormal{ | }Group Two, Department Two}{City, State.}{2020--2022}{@@
 - Took graduate classes on ELisp programming.
 - Mentored several undergraduate students on the text editor wars.
-@@latex:}\par@@
+@@latex:}@@
+@@latex:\\@@
 
 ** Bachelors :ignore:
 @@latex:\cventry{B.Sc. in Bachelors Stuff}{University Three\textnormal{ | }Group Three, Department Three}{City, State.}{2016--2020}{@@
 - Took multiple courses on functional programming and typesetting.
 - Led student project on involuntary servitude.
-@@latex:}\par@@
+@@latex:}@@
+@@latex:\\@@
 
 @@latex:\end{cventries}@@
 
