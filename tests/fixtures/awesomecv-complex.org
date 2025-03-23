@@ -49,37 +49,31 @@
 * Skills
 
 ** Programming
-
 {{{cvtags(Python,Elisp,JavaScript,LaTeX,C++,Java)}}}
 
 ** Tools & Technologies
-
 {{{cvltags(Emacs,5,Git,4,Docker,3,AWS,2)}}}
 
 * Education
-
 @@latex:\begin{cventries}@@
 
 ** Doctorate :ignore:
-
 @@latex:\cventry{Ph.D. in Doctorate Stuff}{University One\textnormal{ | }Group One, Department One}{City, State.}{2022--2025}{@@
 - Thesis on Emacs-based resume generation.
 - Published 3 papers on LaTeX automation.
-@@latex:}@@
+@@latex:}\par@@
 
 ** Masters :ignore:
-
 @@latex:\cventry{M.Sc. in Masters Stuff}{University Two\textnormal{ | }Group Two, Department Two}{City, State.}{2020--2022}{@@
 - Took graduate classes on ELisp programming.
 - Mentored several undergraduate students on the text editor wars.
-@@latex:}@@
+@@latex:}\par@@
 
 ** Bachelors :ignore:
-
 @@latex:\cventry{B.Sc. in Bachelors Stuff}{University Three\textnormal{ | }Group Three, Department Three}{City, State.}{2016--2020}{@@
 - Took multiple courses on functional programming and typesetting.
 - Led student project on involuntary servitude.
-@@latex:}@@
+@@latex:}\par@@
 
 @@latex:\end{cventries}@@
 
@@ -88,20 +82,17 @@
 @@latex:\begin{cventries}@@
 
 ** Job 1 :ignore:
-
 @@latex:\cventry{Senior Developer \& General Guru}{Tech Corp\textnormal{ | }Group, Department}{City, State.}{2018--2020}{@@
 - Led team of 5 developers
 - Implemented CI/CD pipeline {{{cvtags(Python,Docker,Git)}}}
-@@latex:}@@
+@@latex:}\par@@
 
 ** Job 2 :ignore:
-
 @@latex:\cventry{Software Engineer \& Elite Hacker}{Start-up Inc\textnormal{ | }Group, Department}{City, State.}{2015--2018}{@@
 - Full-stack development {{{cvltags(JavaScript,4,React,3,Node.js,4)}}}
-@@latex:}@@
+@@latex:}\par@@
 
 ** Job 3 :ignore:
-
 @@latex:\cventry{VP Underlings}{\href{https://www.company-3-site.com}{Company 3}\textnormal{ | }\href{https://www.company-3-site.com/department/group}{Group}, \href{https://www.company-3-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
 - *Role 1*
   - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
@@ -109,10 +100,9 @@
   - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
 - *Role 3*
   - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-@@latex:}@@
+@@latex:}\par@@
 
 ** Job 4 :ignore:
-
 @@latex:\cventry{Senior Underling}{\href{https://www.company-4-site.com}{Company 4}\textnormal{ | }\href{https://www.company-4-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
 - *Role 1*
   - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
@@ -120,10 +110,9 @@
   - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
 - *Role 3*
   - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-@@latex:}@@
+@@latex:}\par@@
 
 ** Job 5 :ignore:
-
 @@latex:\cventry{Junior Underling}{\href{https://www.company-5-site.com}{Company 5}\textnormal{ | }\href{https://www.company-5-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
 - *Role 1*
   - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
@@ -131,7 +120,7 @@
   - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
 - *Role 3*
   - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-@@latex:}@@
+@@latex:}\par@@
 
 @@latex:\end{cventries}@@
 
@@ -142,34 +131,29 @@
 @@latex:\begin{cventries}@@
 
 ** Project 1 :ignore:
-
 @@latex:\cventry{Python Library}{\textbf{Project 1}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project1}{https://github.com/user-name/project1}}{}{}{@@
 - Project 1 description.
-@@latex:}@@
+@@latex:}\par@@
 
 ** Project 2 :ignore:
-
 @@latex:\cventry{\Cplusplus Library}{\textbf{Project 2}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project2}{https://github.com/user-name/project2}}{}{}{@@
 - Project 2 description.
-@@latex:}@@
+@@latex:}\par@@
 
 ** Project 3 :ignore:
-
 @@latex:\cventry{Rust Library}{\textbf{Project 3}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project3}{https://github.com/user-name/project3}}{}{}{@@
 - Project 3 description.
-@@latex:}@@
+@@latex:}\par@@
 
 ** Project 4 :ignore:
-
 @@latex:\cventry{Java Library}{\textbf{Project 4}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project4}{https://github.com/user-name/project4}}{}{}{@@
 - Project 4 description.
-@@latex:}@@
+@@latex:}\par@@
 
 ** Project 5 :ignore:
-
 @@latex:\cventry{Haskell Library}{\textbf{Project 5}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project5}{https://github.com/user-name/project5}}{}{}{@@
 - Project 5 description.
-@@latex:}@@
+@@latex:}\par@@
 
 @@latex:\end{cventries}@@
 
