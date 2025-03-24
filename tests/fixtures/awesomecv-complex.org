@@ -58,31 +58,34 @@
 @@latex:\begin{cventries}@@
 
 ** Doctorate :ignore:
-@@latex:\cventry{Ph.D. in Doctorate Stuff}{University One\textnormal{ | }Group One, Department One}{City, State.}{2022--2025}{@@
-{{{vspace(-4.00mm)}}}
-- Thesis on Emacs-based resume generation.
-- Published 3 papers on LaTeX automation.
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{Ph.D. in Doctorate Stuff}{University One\textnormal{ | }Group One, Department One}{City, State.}{2022--2025}{
+\begin{cvitems}
+  \item Thesis on Emacs-based resume generation.
+  \item Published 3 papers on LaTeX automation.
+\end{cvitems}
+}
+#+END_SRC
 
 ** Masters :ignore:
-@@latex:\cventry{M.Sc. in Masters Stuff}{University Two\textnormal{ | }Group Two, Department Two}{City, State.}{2020--2022}{@@
-{{{vspace(-4.00mm)}}}
-- Took graduate classes on ELisp programming.
-- Mentored several undergraduate students on the text editor wars.
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{M.Sc. in Masters Stuff}{University Two\textnormal{ | }Group Two, Department Two}{City, State.}{2020--2022}{
+\begin{cvitems}
+  \item Took graduate classes on ELisp programming.
+  \item Mentored several undergraduate students on the text editor wars.
+\end{cvitems}
+}
+#+END_SRC
 
 ** Bachelors :ignore:
-@@latex:\cventry{B.Sc. in Bachelors Stuff}{University Three\textnormal{ | }Group Three, Department Three}{City, State.}{2016--2020}{@@
-{{{vspace(-4.00mm)}}}
-- Took multiple courses on functional programming and typesetting.
-- Led student project on involuntary servitude.
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{B.Sc. in Bachelors Stuff}{University Three\textnormal{ | }Group Three, Department Three}{City, State.}{2016--2020}{
+\begin{cvitems}
+  \item Took multiple courses on functional programming and typesetting.
+  \item Led student project on involuntary servitude.
+\end{cvitems}
+}
+#+END_SRC
 
 @@latex:\end{cventries}@@
 
@@ -91,108 +94,134 @@
 @@latex:\begin{cventries}@@
 
 ** Job 1 :ignore:
-@@latex:\cventry{Senior Developer \& General Guru}{Tech Corp\textnormal{ | }Group, Department}{City, State.}{2018--2020}{@@
-{{{vspace(-4.00mm)}}}
-- Led team of 5 developers
-- Implemented CI/CD pipeline {{{cvtags(Python,Docker,Git)}}}
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{Senior Developer \& General Guru}{Tech Corp\textnormal{ | }Group, Department}{City, State.}{2018--2020}{
+\begin{cvitems}
+  \item Led team of 5 developers.
+  \item Implemented CI/CD pipeline. \cvtag{Python} \cvtag{Docker} \cvtag{Git}
+\end{cvitems}
+}
+#+END_SRC
 
 ** Job 2 :ignore:
-@@latex:\cventry{Software Engineer \& Elite Hacker}{Start-up Inc\textnormal{ | }Group, Department}{City, State.}{2015--2018}{@@
-{{{vspace(-4.00mm)}}}
-- Full-stack development {{{cvltags(JavaScript,4,React,3,Node.js,4)}}}
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{Software Engineer \& Elite Hacker}{Start-up Inc\textnormal{ | }Group, Department}{City, State.}{2015--2018}{
+\begin{cvitems}
+  \item Full-stack development. \cvtag{JavaScript}[4] \cvtag{React}[3] \cvtag{Node.js}[4]
+\end{cvitems}
+}
+#+END_SRC
 
 ** Job 3 :ignore:
-@@latex:\cventry{VP Underlings}{\href{https://www.company-3-site.com}{Company 3}\textnormal{ | }\href{https://www.company-3-site.com/department/group}{Group}, \href{https://www.company-3-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
-{{{vspace(-4.00mm)}}}
-- *Role 1*
-  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-- *Role 2*
-  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-- *Role 3*
-  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{VP Underlings}{\href{https://www.company-3-site.com}{Company 3}\textnormal{ | }\href{https://www.company-3-site.com/department/group}{Group}, \href{https://www.company-3-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{
+\begin{cvitems}
+\item \textbf{Role 1}
+\begin{itemize}
+  \item Role 1 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 2}
+\begin{itemize}
+  \item Role 2 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 3}
+\begin{itemize}
+  \item Role 3 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\end{cvitems}
+}
+#+END_SRC
 
 ** Job 4 :ignore:
-@@latex:\cventry{Senior Underling}{\href{https://www.company-4-site.com}{Company 4}\textnormal{ | }\href{https://www.company-4-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
-{{{vspace(-4.00mm)}}}
-- *Role 1*
-  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-- *Role 2*
-  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-- *Role 3*
-  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{Senior Underling}{\href{https://www.company-4-site.com}{Company 4}\textnormal{ | }\href{https://www.company-4-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{
+\begin{cvitems}
+\item \textbf{Role 1}
+\begin{itemize}
+  \item Role 1 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 2}
+\begin{itemize}
+  \item Role 2 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 3}
+\begin{itemize}
+  \item Role 3 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\end{cvitems}
+}
+#+END_SRC
 
 ** Job 5 :ignore:
-@@latex:\cventry{Junior Underling}{\href{https://www.company-5-site.com}{Company 5}\textnormal{ | }\href{https://www.company-5-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
-{{{vspace(-4.00mm)}}}
-- *Role 1*
-  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-- *Role 2*
-  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-- *Role 3*
-  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{Junior Underling}{\href{https://www.company-5-site.com}{Company 5}\textnormal{ | }\href{https://www.company-5-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{
+\begin{cvitems}
+\item \textbf{Role 1}
+\begin{itemize}
+  \item Role 1 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 2}
+\begin{itemize}
+  \item Role 2 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 3}
+\begin{itemize}
+  \item Role 3 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\end{cvitems}
+}
+#+END_SRC
 
 @@latex:\end{cventries}@@
-
-# {{{pagebreak()}}}
 
 * Projects
 
 @@latex:\begin{cventries}@@
 
 ** Project 1 :ignore:
-@@latex:\cventry{Python Library}{\textbf{Project 1}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project1}{https://github.com/user-name/project1}}{}{}{@@
-{{{vspace(-4.00mm)}}}
-- Project 1 description.
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{Python Library}{\textbf{Project 1}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project1}{https://github.com/user-name/project1}}{}{}{
+\begin{cvitems}
+  \item Project 1 description.
+\end{cvitems}
+}
+#+END_SRC
 
 ** Project 2 :ignore:
-@@latex:\cventry{\Cplusplus Library}{\textbf{Project 2}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project2}{https://github.com/user-name/project2}}{}{}{@@
-{{{vspace(-4.00mm)}}}
-- Project 2 description.
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{\Cplusplus Library}{\textbf{Project 2}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project2}{https://github.com/user-name/project2}}{}{}{
+\begin{cvitems}
+  \item Project 2 description.
+\end{cvitems}
+}
+#+END_SRC
 
 ** Project 3 :ignore:
-@@latex:\cventry{Rust Library}{\textbf{Project 3}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project3}{https://github.com/user-name/project3}}{}{}{@@
-{{{vspace(-4.00mm)}}}
-- Project 3 description.
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{Rust Library}{\textbf{Project 3}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project3}{https://github.com/user-name/project3}}{}{}{
+\begin{cvitems}
+  \item Project 3 description.
+\end{cvitems}
+}
+#+END_SRC
 
 ** Project 4 :ignore:
-@@latex:\cventry{Java Library}{\textbf{Project 4}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project4}{https://github.com/user-name/project4}}{}{}{@@
-{{{vspace(-4.00mm)}}}
-- Project 4 description.
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{Java Library}{\textbf{Project 4}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project4}{https://github.com/user-name/project4}}{}{}{
+\begin{cvitems}
+  \item Project 4 description.
+\end{cvitems}
+}
+#+END_SRC
 
 ** Project 5 :ignore:
-@@latex:\cventry{Haskell Library}{\textbf{Project 5}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project5}{https://github.com/user-name/project5}}{}{}{@@
-{{{vspace(-4.00mm)}}}
-- Project 5 description.
-{{{vspace(-4.00mm)}}}
-@@latex:}@@
-@@latex:\\@@
+#+BEGIN_SRC latex
+\cventry{Haskell Library}{\textbf{Project 5}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project5}{https://github.com/user-name/project5}}{}{}{
+\begin{cvitems}
+  \item Project 5 description.
+\end{cvitems}
+}
+#+END_SRC
 
 @@latex:\end{cventries}@@
 
