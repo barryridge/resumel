@@ -11,7 +11,9 @@
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
        (awesomecv-color (or (cdr (assoc "AWESOMECV_COLOR" resumel-template-vars)) "awesome-red"))
        (awesomecv-section-color-highlight (or (cdr (assoc "AWESOMECV_SECTION_COLOR_HIGHLIGHT" resumel-template-vars)) "true"))
-       (awesomecv-header-social-sep (or (cdr (assoc "AWESOMECV_HEADER_SOCIAL_SEP" resumel-template-vars)) "\\quad\\textbar\\quad")))
+       (awesomecv-header-social-sep (or (cdr (assoc "AWESOMECV_HEADER_SOCIAL_SEP" resumel-template-vars)) "\\quad\\textbar\\quad"))
+       (awesomecv-section-top-skip (or (cdr (assoc "AWESOMECV_SECTION_TOP_SKIP" resumel-template-vars)) "3mm"))
+       (awesomecv-section-content-top-skip (or (cdr (assoc "AWESOMECV_SECTION_CONTENT_TOP_SKIP" resumel-template-vars)) "2.5mm")))
 
   (setq org-latex-compiler compiler)
 
@@ -65,21 +67,9 @@
 % If you would like to change the social information separator from a pipe (|) to something else
 \\renewcommand{\\acvHeaderSocialSep}{" awesomecv-header-social-sep "}
 
-% Redfine itemize to match cvitems from awesomecv
-% This will cause Org lists to use this format instead.
-%
-\\usepackage{enumitem}
-\\let\\olditemize\\itemize
-\\let\\endolditemize\\enditemize
-\\renewenvironment{itemize}{
-  \\begin{justify}
-  \\begin{olditemize}[leftmargin=2ex, nosep, noitemsep]
-    \\setlength{\\parskip}{0pt}
-    \\renewcommand{\\labelitemi}{\\bullet}%
-}{
-  \\end{olditemize}
-  \\end{justify}
-}
+% Other
+\\renewcommand{\\acvSectionTopSkip}{" awesomecv-section-top-skip "}
+\\renewcommand{\\acvSectionContentTopSkip}{" awesomecv-section-content-top-skip "}
 
 % Define divider (replicated from altacv)
 \\usepackage{dashrule}
