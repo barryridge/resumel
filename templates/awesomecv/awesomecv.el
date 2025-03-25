@@ -17,6 +17,17 @@
 
   (setq org-latex-compiler compiler)
 
+  (message "[resumel - DEBUG]: org-latex-default-packages-alist BEFORE: %S" org-latex-default-packages-alist)
+
+  ;; Remove amssymb from org latex packages, as it seems to cause a conflict
+  (require 'cl-lib)  ;; for cl-remove-if
+  (setq org-latex-default-packages-alist
+        (cl-remove-if (lambda (pkg)
+                        (member (cadr pkg) '("amsmath" "amssymb")))
+                      org-latex-default-packages-alist))
+
+  (message "[resumel - DEBUG]: org-latex-default-packages-alist AFTER: %S" org-latex-default-packages-alist)
+
   (add-to-list 'org-latex-classes
                `("resumel-awesomecv"
                  ,(concat "\\documentclass[" documentclass-options "]{awesome-cv}
