@@ -26,11 +26,10 @@ jobs:
           g++ \
           libpoppler-glib-dev \
           poppler-utils \
-          libwxgtk3.2-dev \
           git
 
     - name: Set up TeX Live
-      uses: teatimeguest/setup-texlive-action@v3
+      uses: teatimeguest/setup-texlive-action@v3.4.1
       with:
         packages: |
           latexmk
