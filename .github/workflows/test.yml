@@ -26,13 +26,14 @@ jobs:
           g++ \
           libpoppler-glib-dev \
           poppler-utils \
-          libwxgtk3.2-dev \
           git
 
     - name: Set up TeX Live
-      uses: teatimeguest/setup-texlive-action@v3
+      uses: teatimeguest/setup-texlive-action@v3.4.1
       with:
         packages: |
+          latexmk
+          xetex
           scheme-basic
           moderncv
           paracol
@@ -138,11 +139,22 @@ jobs:
           fontaxes
           ulem
           capt-of
+          array
+          xifthen
+          xstring
+          setspace
+          sourcesanspro
+          bookmark
 
     - name: Clone AltaCV Repository
       run: |
         mkdir -p $TEXMFHOME/tex/latex
         git clone https://github.com/liantze/AltaCV.git $TEXMFHOME/tex/latex/altacv
+
+    - name: Clone AwesomeCV Repository
+      run: |
+        mkdir -p $TEXMFHOME/tex/latex
+        git clone https://github.com/posquit0/Awesome-CV.git $TEXMFHOME/tex/latex/awesomecv
 
     - name: Refresh TeX Live Filename Database
       run: |
@@ -176,12 +188,22 @@ jobs:
 
     - name: Debug CI Emacs Setup
       run: |
+        echo "Listing Emacs version info:"
+        emacs --version
+        echo "Listing Emacs Org version info:"
+        emacs --batch -l ${USER_EMACS_DIR}/init.el --eval '(princ (org-version))' --kill
+        echo "Listing pdflatex version info:"
+        pdflatex --version
+        echo "Listing xetex version info:"
+        xetex --version
         echo "USER_EMACS_DIR is set to: $USER_EMACS_DIR"
         echo "TEXMFHOME is set to: $TEXMFHOME"
         echo "Listing contents of $USER_EMACS_DIR:"
         ls -la $USER_EMACS_DIR
         echo "Listing contents of $TEXMFHOME/tex/latex/altacv:"
         ls -la $TEXMFHOME/tex/latex/altacv
+        echo "Listing contents of $TEXMFHOME/tex/latex/awesomecv:"
+        ls -la $TEXMFHOME/tex/latex/awesomecv
 
     - name: Run tests
       env:

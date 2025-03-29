@@ -1,0 +1,8 @@
+#+INCLUDE: "../../resumel.org"
+
+#+MACRO: cvsection @@latex:\cvsection{$1}@@
+#+MACRO: cvsubsection @@latex:\cvsubsection{$1}@@
+#+MACRO: cventry @@latex:\cventry{$1}{$2}{$3}{$4}{$5}{$6}@@
+#+MACRO: cvskill @@latex:\cvskill{$1}{$2}@@
+#+MACRO: cvhonor @@latex:\cvhonor{$1}{$2}{$3}{$4}@@
+#+MACRO: wheelchart @@latex:\wheelchart{$1}{$2}{$3}@@
