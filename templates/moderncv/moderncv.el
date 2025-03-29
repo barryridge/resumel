@@ -3,7 +3,8 @@
 (setq org-latex-default-packages-alist nil)
 (setq org-latex-packages-alist nil)
 
-(let* ((geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "scale=0.75, top=2cm, bottom=2cm, left=2.05cm, right=2.05cm"))
+(let* ((compiler (or (cdr (assoc "COMPILER" resumel-template-vars)) "pdflatex"))
+       (geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "scale=0.75, top=2cm, bottom=2cm, left=2.05cm, right=2.05cm"))
        (documentclass-options (or (cdr (assoc "DOCUMENTCLASS_OPTIONS" resumel-template-vars)) "11pt,letterpaper,sans"))
        (main-font-xelatex (or (cdr (assoc "MAIN_FONT_XELATEX" resumel-template-vars)) "Latin Modern Roman"))
        (sans-font-xelatex (or (cdr (assoc "SANS_FONT_XELATEX" resumel-template-vars)) "Latin Modern Sans"))
@@ -17,6 +18,8 @@
        (moderncv-style (or (cdr (assoc "MODERNCV_STYLE" resumel-template-vars)) "classic"))
        (moderncv-firstname (or (cdr (assoc "MODERNCV_FIRSTNAME" resumel-template-vars)) ""))
        (moderncv-lastname (or (cdr (assoc "MODERNCV_LASTNAME" resumel-template-vars)) "")))
+
+  (setq org-latex-compiler compiler)
 
   (add-to-list 'org-latex-classes
                `("resumel-moderncv"

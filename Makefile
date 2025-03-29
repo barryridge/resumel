@@ -61,7 +61,7 @@ endif
 test: clean install-packages
 	@mkdir -p $(RESULTS_DIR)
 
-	@echo "Running resumel moderncv template tests..."
+	@echo "Running resumel template tests..."
 	@DIFF_PDF_CHANNEL_TOLERANCE=$(DIFF_PDF_CHANNEL_TOLERANCE) \
 	 	DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE=$(DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE) \
 	 	$(EMACS) $(EMACS_FLAGS) $(OX_EXTRA_L_FLAGS) \
