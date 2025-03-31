@@ -15,14 +15,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            latexmk \
             emacs \
             make \
-            curl \
-            automake \
-            g++ \
-            libpoppler-glib-dev \
-            poppler-utils \
             git
 
       - name: Set up TeX Live
