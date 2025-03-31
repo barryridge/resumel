@@ -172,7 +172,7 @@ jobs:
           echo "Listing Emacs version info:"
           emacs --version
           echo "Listing Emacs Org version info:"
-          emacs --batch -l ${USER_EMACS_DIR}/init.el --eval '(princ (org-version))' --kill
+          emacs --batch -l ./test-init.el --eval '(princ (org-version))' --kill
           echo "Listing pdflatex version info:"
           pdflatex --version
           echo "Listing xetex version info:"
