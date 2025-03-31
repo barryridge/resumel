@@ -6,8 +6,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      # Define a separate Emacs user directory for CI (optional)
-      USER_EMACS_DIR: ${{ github.workspace }}/ci_emacs.d
       TEXMFHOME: ${{ github.workspace }}/texmf
     steps:
       - name: Checkout code
@@ -177,10 +175,7 @@ jobs:
           pdflatex --version
           echo "Listing xetex version info:"
           xetex --version
-          echo "USER_EMACS_DIR is set to: $USER_EMACS_DIR"
           echo "TEXMFHOME is set to: $TEXMFHOME"
-          echo "Listing contents of $USER_EMACS_DIR:"
-          ls -la $USER_EMACS_DIR
           echo "Listing contents of $TEXMFHOME/tex/latex/altacv:"
           ls -la $TEXMFHOME/tex/latex/altacv
           echo "Listing contents of $TEXMFHOME/tex/latex/awesomecv:"
