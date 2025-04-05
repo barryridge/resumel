@@ -16,6 +16,7 @@
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
        (cvtag-intensity-default (or (cdr (assoc "CVTAG_INTENSITY_DEFAULT" resumel-template-vars)) "5"))
        (cvtag-font-default (or (cdr (assoc "CVTAG_FONT_DEFAULT" resumel-template-vars)) "\\scriptsize"))
+       (cvtag-baseline-default (or (cdr (assoc "CVTAG_BASELINE_DEFAULT" resumel-template-vars)) "-0.5ex"))
        (cvtag-inner-x-sep-default (or (cdr (assoc "CVTAG_INNER_X_SEP_DEFAULT" resumel-template-vars)) "0.5ex"))
        (cvtag-inner-y-sep-default (or (cdr (assoc "CVTAG_INNER_Y_SEP_DEFAULT" resumel-template-vars)) "0.5ex"))
        (cvtag-text-height-default (or (cdr (assoc "CVTAG_TEXT_HEIGHT_DEFAULT" resumel-template-vars)) "1.25ex"))
@@ -110,6 +111,7 @@
 % Set global cvtag defaults
 \\newcommand{\\cvtagIntensityDefault}{" cvtag-intensity-default "}
 \\newcommand{\\cvtagFontDefault}{" cvtag-font-default "}
+\\newcommand{\\cvtagBaselineDefault}{" cvtag-baseline-default "}
 \\newcommand{\\cvtagInnerXSepDefault}{" cvtag-inner-x-sep-default "}
 \\newcommand{\\cvtagInnerYSepDefault}{" cvtag-inner-y-sep-default "}
 \\newcommand{\\cvtagTextHeightDefault}{" cvtag-text-height-default "}
@@ -121,6 +123,7 @@
 \\NewDocumentCommand{\\cvtag}{m
   O{\\cvtagIntensityDefault}
   O{\\cvtagFontDefault}
+  O{\\cvtagBaselineDefault}
   O{\\cvtagInnerXSepDefault}
   O{\\cvtagInnerYSepDefault}
   O{\\cvtagTextHeightDefault}
@@ -132,15 +135,15 @@
   \\ifdim \\skillIntensity pt < 0pt   \\def\\skillIntensity{0}\\fi
   %
   % Draw the tag using separate spacing parameters.
-  \\tikz[baseline=-0.5ex]{%
+  \\tikz[baseline=#4]{%
     \\node[draw=black!\\skillIntensity!white,
           fill=white,
           % Use the passed corner style
-          #8,
-          inner xsep=#4,
-          inner ysep=#5,
-          text height=#6,
-          text depth=#7,
+          #9,
+          inner xsep=#5,
+          inner ysep=#6,
+          text height=#7,
+          text depth=#8,
           font=#3,
           text=black!\\skillIntensity!white]
           {#1};%
