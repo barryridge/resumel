@@ -9,6 +9,14 @@
        (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lato"))
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "sourcecodepro"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (cvtag-intensity-default (or (cdr (assoc "CVTAG_INTENSITY_DEFAULT" resumel-template-vars)) "5"))
+       (cvtag-baseline-default (or (cdr (assoc "CVTAG_BASELINE_DEFAULT" resumel-template-vars)) "-0.5ex"))
+       (cvtag-font-default (or (cdr (assoc "CVTAG_FONT_DEFAULT" resumel-template-vars)) "\\scriptsize"))
+       (cvtag-inner-x-sep-default (or (cdr (assoc "CVTAG_INNER_X_SEP_DEFAULT" resumel-template-vars)) "0.5ex"))
+       (cvtag-inner-y-sep-default (or (cdr (assoc "CVTAG_INNER_Y_SEP_DEFAULT" resumel-template-vars)) "0.5ex"))
+       (cvtag-text-height-default (or (cdr (assoc "CVTAG_TEXT_HEIGHT_DEFAULT" resumel-template-vars)) "1.25ex"))
+       (cvtag-text-depth-default (or (cdr (assoc "CVTAG_TEXT_DEPTH_DEFAULT" resumel-template-vars)) "0.25ex"))
+       (cvtag-corner-default (or (cdr (assoc "CVTAG_CORNER_DEFAULT" resumel-template-vars)) "rounded corners"))
        (awesomecv-color (or (cdr (assoc "AWESOMECV_COLOR" resumel-template-vars)) "awesome-red"))
        (awesomecv-section-color-highlight (or (cdr (assoc "AWESOMECV_SECTION_COLOR_HIGHLIGHT" resumel-template-vars)) "true"))
        (awesomecv-header-social-sep (or (cdr (assoc "AWESOMECV_HEADER_SOCIAL_SEP" resumel-template-vars)) "\\quad\\textbar\\quad"))
@@ -17,16 +25,12 @@
 
   (setq org-latex-compiler compiler)
 
-  (message "[resumel - DEBUG]: org-latex-default-packages-alist BEFORE: %S" org-latex-default-packages-alist)
-
   ;; Remove amssymb from org latex packages, as it seems to cause a conflict
   (require 'cl-lib)  ;; for cl-remove-if
   (setq org-latex-default-packages-alist
         (cl-remove-if (lambda (pkg)
                         (member (cadr pkg) '("amsmath" "amssymb")))
                       org-latex-default-packages-alist))
-
-  (message "[resumel - DEBUG]: org-latex-default-packages-alist AFTER: %S" org-latex-default-packages-alist)
 
   (add-to-list 'org-latex-classes
                `("resumel-awesomecv"
@@ -103,24 +107,49 @@
 \\newcommand{\\divider}{\\textcolor{color2!30}{\\hdashrule{\\linewidth}{0.6pt}{0.5ex}}\\medskip}
 
 % CV Tags
-\\usepackage{tikz}
+%
+% Set global cvtag defaults
+\\newcommand{\\cvtagIntensityDefault}{" cvtag-intensity-default "}
+\\newcommand{\\cvtagFontDefault}{" cvtag-font-default "}
+\\newcommand{\\cvtagBaselineDefault}{" cvtag-baseline-default "}
+\\newcommand{\\cvtagInnerXSepDefault}{" cvtag-inner-x-sep-default "}
+\\newcommand{\\cvtagInnerYSepDefault}{" cvtag-inner-y-sep-default "}
+\\newcommand{\\cvtagTextHeightDefault}{" cvtag-text-height-default "}
+\\newcommand{\\cvtagTextDepthDefault}{" cvtag-text-depth-default "}
+\\newcommand{\\cvtagCornerDefault}{" cvtag-corner-default "}
 
-\\NewDocumentCommand{\\cvtag}{m O{5}}{%
+\\usepackage{tikz}
+\\makeatletter
+\\NewDocumentCommand{\\cvtag}{m
+  O{\\cvtagIntensityDefault}
+  O{\\cvtagFontDefault}
+  O{\\cvtagBaselineDefault}
+  O{\\cvtagInnerXSepDefault}
+  O{\\cvtagInnerYSepDefault}
+  O{\\cvtagTextHeightDefault}
+  O{\\cvtagTextDepthDefault}
+  O{\\cvtagCornerDefault}}{%
+  % Calculate the intensity based on the provided level (0–5)
   \\pgfmathsetmacro{\\skillIntensity}{20 + (#2 * 16)}%
   \\ifdim \\skillIntensity pt > 100pt \\def\\skillIntensity{100}\\fi
   \\ifdim \\skillIntensity pt < 0pt   \\def\\skillIntensity{0}\\fi
-  \\tikz[baseline=-0.5ex]{%
+  %
+  % Draw the tag using separate spacing parameters.
+  \\tikz[baseline=#4]{%
     \\node[draw=black!\\skillIntensity!white,
-           fill=white,
-           rounded corners,
-           inner xsep=0.5ex,
-           inner ysep=0.5ex,
-           text height=1.25ex,
-           text depth=.25ex,
-           font=\\scriptsize,
-           text=black!\\skillIntensity!white]{#1};%
-  }
+          fill=white,
+          % Use the passed corner style
+          #9,
+          inner xsep=#5,
+          inner ysep=#6,
+          text height=#7,
+          text depth=#8,
+          font=#3,
+          text=black!\\skillIntensity!white]
+          {#1};%
+  }%
 }
+\\makeatother
 
 % C++ logo
 \\def\\Cplusplus{C{}\\texttt{++}}
