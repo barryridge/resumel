@@ -9,6 +9,8 @@
        (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lato"))
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "sourcecodepro"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (section-font (or (cdr (assoc "SECTION_FONT" resumel-template-vars)) "\\fontsize{16pt}{1em}\\bodyfont\\bfseries"))
+       (subsection-font (or (cdr (assoc "SUBSECTION_FONT" resumel-template-vars)) "\\fontsize{12pt}{1em}\\bodyfont\\scshape"))
        (cvtag-intensity-default (or (cdr (assoc "CVTAG_INTENSITY_DEFAULT" resumel-template-vars)) "5"))
        (cvtag-font-default (or (cdr (assoc "CVTAG_FONT_DEFAULT" resumel-template-vars)) "\\scriptsize"))
        (cvtag-baseline-default (or (cdr (assoc "CVTAG_BASELINE_DEFAULT" resumel-template-vars)) "-0.5ex"))
@@ -37,9 +39,11 @@
                  ,(concat "\\documentclass[" documentclass-options "]{awesome-cv}
 
 % Layout
+%
 \\geometry{" geometry "}
 
 % Fonts
+%
 % \\iftutex
 %   % If using xelatex or lualatex:
 %   \\setmainfont{" main-font-xelatex "} % Main (serif/roman) font
@@ -55,6 +59,14 @@
 %   % \\usepackage{" math-font-pdflatex "} % Math font
 %   \\renewcommand{\\familydefault}{\\sfdefault}
 % \\fi
+
+% Redefine Awesome section color to enable below section style renewal
+\\def\\@sectioncolor#1#2#3{%
+  \\ifbool{acvSectionColorHighlight}{{\\color{awesome}#1#2#3}}{#1#2#3}%
+}
+
+\\renewcommand*{\\sectionstyle}[1]{{" section-font "\\color{text}\\@sectioncolor #1}}
+\\renewcommand*{\\subsectionstyle}[1]{{" subsection-font "\\textcolor{text}{#1}}}
 
 % Colors
 %
@@ -78,6 +90,11 @@
 
 % Set false if you don't want to highlight section with awesome color
 \\setbool{acvSectionColorHighlight}{" awesomecv-section-color-highlight "}
+
+% Math and symbol support
+%
+\\usepackage{amsmath}
+\\usepackage{amsfonts}
 
 % If you would like to change the social information separator from a pipe (|) to something else
 \\renewcommand{\\acvHeaderSocialSep}{" awesomecv-header-social-sep "}
@@ -159,10 +176,6 @@
 
 % Add calendar symbol command for dates
 \\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendar}~}
-
-% Math stuff...
-\\usepackage{amsmath}
-\\usepackage{amsfonts}
 
 ")
 

@@ -9,6 +9,8 @@
        (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lato"))
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "sourcecodepro"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (section-font (or (cdr (assoc "SECTION_FONT" resumel-template-vars)) "\\LARGE\\rmfamily\\bfseries"))
+       (subsection-font (or (cdr (assoc "SUBSECTION_FONT" resumel-template-vars)) "\\large\\bfseries"))
        (cvtag-intensity-default (or (cdr (assoc "CVTAG_INTENSITY_DEFAULT" resumel-template-vars)) "5"))
        (cvtag-font-default (or (cdr (assoc "CVTAG_FONT_DEFAULT" resumel-template-vars)) "\\scriptsize"))
        (cvtag-baseline-default (or (cdr (assoc "CVTAG_BASELINE_DEFAULT" resumel-template-vars)) "-0.5ex"))
@@ -26,6 +28,7 @@
                  ,(concat "\\documentclass[" documentclass-options "]{altacv}
 
 % Layout
+%
 \\geometry{" geometry "}
 
 % Use paracol for column layout
@@ -35,6 +38,7 @@
 \\columnratio{" altacv-columnratio "}
 
 % Fonts
+%
 \\iftutex
   % If using xelatex or lualatex:
   \\setmainfont{" main-font-xelatex "} % Main (serif/roman) font
@@ -51,7 +55,14 @@
   \\renewcommand{\\familydefault}{\\sfdefault}
 \\fi
 
+\\renewcommand{\\familydefault}{\\sfdefault}
+\\renewcommand{\\namefont}{\\Huge\\rmfamily\\bfseries}
+\\renewcommand{\\personalinfofont}{\\footnotesize}
+\\renewcommand{\\cvsectionfont}{" section-font "}
+\\renewcommand{\\cvsubsectionfont}{" subsection-font "}
+
 % Colors
+%
 \\definecolor{Black}{HTML}{000000}
 \\definecolor{SlateGrey}{HTML}{2E2E2E}
 \\definecolor{LightGrey}{HTML}{666666}
@@ -74,12 +85,10 @@
 \\colorlet{color1}{DarkPastelRed}
 \\colorlet{color2}{SlateGrey}
 
-% Update fonts
-\\renewcommand{\\familydefault}{\\sfdefault}
-\\renewcommand{\\namefont}{\\Huge\\rmfamily\\bfseries}
-\\renewcommand{\\personalinfofont}{\\footnotesize}
-\\renewcommand{\\cvsectionfont}{\\LARGE\\rmfamily\\bfseries}
-\\renewcommand{\\cvsubsectionfont}{\\large\\bfseries}
+% Math and symbol support
+%
+\\usepackage{amsmath}
+\\usepackage{amsfonts}
 
 % CV Tags
 %
@@ -134,10 +143,6 @@
 
 % Add calendar symbol command for dates
 \\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendar}~}
-
-% Math stuff...
-\\usepackage{amsmath}
-\\usepackage{amsfonts}
 
 ")
 

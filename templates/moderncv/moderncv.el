@@ -14,6 +14,8 @@
        (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (section-font (or (cdr (assoc "SECTION_FONT" resumel-template-vars)) "\\Large\\mdseries\\upshape"))
+       (subsection-font (or (cdr (assoc "SUBSECTION_FONT" resumel-template-vars)) "\\large\\mdseries\\upshape"))
        (cvtag-intensity-default (or (cdr (assoc "CVTAG_INTENSITY_DEFAULT" resumel-template-vars)) "5"))
        (cvtag-font-default (or (cdr (assoc "CVTAG_FONT_DEFAULT" resumel-template-vars)) "\\scriptsize"))
        (cvtag-baseline-default (or (cdr (assoc "CVTAG_BASELINE_DEFAULT" resumel-template-vars)) "-0.5ex"))
@@ -36,20 +38,11 @@
 % Set default ModernCV color
 \\moderncvcolor{" moderncv-color "}
 
-% Redefine moderncv colors (they seem to not propagate from the package and cause xcolor 'Undefined color' errors)
-\\definecolor{black}{RGB}{0, 0, 0}
-\\definecolor{red}{rgb}{0.95, 0.20, 0.20}
-\\definecolor{darkgrey}{rgb}{0.45, 0.45, 0.45}
-\\definecolor{orange}{rgb}{0.95, 0.55, 0.15}
-\\definecolor{burgundy}{rgb}{0.596078, 0, 0}% 139/255 (0.545098) or 152/255 (0.596078)
-\\definecolor{purple}{rgb}{0.50, 0.33, 0.80}
-\\definecolor{lightblue}{rgb}{0.22, 0.45, 0.70}
-\\definecolor{green}{rgb}{0.35, 0.70, 0.30}
-
 % Set default ModernCV theme
 \\moderncvstyle{" moderncv-style "}
 
 % Layout
+%
 \\usepackage[" geometry "]{geometry}
 
 % To make cover letter text justified
@@ -62,6 +55,7 @@
 \\makeatother
 
 % Fonts
+%
 \\iftutex
   \\usepackage{fontspec}
   \\usepackage{unicode-math}
@@ -82,8 +76,24 @@
   \\usepackage{" main-font-pdflatex "}
 \\fi
 
+\\renewcommand*{\\sectionfont}{" section-font "}
+\\renewcommand*{\\subsectionfont}{" subsection-font "}
+
+% Colors
+%
+% Redefine moderncv colors (they seem to not propagate from the package and cause xcolor 'Undefined color' errors)
+\\definecolor{black}{RGB}{0, 0, 0}
+\\definecolor{red}{rgb}{0.95, 0.20, 0.20}
+\\definecolor{darkgrey}{rgb}{0.45, 0.45, 0.45}
+\\definecolor{orange}{rgb}{0.95, 0.55, 0.15}
+\\definecolor{burgundy}{rgb}{0.596078, 0, 0}% 139/255 (0.545098) or 152/255 (0.596078)
+\\definecolor{purple}{rgb}{0.50, 0.33, 0.80}
+\\definecolor{lightblue}{rgb}{0.22, 0.45, 0.70}
+\\definecolor{green}{rgb}{0.35, 0.70, 0.30}
+
 
 % Math and symbol support
+%
 \\usepackage{amsmath}
 \\usepackage{amsfonts}
 

@@ -9,6 +9,8 @@
        (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (section-font (or (cdr (assoc "SECTION_FONT" resumel-template-vars)) "\\LARGE"))
+       (subsection-font (or (cdr (assoc "SUBSECTION_FONT" resumel-template-vars)) "\\large"))
        (cvtag-intensity-default (or (cdr (assoc "CVTAG_INTENSITY_DEFAULT" resumel-template-vars)) "5"))
        (cvtag-font-default (or (cdr (assoc "CVTAG_FONT_DEFAULT" resumel-template-vars)) "\\scriptsize"))
        (cvtag-baseline-default (or (cdr (assoc "CVTAG_BASELINE_DEFAULT" resumel-template-vars)) "-0.5ex"))
@@ -26,6 +28,7 @@
                  ,(concat "\\documentclass[" documentclass-options "]{altacv}
 
 % Layout
+%
 \\geometry{" geometry "}
 
 % Use paracol for column layout
@@ -35,6 +38,7 @@
 \\columnratio{" modaltacv-columnratio "}
 
 % Fonts
+%
 \\iftutex
   % If using xelatex or lualatex:
   \\setmainfont{" main-font-xelatex "} % Main (serif/roman) font
@@ -51,7 +55,18 @@
   \\renewcommand{\\familydefault}{\\sfdefault}
 \\fi
 
+\\usepackage[utf8]{inputenc}
+\\usepackage[T1]{fontenc}
+\\usepackage{lmodern} % Loads Latin Modern Roman, Sans, and Mono
+\\renewcommand{\\familydefault}{\\sfdefault}
+\\renewcommand{\\namefont}{\\Huge\\mdseries\\upshape}
+\\renewcommand{\\taglinefont}{\\LARGE\\mdseries\\slshape}
+\\renewcommand{\\personalinfofont}{\\footnotesize\\mdseries\\slshape}
+\\renewcommand{\\cvsectionfont}{" section-font "}
+\\renewcommand{\\cvsubsectionfont}{" subsection-font "}
+
 % Colors
+%
 \\definecolor{Black}{HTML}{000000}
 \\definecolor{SlateGrey}{HTML}{2E2E2E}
 \\definecolor{LightGrey}{HTML}{666666}
@@ -84,18 +99,13 @@
 \\colorlet{color1}{lightblue}
 \\colorlet{color2}{darkgrey}
 
-% Update fonts
-\\usepackage[utf8]{inputenc}
-\\usepackage[T1]{fontenc}
-\\usepackage{lmodern} % Loads Latin Modern Roman, Sans, and Mono
-\\renewcommand{\\familydefault}{\\sfdefault}
-\\renewcommand{\\namefont}{\\Huge\\mdseries\\upshape}
-\\renewcommand{\\taglinefont}{\\LARGE\\mdseries\\slshape}
-\\renewcommand{\\personalinfofont}{\\footnotesize\\mdseries\\slshape}
-\\renewcommand{\\cvsectionfont}{\\LARGE}
-\\renewcommand{\\cvsubsectionfont}{\\large\\bfseries}
+% Math and symbol support
+%
+\\usepackage{amsmath}
+\\usepackage{amsfonts}
 
-% Update info fields & symbols
+% Info fields & symbols
+%
 \\NewInfoField{location}{\\faMapMarker}
 \\NewInfoField{mailaddress}{\\faEnvelope}
 \\NewInfoField{phone}{\\faMobile}[tel:]
@@ -248,10 +258,6 @@
 
 % Add calendar symbol command for dates
 \\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendar}~}
-
-% Math stuff...
-\\usepackage{amsmath}
-\\usepackage{amsfonts}
 
 % Itemize labels from moderncv
 \\renewcommand{\\labelitemi}{\\strut\\textcolor{color1}{\\large\\rmfamily\\small\\textbullet}}
