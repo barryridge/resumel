@@ -60,13 +60,10 @@
 %   \\renewcommand{\\familydefault}{\\sfdefault}
 % \\fi
 
-% Redefine Awesome section color to enable below section style renewal
-\\def\\@sectioncolor#1#2#3{%
-  \\ifbool{acvSectionColorHighlight}{{\\color{awesome}#1#2#3}}{#1#2#3}%
-}
-
+\\makeatletter
 \\renewcommand*{\\sectionstyle}[1]{{" section-font "\\color{text}\\@sectioncolor #1}}
 \\renewcommand*{\\subsectionstyle}[1]{{" subsection-font "\\textcolor{text}{#1}}}
+\\makeatother
 
 % Colors
 %
