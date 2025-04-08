@@ -8,8 +8,6 @@
 #+RESUMEL_MODERNCV_COLOR: blue
 # RESUMEL_MODERNCV_STYLE Options: 'casual', 'classic' (default), 'banking', 'oldstyle', 'fancy', 'contemporary'
 #+RESUMEL_MODERNCV_STYLE: classic
-#+RESUMEL_MODERNCV_FIRSTNAME: Firstname
-#+RESUMEL_MODERNCV_LASTNAME: Lastname
 #+TITLE: World Expert \newline \newline \small{Seeking a fantastic new role.}
 #+AUTHOR: Firstname Lastname
 #+DATE: <1955-11-05 Sat>

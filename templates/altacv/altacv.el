@@ -9,6 +9,8 @@
        (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lato"))
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "sourcecodepro"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (title-font (or (cdr (assoc "TITLE_FONT" resumel-template-vars)) "\\large\\bfseries"))
+       (author-font (or (cdr (assoc "AUTHOR_FONT" resumel-template-vars)) "\\Huge\\rmfamily\\bfseries"))
        (section-font (or (cdr (assoc "SECTION_FONT" resumel-template-vars)) "\\LARGE\\rmfamily\\bfseries"))
        (subsection-font (or (cdr (assoc "SUBSECTION_FONT" resumel-template-vars)) "\\large\\bfseries"))
        (cvtag-intensity-default (or (cdr (assoc "CVTAG_INTENSITY_DEFAULT" resumel-template-vars)) "5"))
@@ -56,7 +58,8 @@
 \\fi
 
 \\renewcommand{\\familydefault}{\\sfdefault}
-\\renewcommand{\\namefont}{\\Huge\\rmfamily\\bfseries}
+\\renewcommand{\\namefont}{" author-font "}
+\\renewcommand{\\taglinefont}{" title-font "}
 \\renewcommand{\\personalinfofont}{\\footnotesize}
 \\renewcommand{\\cvsectionfont}{" section-font "}
 \\renewcommand{\\cvsubsectionfont}{" subsection-font "}
@@ -89,6 +92,27 @@
 %
 \\usepackage{amsmath}
 \\usepackage{amsfonts}
+
+% CV Header
+%
+% Update to use Org 'title' instead of 'tagline' and Org 'author' instead of 'name'
+%
+\\makeatletter
+\\renewcommand{\\makecvheader}{%
+  \\begingroup
+    \\altacv@left@photos\\hfill%
+    \\begin{minipage}{\\dimexpr\\linewidth-\\altacv@photos@width}%
+    \\raggedright%
+    {\\namefont\\color{name}\\MakeUppercase{\\@author}\\par}
+    \\medskip
+    {\\taglinefont\\color{tagline}\\@title\\par}
+    \\medskip
+    {\\personalinfofont\\@personalinfo\\par}
+    \\end{minipage}\\hfill%
+    \\altacv@right@photos\\par%
+  \\endgroup\\medskip
+}
+\\makeatother
 
 % CV Tags
 %

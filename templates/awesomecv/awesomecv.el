@@ -9,6 +9,8 @@
        (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lato"))
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "sourcecodepro"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (title-font (or (cdr (assoc "TITLE_FONT" resumel-template-vars)) "\\fontsize{7.6pt}{1em}\\bodyfont\\scshape"))
+       (author-font (or (cdr (assoc "AUTHOR_FONT" resumel-template-vars)) "\\fontsize{32pt}{1em}"))
        (section-font (or (cdr (assoc "SECTION_FONT" resumel-template-vars)) "\\fontsize{16pt}{1em}\\bodyfont\\bfseries"))
        (subsection-font (or (cdr (assoc "SUBSECTION_FONT" resumel-template-vars)) "\\fontsize{12pt}{1em}\\bodyfont\\scshape"))
        (cvtag-intensity-default (or (cdr (assoc "CVTAG_INTENSITY_DEFAULT" resumel-template-vars)) "5"))
@@ -61,6 +63,9 @@
 % \\fi
 
 \\makeatletter
+\\renewcommand*{\\headerfirstnamestyle}[1]{{" author-font "\\headerfontlight\\color{graytext} #1}}
+\\renewcommand*{\\headerlastnamestyle}[1]{{" author-font "\\headerfont\\bfseries\\color{text} #1}}
+\\renewcommand*{\\headerpositionstyle}[1]{{" title-font "\\color{awesome} #1}}
 \\renewcommand*{\\sectionstyle}[1]{{" section-font "\\color{text}\\@sectioncolor #1}}
 \\renewcommand*{\\subsectionstyle}[1]{{" subsection-font "\\textcolor{text}{#1}}}
 \\makeatother
@@ -93,6 +98,39 @@
 \\usepackage{amsmath}
 \\usepackage{amsfonts}
 
+
+% Author
+%
+% Redefine \\author so that it splits the given name into first and last names.
+\\usepackage{xstring} % For string splitting
+\\makeatletter
+\\renewcommand{\\author}[1]{%
+  % Use xstring to grab text before and after the first space.
+  \\StrBefore{#1}{ }[\\firstname]%
+  \\StrBehind{#1}{ }[\\lastname]%
+  % If there is no space, \\lastname will be empty. In that case, just use the original.
+  \\ifx\\lastname\\empty
+    \\gdef\\@author{#1}%
+  \\else
+    \\gdef\\@author{\\firstname \\lastname}%
+  \\fi
+}
+\\makeatother
+
+% Set name using derived \\firstname and \\lastname
+\\name{\\firstname}{\\lastname}
+
+% Title
+%
+\\makeatletter
+\\renewcommand{\\title}[1]{%
+   \\gdef\\@title{#1}%
+}
+\\position{\\@title}
+\\makeatother
+
+% CV Structure
+%
 % If you would like to change the social information separator from a pipe (|) to something else
 \\renewcommand{\\acvHeaderSocialSep}{" awesomecv-header-social-sep "}
 

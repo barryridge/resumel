@@ -14,6 +14,8 @@
        (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (title-font (or (cdr (assoc "TITLE_FONT" resumel-template-vars)) "\\LARGE\\mdseries\\slshape"))
+       (author-font (or (cdr (assoc "AUTHOR_FONT" resumel-template-vars)) "\\fontsize{34}{36}\\mdseries\\upshape"))
        (section-font (or (cdr (assoc "SECTION_FONT" resumel-template-vars)) "\\Large\\mdseries\\upshape"))
        (subsection-font (or (cdr (assoc "SUBSECTION_FONT" resumel-template-vars)) "\\large\\mdseries\\upshape"))
        (cvtag-intensity-default (or (cdr (assoc "CVTAG_INTENSITY_DEFAULT" resumel-template-vars)) "5"))
@@ -25,9 +27,7 @@
        (cvtag-text-depth-default (or (cdr (assoc "CVTAG_TEXT_DEPTH_DEFAULT" resumel-template-vars)) "0.25ex"))
        (cvtag-corner-default (or (cdr (assoc "CVTAG_CORNER_DEFAULT" resumel-template-vars)) "rounded corners"))
        (moderncv-color (or (cdr (assoc "MODERNCV_COLOR" resumel-template-vars)) "blue"))
-       (moderncv-style (or (cdr (assoc "MODERNCV_STYLE" resumel-template-vars)) "classic"))
-       (moderncv-firstname (or (cdr (assoc "MODERNCV_FIRSTNAME" resumel-template-vars)) ""))
-       (moderncv-lastname (or (cdr (assoc "MODERNCV_LASTNAME" resumel-template-vars)) "")))
+       (moderncv-style (or (cdr (assoc "MODERNCV_STYLE" resumel-template-vars)) "classic")))
 
   (setq org-latex-compiler compiler)
 
@@ -76,6 +76,8 @@
   \\usepackage{" main-font-pdflatex "}
 \\fi
 
+\\renewcommand*{\\namefont}{" author-font "}
+\\renewcommand*{\\titlefont}{" title-font "}
 \\renewcommand*{\\sectionfont}{" section-font "}
 \\renewcommand*{\\subsectionfont}{" subsection-font "}
 
@@ -97,7 +99,29 @@
 \\usepackage{amsmath}
 \\usepackage{amsfonts}
 
+% Author
+%
+% Redefine \\author so that it splits the given name into first and last names.
+\\usepackage{xstring} % For string splitting
+\\makeatletter
+\\renewcommand{\\author}[1]{%
+  % Use xstring to grab text before and after the first space.
+  \\StrBefore{#1}{ }[\\firstname]%
+  \\StrBehind{#1}{ }[\\lastname]%
+  % If there is no space, \\lastname will be empty. In that case, just use the original.
+  \\ifx\\lastname\\empty
+    \\gdef\\@author{#1}%
+  \\else
+    \\gdef\\@author{\\firstname \\lastname}%
+  \\fi
+}
+\\makeatother
+
+% Set name using derived \\firstname and \\lastname
+\\name{\\firstname}{\\lastname}
+
 % Custom commands
+%
 \\newcommand*{\\Cplusplus}{C{}\\texttt{++}}
 \\renewcommand*{\\cventry}[7][.25em]{%
   \\cvitem[#1]{#2}{%
@@ -172,9 +196,6 @@
 
 % For pdf attachments
 \\usepackage{pdfpages}
-
-% Set name (moderncv will throw errors if this is not set in the header)
-\\name{" moderncv-firstname "}{" moderncv-lastname "}
 
 ")
                  ("\n\\section{%s}" . "\n\\section*{%s}")

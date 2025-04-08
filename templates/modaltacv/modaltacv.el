@@ -9,6 +9,8 @@
        (sans-font-pdflatex (or (cdr (assoc "SANS_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
        (mono-font-pdflatex (or (cdr (assoc "MONO_FONT_PDFLATEX" resumel-template-vars)) "lmodern"))
        (math-font-pdflatex (or (cdr (assoc "MATH_FONT_PDFLATEX" resumel-template-vars)) "newtxmath"))
+       (author-font (or (cdr (assoc "AUTHOR_FONT" resumel-template-vars)) "\\Huge\\mdseries\\upshape"))
+       (title-font (or (cdr (assoc "TITLE_FONT" resumel-template-vars)) "\\LARGE\\mdseries\\slshape"))
        (section-font (or (cdr (assoc "SECTION_FONT" resumel-template-vars)) "\\LARGE"))
        (subsection-font (or (cdr (assoc "SUBSECTION_FONT" resumel-template-vars)) "\\large"))
        (cvtag-intensity-default (or (cdr (assoc "CVTAG_INTENSITY_DEFAULT" resumel-template-vars)) "5"))
@@ -59,14 +61,15 @@
 \\usepackage[T1]{fontenc}
 \\usepackage{lmodern} % Loads Latin Modern Roman, Sans, and Mono
 \\renewcommand{\\familydefault}{\\sfdefault}
-\\renewcommand{\\namefont}{\\Huge\\mdseries\\upshape}
-\\renewcommand{\\taglinefont}{\\LARGE\\mdseries\\slshape}
+\\renewcommand{\\namefont}{" author-font "}
+\\renewcommand{\\taglinefont}{" title-font "}
 \\renewcommand{\\personalinfofont}{\\footnotesize\\mdseries\\slshape}
 \\renewcommand{\\cvsectionfont}{" section-font "}
 \\renewcommand{\\cvsubsectionfont}{" subsection-font "}
 
 % Colors
 %
+% Define altacv colors
 \\definecolor{Black}{HTML}{000000}
 \\definecolor{SlateGrey}{HTML}{2E2E2E}
 \\definecolor{LightGrey}{HTML}{666666}
@@ -77,16 +80,8 @@
 \\definecolor{GoldenEarth}{HTML}{E7D192}
 \\definecolor{CoolSky}{HTML}{92CDE7}
 \\definecolor{SoftSkyBlue}{HTML}{97D5EF}
-\\colorlet{name}{Black}
-\\colorlet{tagline}{LightGrey}
-\\colorlet{heading}{Blue}
-\\colorlet{headingrule}{Blue}
-\\colorlet{subheading}{LightGrey}
-\\colorlet{accent}{LightGrey}
-\\colorlet{emphasis}{SlateGrey}
-\\colorlet{body}{SlateGrey}
 
-% Set moderncv colors
+% Define moderncv colors
 \\definecolor{black}{RGB}{0, 0, 0}
 \\definecolor{red}{rgb}{0.95, 0.20, 0.20}
 \\definecolor{darkgrey}{rgb}{0.45, 0.45, 0.45}
@@ -98,6 +93,18 @@
 \\colorlet{color0}{black}
 \\colorlet{color1}{lightblue}
 \\colorlet{color2}{darkgrey}
+
+% Set document colors
+\\colorlet{name}{Black}
+\\colorlet{lastnamecolor}{color2}
+\\colorlet{firstnamecolor}{lastnamecolor!50}
+\\colorlet{tagline}{LightGrey}
+\\colorlet{heading}{Blue}
+\\colorlet{headingrule}{Blue}
+\\colorlet{subheading}{LightGrey}
+\\colorlet{accent}{LightGrey}
+\\colorlet{emphasis}{SlateGrey}
+\\colorlet{body}{SlateGrey}
 
 % Math and symbol support
 %
@@ -119,17 +126,37 @@
 \\newcommand*{\\scholarsocialsymbol}{\\includegraphics[height=1em]{google_scholar_logo_bw.pdf}}
 \\NewInfoField*{scholar}{\\scholarsocialsymbol}
 
+% Author
+%
+% Redefine \\author so that it splits the given name into first and last names.
+\\usepackage{xstring} % For string splitting
+\\makeatletter
+\\renewcommand{\\author}[1]{%
+  % Use xstring to grab text before and after the first space.
+  \\StrBefore{#1}{ }[\\firstname]%
+  \\StrBehind{#1}{ }[\\lastname]%
+  % If there is no space, \\lastname will be empty. In that case, just use the original.
+  \\ifx\\lastname\\empty
+    \\gdef\\@author{#1}%
+  \\else
+    \\gdef\\@author{\\firstname \\lastname}%
+  \\fi
+}
+\\makeatother
+
 % CV Header
 %
-% Update CV header & section headings - socials on multiple lines
+% Update to use Org 'title' instead of 'tagline' and Org 'author' instead of 'name'
+% Update to color firstname and lastname separately as with moderncv
+% Update to have socials on multiple lines
 %
 \\makeatletter
 \\renewcommand{\\makecvheader}{%
   \\begingroup
     \\begin{minipage}[t]{0.8365\\linewidth}
-    {\\namefont\\color{name}\\@name\\par}
+    {\\namefont\\color{firstnamecolor}\\firstname\\ \\color{lastnamecolor}\\lastname\\par}
     \\vspace{0.9em}
-    {\\taglinefont\\color{tagline}\\@tagline\\par}
+    {\\taglinefont\\color{tagline}\\@title\\par}
     \\end{minipage}%
     \\hfill%
     % Right side for social links, allowing multi-line content
