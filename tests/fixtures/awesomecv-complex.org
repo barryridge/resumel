@@ -2,8 +2,8 @@
 #+RESUMEL_TEMPLATE: awesomecv
 # RESUMEL_AWESOMECV_COLOR Options: awesome-emerald, awesome-skyblue, awesome-red (default), awesome-pink, awesome-orange, awesome-nephritis, awesome-concrete, awesome-darknight
 #+RESUMEL_AWESOMECV_COLOR: awesome-red
-#+TITLE: Test Resume
-#+AUTHOR: Test User
+#+TITLE: World Expert
+#+AUTHOR: Firstname Lastname
 #+DATE: <1955-11-05 Sat>
 #+EXPORT_FILE_NAME: ../results/awesomecv-complex.pdf
 #+OPTIONS: toc:nil title:nil H:2
@@ -12,8 +12,6 @@
 #+OPTIONS: toc:nil title:nil H:2
 
 * Personal Information :ignore:
-\name{Firstname}{Lastname}
-\position{World Expert}
 \address{Street, City, State, Country}
 \mobile{+1 (555) 555-1234}
 \email{user@foo.bar}

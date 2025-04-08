@@ -5,8 +5,8 @@
 #+RESUMEL_SANS_FONT_XELATEX: Latin Modern Sans
 #+RESUMEL_MAIN_FONT_PDFLATEX: lmodern
 #+RESUMEL_SANS_FONT_PDFLATEX: lmodern
-#+TITLE: Test Resume
-#+AUTHOR: Test User
+#+TITLE: World Expert
+#+AUTHOR: Firstname Lastname
 #+DATE: <1955-11-05 Sat>
 #+EXPORT_FILE_NAME: ../results/modaltacv-complex.pdf
 #+OPTIONS: toc:nil title:nil H:2
@@ -22,12 +22,6 @@
 {{{colorlet(color1,lightblue)}}}
 
 * CV Header :ignore:
-** Photo & Tagline :ignore:
-#+begin_export latex
-\name{Firstname Lastname}
-\tagline{World Expert}
-#+end_export
-
 ** Personal Info :ignore:
 #+begin_export latex
 \personalinfo{
