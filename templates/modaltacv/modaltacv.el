@@ -287,17 +287,21 @@
 \\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendar}~}
 
 % Itemize labels from moderncv
-\\renewcommand{\\labelitemi}{\\strut\\textcolor{color1}{\\large\\rmfamily\\small\\textbullet}}
-\\renewcommand{\\labelitemiii}{\\strut\\textcolor{color1}{\\rmfamily\\textperiodcentered}}
-\\renewcommand{\\labelitemiv}{\\labelitemiii}
-\\newcommand*{\\listitemsymbol}{\\labelitemi~}
-
-% Change the bullets for itemize and rating marker
 \\renewcommand*{\\cvItemMarker}{\\strut\\textcolor{color1}{\\tiny\\faCircle[regular]}}
+\\newcommand*{\\cvItemMarkeri}{\\cvItemMarker}
+\\newcommand*{\\cvItemMarkerii}{\\strut\\textcolor{color1}{\\large\\bfseries-}}
+\\newcommand*{\\cvItemMarkeriii}{\\strut\\textcolor{color1}{\\rmfamily\\textperiodcentered}}
+\\newcommand*{\\cvItemMarkeriv}{\\cvItemMarkeriii}
+\\setlist[itemize,1]{label=\\cvItemMarkeri}
+\\setlist[itemize,2]{label=\\cvItemMarkerii}
+\\setlist[itemize,3]{label=\\cvItemMarkeriii}
+\\setlist[itemize,4]{label=\\cvItemMarkeriv}
+
+% Rating marker
 \\renewcommand{\\cvRatingMarker}{\\faCircle}
 
 % Change the bullets for publications
-% NOTE: to use these, the \input{pubs-authoryear.cfg} and \input{pubs-num.cfg} inclusions
+% NOTE: to use these, the \\input{pubs-authoryear.cfg} and \input{pubs-num.cfg} inclusions
 % below under 'Bibliography' should be commented out.
 %
 \\usepackage[backend=biber,style=ieee,sorting=ydnt,defernumbers=true]{biblatex}
