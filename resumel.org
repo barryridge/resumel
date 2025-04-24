@@ -28,6 +28,8 @@
 #+MACRO: endl @@latex:\\@@
 #+MACRO: divider @@latex:\divider@@
 #+MACRO: par-div @@latex:\par\divider@@
+#+MACRO: tightdiv @@latex:\vspace{$1}\divider\vspace{$1}@@
+#+MACRO: tighterdiv @@latex:\vspace{$1}\divider\vspace{$2}@@
 #+MACRO: new-page @@latex:\newpage@@
 #+MACRO: vspace @@latex:\vspace{$1}@@
 #+MACRO: hspace @@latex:\hspace{$1}@@

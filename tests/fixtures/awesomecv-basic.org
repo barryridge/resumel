@@ -40,6 +40,13 @@
 - Font Awesome symbol in different colors: {{{fa(Briefcase,\color{color1})}}} {{{fa(Briefcase,\color{black})}}} {{{fa(Briefcase,\color{darkgray})}}} {{{fa(Briefcase,\color{gray})}}} {{{fa(Briefcase,\color{lightgray})}}} {{{fa(Briefcase,\color{green})}}} {{{fa(Briefcase,\color{orange})}}} {{{fa(Briefcase,\color{purple})}}} {{{fa(Briefcase,\color{red})}}} {{{fa(Briefcase,\color{blue})}}} {{{fa(Briefcase,\color{awesome-emerald})}}}
 - Font Awesome symbol in different sizes and colors: {{{fa(Briefcase,\color{color1}\Huge)}}} {{{fa(Briefcase,\color{awesome-emerald}\huge)}}} {{{fa(Briefcase,\color{awesome-darknight}\Large)}}} {{{fa(Briefcase,\color{awesome-skyblue}\large)}}} {{{fa(Briefcase,\color{awesome-red}\normalsize)}}} {{{fa(Briefcase,\color{awesome-pink}\small)}}} {{{fa(Briefcase,\color{awesome-orange}\footnotesize)}}} {{{fa(Briefcase,\color{awesome-nephritis}\scriptsize)}}} {{{fa(Briefcase,\color{awesome-concrete}\tiny)}}}
 
+** Spacing
+- 1cm vspace:
+
+{{{vspace(1cm)}}}
+
+- 1cm hspace: From here... {{{hspace(1cm)}}} ...to here.
+
 ** Dividers
 - Divider:
 {{{divider}}}
@@ -47,12 +54,11 @@
 -  Paragraph Divider:
 {{{par-div}}}
 
-** Spacing
-- 1cm vspace:
+- Tight Divider (single parameter for vspaces above and below):
+{{{tightdiv(-1ex)}}}
 
-{{{vspace(1cm)}}}
-
-- 1cm hspace: From here... {{{hspace(1cm)}}} ...to here.
+- Tighter Divider (separate parameters for vspaces above and below):
+{{{tighterdiv(-2ex,1ex)}}}
 
 ** Tables
 - Org table:
