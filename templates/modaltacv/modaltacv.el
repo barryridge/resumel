@@ -191,10 +191,10 @@
 % Update cvevent command to tighten up location next to date
 %
 \\renewcommand{\\cvevent}[4]{%
-  {\\large\\color{color0}#1\\par} % Event title in color0
+  {\\textbf{\\large\\color{color0}#1}\\par} % Event title in color0
   \\smallskip\\normalsize
   \\ifstrequal{#2}{}{}{%
-  \\textbf{\\color{color0}#2}\\par} % Subtitle/organization in color0
+  {\\color{color0}#2}\\par} % Subtitle/organization in color0
   \\smallskip
   \\ifstrequal{#3}{}{}{%
     {\\small\\makebox[0.5\\linewidth][l]%
