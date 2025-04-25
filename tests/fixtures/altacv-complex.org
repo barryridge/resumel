@@ -49,7 +49,7 @@
 
 ** Experience {{{fa(Briefcase)}}}
 *** Job 1 :ignore:
-{{{cvevent(Job 1,\href{https://www.company-1-site.com}{Company 1}, \href{https://www.company-1-site.com/department/group}{Group}, \href{https://www.company-1-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
+{{{cvevent(Job 1,\href{https://www.company-1-site.com}{Company 1}\, \href{https://www.company-1-site.com/department/group}{Group}\, \href{https://www.company-1-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
 
 **** Role 1 :ignore:
 *Role 1*
@@ -68,7 +68,7 @@
 {{{vspace(-0.2cm)}}}
 
 *** Job 2 :ignore:
-{{{cvevent(Job 2, \href{https://www.company-2-site.com}{Company 2},\href{https://www.company-2-site.com/department/group}{Group}, \href{https://www.company-2-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
+{{{cvevent(Job 2, \href{https://www.company-2-site.com}{Company 2}\, \href{https://www.company-2-site.com/department/group}{Group}\, \href{https://www.company-2-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
 
 **** Role 1 :ignore:
 *Role 1*
@@ -87,7 +87,7 @@
 {{{vspace(-0.2cm)}}}
 
 *** Job 3 :ignore:
-{{{cvevent(Job 3, \href{https://www.company-3-site.com}{Company 3},\href{https://www.company-3-site.com/department/group}{Group}, \href{https://www.company-3-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
+{{{cvevent(Job 3, \href{https://www.company-3-site.com}{Company 3}\, \href{https://www.company-3-site.com/department/group}{Group}\, \href{https://www.company-3-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
 
 **** Role 1 :ignore:
 *Role 1*
@@ -106,7 +106,7 @@
 {{{vspace(-0.2cm)}}}
 
 *** Job 4 :ignore:
-{{{cvevent(Job 4, \href{https://www.company-3-site.com}{Company 4},\href{https://www.company-4-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
+{{{cvevent(Job 4, \href{https://www.company-3-site.com}{Company 4}\, \href{https://www.company-4-site.com/department/group}{Group}\, \href{https://www.company-4-site.com/department}{Department},May 9 1806 -- Apr 7 2025, City\, State)}}}
 
 **** Role 1 :ignore:
 *Role 1*
@@ -212,7 +212,7 @@
 ** Experience (Cont.) {{{fa(Briefcase)}}}
 
 *** Job 5 :ignore:
-{{{cvevent(Job 5, \href{https://www.company-5-site.com}{Company 5}, \href{https://www.company-5-site.com/department/group}{Group}, \href{https://www.company-5-site.com/department}{Department}, May 9 1806 -- Apr 7 2025, City\, State)}}}
+{{{cvevent(Job 5, \href{https://www.company-5-site.com}{Company 5}\, \href{https://www.company-5-site.com/department/group}{Group}\, \href{https://www.company-5-site.com/department}{Department}, May 9 1806 -- Apr 7 2025, City\, State)}}}
 
 **** Role 1 :ignore:
 *Role 1*
@@ -231,7 +231,7 @@
 {{{vspace(-0.2cm)}}}
 
 *** Job 6 :ignore:
-{{{cvevent(Job 6,\href{https://www.company-6-site.com}{Company 6},\href{https://www.company-6-site.com/department/group}{Group}, \href{https://www.company-6-site.com/department}{Department},May 9 1806 -- Apr 7 2025,City\, State)}}}
+{{{cvevent(Job 6,\href{https://www.company-6-site.com}{Company 6}\, \href{https://www.company-6-site.com/department/group}{Group}\, \href{https://www.company-6-site.com/department}{Department},May 9 1806 -- Apr 7 2025,City\, State)}}}
 
 **** Role 1 :ignore:
 *Role 1*
