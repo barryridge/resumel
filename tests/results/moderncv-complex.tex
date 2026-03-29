@@ -1,0 +1,292 @@
+% Created 2026-03-29 Sun 12:21
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt,letterpaper,sans]{moderncv}
+
+% Set default ModernCV color
+\moderncvcolor{blue}
+
+% Set default ModernCV theme
+\moderncvstyle{classic}
+
+% Layout
+%
+\usepackage[scale=0.75, top=2cm, bottom=2cm, left=2.05cm, right=2.05cm]{geometry}
+
+% To make cover letter text justified
+\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
+\makeatletter
+\patchcmd{\makeletterhead}% <cmd>
+  {\raggedright \@opening}% <search>
+  {\@opening}% <replace>
+  {}{}% <success><failure>
+\makeatother
+
+% Fonts
+%
+\iftutex
+  \usepackage{fontspec}
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX}
+  \setmainfont{Latin Modern Roman}
+  \setsansfont{Latin Modern Sans}
+  \setmonofont{Latin Modern Mono}
+  \setmathfont{Latin Modern Math}
+
+  % you may also consider Fira Sans Light for a extra modern look
+  %\setsansfont[ItalicFont={Fira Sans Light Italic},%
+  %           BoldFont={Fira Sans},%
+  %           BoldItalicFont={Fira Sans Italic}]%
+  %           {Fira Sans Light}%
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}
+\fi
+
+\renewcommand*{\namefont}{\fontsize{34}{36}\mdseries\upshape}
+\renewcommand*{\titlefont}{\LARGE\mdseries\slshape}
+\renewcommand*{\sectionfont}{\Large\mdseries\upshape}
+\renewcommand*{\subsectionfont}{\large\mdseries\upshape}
+
+% Colors
+%
+% Redefine moderncv colors (they seem to not propagate from the package and cause xcolor 'Undefined color' errors)
+\definecolor{black}{RGB}{0, 0, 0}
+\definecolor{red}{rgb}{0.95, 0.20, 0.20}
+\definecolor{darkgrey}{rgb}{0.45, 0.45, 0.45}
+\definecolor{orange}{rgb}{0.95, 0.55, 0.15}
+\definecolor{burgundy}{rgb}{0.596078, 0, 0}% 139/255 (0.545098) or 152/255 (0.596078)
+\definecolor{purple}{rgb}{0.50, 0.33, 0.80}
+\definecolor{lightblue}{rgb}{0.22, 0.45, 0.70}
+\definecolor{green}{rgb}{0.35, 0.70, 0.30}
+
+
+% Math and symbol support
+%
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+% Author
+%
+% Redefine \author so that it splits the given name into first and last names.
+\usepackage{xstring} % For string splitting
+\makeatletter
+\renewcommand{\author}[1]{%
+  % Use xstring to grab text before and after the first space.
+  \StrBefore{#1}{ }[\firstname]%
+  \StrBehind{#1}{ }[\lastname]%
+  % If there is no space, \lastname will be empty. In that case, just use the original.
+  \ifx\lastname\empty
+    \gdef\@author{#1}%
+  \else
+    \gdef\@author{\firstname \lastname}%
+  \fi
+}
+\makeatother
+
+% Set name using derived \firstname and \lastname
+\name{\firstname}{\lastname}
+
+% Custom commands
+%
+\newcommand*{\Cplusplus}{C{}\texttt{++}}
+\renewcommand*{\cventry}[7][.25em]{%
+  \cvitem[#1]{#2}{%
+    {\bfseries#3}%
+    \ifthenelse{\equal{#4}{}}{}{{\slshape#4}}%
+    \ifthenelse{\equal{#5}{}}{}{#5}%
+    \ifthenelse{\equal{#6}{}}{}{#6}%
+    \strut%
+    \ifx&#7&%
+    \else{\newline{}\begin{minipage}[t]{\linewidth}\small#7\end{minipage}}
+    \fi
+  }
+}
+
+% Define divider (replicated from altacv)
+\usepackage{dashrule}
+\newcommand{\divider}{\textcolor{color2!30}{\hdashrule{\linewidth}{0.6pt}{0.5ex}}\medskip}
+
+% CV Tags
+%
+% Set global cvtag defaults
+\newcommand{\cvtagIntensityDefault}{5}
+\newcommand{\cvtagFontDefault}{\scriptsize}
+\newcommand{\cvtagBaselineDefault}{-0.5ex}
+\newcommand{\cvtagInnerXSepDefault}{0.5ex}
+\newcommand{\cvtagInnerYSepDefault}{0.5ex}
+\newcommand{\cvtagTextHeightDefault}{1.25ex}
+\newcommand{\cvtagTextDepthDefault}{0.25ex}
+\newcommand{\cvtagCornerDefault}{rounded corners}
+
+\usepackage{tikz}
+\makeatletter
+\NewDocumentCommand{\cvtag}{m
+  O{\cvtagIntensityDefault}
+  O{\cvtagFontDefault}
+  O{\cvtagBaselineDefault}
+  O{\cvtagInnerXSepDefault}
+  O{\cvtagInnerYSepDefault}
+  O{\cvtagTextHeightDefault}
+  O{\cvtagTextDepthDefault}
+  O{\cvtagCornerDefault}}{%
+  % Calculate the intensity based on the provided level (0–5)
+  \pgfmathsetmacro{\skillIntensity}{20 + (#2 * 16)}%
+  \ifdim \skillIntensity pt > 100pt \def\skillIntensity{100}\fi
+  \ifdim \skillIntensity pt < 0pt   \def\skillIntensity{0}\fi
+  %
+  % Draw the tag using separate spacing parameters.
+  \tikz[baseline=#4]{%
+    \node[draw=black!\skillIntensity!white,
+          fill=white,
+          % Use the passed corner style
+          #9,
+          inner xsep=#5,
+          inner ysep=#6,
+          text height=#7,
+          text depth=#8,
+          font=#3,
+          text=black!\skillIntensity!white]
+          {#1};%
+  }%
+}
+\makeatother
+
+% Highlight macro used to boldface name in .bib file
+\newcommand{\highlight}[1]{\textbf{#1}} % Replace \textbf with any desired formatting
+
+% Add map marker symbol to address
+\renewcommand*{\addresssymbol}{{\color{color2}\small\faMapMarker}~}
+
+% Add calendar symbol command for dates
+\newcommand{\calendarsymbol}{{\color{color2}\small\faCalendar}~}
+
+% For pdf attachments
+\usepackage{pdfpages}
+\author{Firstname Lastname}
+\date{\textit{<1955-11-05 Sat>}}
+\title{World Expert \newline \newline \small{Seeking a fantastic new role.}}
+\begin{document}
+
+\address{City, State}{}
+\phone[mobile]{+1 (555) 555-1234}
+\email{user@foo.bar}
+\homepage{www.foo.bar}
+\social[linkedin]{user-name}
+\social[github]{username}
+
+\colorlet{color1}{lightblue}
+
+\small
+\makecvtitle
+
+
+\section{{\faCogs} Skills}
+\label{sec:org141c60c}
+
+
+\subsection{Programming}
+\label{sec:org885d470}
+\cvtag{Python} \cvtag{Elisp} \cvtag{JavaScript} \cvtag{LaTeX} \cvtag{C++} \cvtag{Java}
+
+
+\subsection{Tools \& Technologies}
+\label{sec:orgd0e918d}
+\cvtag{Emacs}[5] \cvtag{Git}[4] \cvtag{Docker}[3] \cvtag{AWS}[2]
+
+
+\section{{\faBriefcase} Experience}
+\label{sec:org736a109}
+
+\cventry{\calendarsymbol 2018--2020}{Senior Developer\textnormal{ | }}{Tech Corp\textnormal{ | }}{\addresssymbol City, State.}{}{Group, Department
+\begin{itemize}
+\item Led team of 5 developers
+\item Implemented CI/CD pipeline \cvtag{Python} \cvtag{Docker} \cvtag{Git}
+\end{itemize}
+}
+\cventry{\calendarsymbol 2015--2018}{Software Engineer\textnormal{ | }}{Start-up Inc\textnormal{ | }}{\addresssymbol City, State.}{}{Group, Department
+\begin{itemize}
+\item Full-stack development \cvtag{JavaScript}[4] \cvtag{React}[3] \cvtag{Node.js}[4]
+\end{itemize}
+}
+\cventry{\calendarsymbol May 9 1806 -- Apr 7 2025}{Job 3\textnormal{ | }}{\href{https://www.company-3-site.com}{Company 3}\textnormal{ | }}{\addresssymbol City, State.}{}{\href{https://www.company-3-site.com/department/group}{Group}, \href{https://www.company-3-site.com/department}{Department}
+\begin{itemize}
+\item \textbf{Role 1}
+\begin{itemize}
+\item Role 1 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 2}
+\begin{itemize}
+\item Role 2 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 3}
+\begin{itemize}
+\item Role 3 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\end{itemize}
+}
+\cventry{\calendarsymbol May 9 1806 -- Apr 7 2025}{Job 4\textnormal{ | }}{\href{https://www.company-4-site.com}{Company 4}\textnormal{ | }}{\addresssymbol City, State.}{}{\href{https://www.company-4-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}
+\begin{itemize}
+\item \textbf{Role 1}
+\begin{itemize}
+\item Role 1 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 2}
+\begin{itemize}
+\item Role 2 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 3}
+\begin{itemize}
+\item Role 3 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\end{itemize}
+}
+\cventry{\calendarsymbol May 9 1806 -- Apr 7 2025}{Job 5\textnormal{ | }}{\href{https://www.company-5-site.com}{Company 5}\textnormal{ | }}{\addresssymbol City, State.}{}{\href{https://www.company-5-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}
+\begin{itemize}
+\item \textbf{Role 1}
+\begin{itemize}
+\item Role 1 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 2}
+\begin{itemize}
+\item Role 2 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\item \textbf{Role 3}
+\begin{itemize}
+\item Role 3 description. \cvtag{\Cplusplus} \cvtag{Python}
+\end{itemize}
+\end{itemize}
+}
+
+\pagebreak
+
+
+\section{{\faWrench} Projects}
+\label{sec:org7cf420a}
+\cvitem{Python Library}{\textbf{Project 1}\hspace{2em}\faGithub\textnormal{ }\href{https://github.com/user-name/project1}{https://github.com/user-name/project1}}
+\cvlistitem{Project 1 description}
+\cvitem{Python Library}{\textbf{Project 2}\hspace{2em}\faGithub\textnormal{ }\href{https://github.com/user-name/project2}{https://github.com/user-name/project2}}
+\cvlistitem{Project 2 description}
+\cvitem{Python Library}{\textbf{Project 3}\hspace{2em}\faGithub\textnormal{ }\href{https://github.com/user-name/project3}{https://github.com/user-name/project3}}
+\cvlistitem{Project 3 description}
+\cvitem{Python Library}{\textbf{Project 4}\hspace{2em}\faGithub\textnormal{ }\href{https://github.com/user-name/project4}{https://github.com/user-name/project4}}
+\cvlistitem{Project 4 description}
+\cvitem{Python Library}{\textbf{Project 5}\hspace{2em}\faGithub\textnormal{ }\href{https://github.com/user-name/project5}{https://github.com/user-name/project5}}
+\cvlistitem{Project 5 description}
+
+
+\section{{\faGraduationCap} Education}
+\label{sec:orgde7d4d5}
+
+\cventry{\calendarsymbol 2022--2024}{Ph.D. in Computer Science\textnormal{ | }}{University\textnormal{ | }}{\addresssymbol City, State.}{}{Group, Department
+\begin{itemize}
+\item Thesis on Emacs-based resume generation
+\item Published 3 papers on \LaTeX{} automation
+\end{itemize}
+}
+
+
+\section{{\faLanguage} Languages}
+\label{sec:org6892330}
+\cvdoubleitem{English}{Native}{Spanish}{Intermediate}
+\end{document}

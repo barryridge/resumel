@@ -90,6 +90,13 @@ text-width color detail value text-width color detail...)."
   :type '(choice (const "moderncv") (const "altacv") (const "modaltacv") (const "awesomecv"))
   :group 'resumel)
 
+;; Buffer-local alist of RESUMEL_* keyword values parsed from the Org file.
+;; Declared as defvar so template .el files can read it via dynamic binding.
+(defvar resumel-template-vars nil
+  "Alist of (VAR-NAME . value) pairs parsed from RESUMEL_* Org keywords.
+Set during `resumel-setup'.  Template .el files read this to resolve their
+configuration variables.")
+
 ;; Set the directory where resumel.el is located
 (defvar resumel-base-dir
   (file-name-directory (file-truename (or load-file-name buffer-file-name)))
@@ -199,6 +206,161 @@ text-width color detail value text-width color detail...)."
       (resumel-setup)
       ;; Export to PDF
       (org-latex-export-to-pdf))))
+
+;;; Template variable introspection
+
+(defun resumel--get-buffer-template ()
+  "Return the template selected in the current buffer, or the global default."
+  (save-excursion
+    (goto-char (point-min))
+    (if (re-search-forward "^#\\+RESUMEL_TEMPLATE: *\\(.*\\)$" nil t)
+        (string-trim (match-string 1))
+      resumel-default-template)))
+
+(defun resumel--get-buffer-vars ()
+  "Parse all RESUMEL_* keywords from the current buffer.
+Returns an alist of (VAR-NAME . value), excluding RESUMEL_TEMPLATE."
+  (let (vars)
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "^#\\+RESUMEL_\\([^:[:space:]]+\\): *\\(.*\\)$" nil t)
+        (let ((key (string-trim (match-string 1)))
+              (val (string-trim (match-string 2))))
+          (unless (string= key "TEMPLATE")
+            (push (cons key val) vars)))))
+    (nreverse vars)))
+
+(defun resumel--get-template-defaults (template)
+  "Return the default variables alist for TEMPLATE.
+Loads the template .el file if the defaults are not yet available."
+  (let* ((defaults-sym (intern (format "resumel-%s-variable-defaults" template)))
+         (template-dir (expand-file-name template resumel-templates-dir))
+         (template-el (expand-file-name (format "%s.el" template) template-dir)))
+    (unless (boundp defaults-sym)
+      (unless (file-exists-p template-el)
+        (error "Template file not found: %s" template-el))
+      ;; Load with empty vars so the let* in the template file doesn't error
+      (let ((resumel-template-vars '()))
+        (load-file template-el)))
+    (if (boundp defaults-sym)
+        (symbol-value defaults-sym)
+      nil)))
+
+;;;###autoload
+(defun resumel-get-template-variable (var)
+  "Return the effective value of template variable VAR.
+Checks the current buffer's #+RESUMEL_VAR keywords first, then falls
+back to the selected template's compiled-in defaults.
+
+When called interactively, prompts with completion over known variables
+and displays the result in the minibuffer."
+  (interactive
+   (let* ((template (resumel--get-buffer-template))
+          (defaults (resumel--get-template-defaults template))
+          (buf-vars (resumel--get-buffer-vars))
+          (names (delete-dups
+                  (append (mapcar #'car defaults)
+                          (mapcar #'car buf-vars)))))
+     (list (completing-read "Variable: " names nil nil))))
+  (let* ((template (resumel--get-buffer-template))
+         (buf-vars (resumel--get-buffer-vars))
+         (defaults (resumel--get-template-defaults template))
+         (buf-val  (cdr (assoc var buf-vars)))
+         (def-val  (cdr (assoc var defaults)))
+         (value    (or buf-val def-val)))
+    (when (called-interactively-p 'interactive)
+      (message "#+RESUMEL_%s = %s  [%s]"
+               var
+               (or value "(not set)")
+               (cond (buf-val  "set in buffer")
+                     (def-val  "template default")
+                     (t        "unknown variable"))))
+    value))
+
+;;;###autoload
+(defun resumel-set-template-variable (var value)
+  "Set template variable VAR to VALUE in the current Org buffer header.
+Inserts or updates the #+RESUMEL_VAR: value keyword.  Does not modify
+the template source files — the change applies only to this buffer."
+  (interactive
+   (let* ((template (resumel--get-buffer-template))
+          (defaults (resumel--get-template-defaults template))
+          (buf-vars (resumel--get-buffer-vars))
+          (names    (delete-dups
+                     (append (mapcar #'car defaults)
+                             (mapcar #'car buf-vars))))
+          (v        (completing-read "Variable: " names nil nil))
+          (current  (resumel-get-template-variable v))
+          (val      (read-string
+                     (format "#+RESUMEL_%s (current: %s): " v (or current "not set"))
+                     current)))
+     (list v val)))
+  (unless (derived-mode-p 'org-mode)
+    (error "resumel-set-template-variable must be called from an Org buffer"))
+  (let ((keyword    (format "#+RESUMEL_%s" var))
+        (search-re  (format "^#\\+RESUMEL_%s:" (regexp-quote var))))
+    (save-excursion
+      (goto-char (point-min))
+      (if (re-search-forward search-re nil t)
+          ;; Update the existing keyword line
+          (progn
+            (beginning-of-line)
+            (kill-line)
+            (insert (format "%s: %s" keyword value)))
+        ;; Insert a new keyword line
+        (goto-char (point-min))
+        (if (re-search-forward "^#\\+RESUMEL_" nil t)
+            ;; Append after the last existing RESUMEL_ keyword
+            (let (last-pos)
+              (goto-char (point-min))
+              (while (re-search-forward "^#\\+RESUMEL_" nil t)
+                (setq last-pos (line-end-position)))
+              (goto-char last-pos)
+              (insert (format "\n%s: %s" keyword value)))
+          ;; No RESUMEL_ keywords yet — insert after the last top-level keyword
+          (goto-char (point-min))
+          (let (last-kw-end)
+            (while (looking-at "^#\\+")
+              (setq last-kw-end (line-end-position))
+              (forward-line 1))
+            (if last-kw-end
+                (progn (goto-char last-kw-end)
+                       (insert (format "\n%s: %s" keyword value)))
+              (insert (format "%s: %s\n" keyword value)))))))))
+
+;;;###autoload
+(defun resumel-show-all-template-variables ()
+  "Display all template variables and their effective values in a help buffer.
+For each variable, shows whether its value comes from the current buffer
+or from the selected template's defaults."
+  (interactive)
+  (let* ((template  (resumel--get-buffer-template))
+         (defaults  (resumel--get-template-defaults template))
+         (buf-vars  (resumel--get-buffer-vars))
+         (all-names (delete-dups
+                     (append (mapcar #'car defaults)
+                             (mapcar #'car buf-vars))))
+         (buf (get-buffer-create "*resumel: template variables*")))
+    (with-current-buffer buf
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (insert (format "Resumel template variables  [template: %s]\n" template))
+        (insert (make-string 70 ?=) "\n\n")
+        (insert (format "  %-42s %-9s  %s\n" "KEYWORD" "SOURCE" "EFFECTIVE VALUE"))
+        (insert "  " (make-string 68 ?-) "\n")
+        (dolist (name all-names)
+          (let* ((bval    (cdr (assoc name buf-vars)))
+                 (dval    (cdr (assoc name defaults)))
+                 (src     (if bval "buffer" "default"))
+                 (display (or bval dval "(not set)")))
+            (insert (format "  #+RESUMEL_%-32s [%-7s]  %s\n"
+                            name src display))))
+        (insert "\n")
+        (insert "Use M-x resumel-set-template-variable to override a value in this buffer.\n")
+        (insert "Use M-x resumel-get-template-variable to query a single variable.\n"))
+      (special-mode)
+      (goto-char (point-min)))
+    (display-buffer buf)))
 
 (provide 'resumel)
 ;;; resumel.el ends here

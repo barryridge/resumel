@@ -1,0 +1,353 @@
+% Created 2026-03-29 Sun 12:20
+% Intended LaTeX compiler: xelatex
+\documentclass[10pt,letterpaper,ragged2e,withhyper]{awesome-cv}
+
+% Layout
+%
+\geometry{left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm}
+
+% Fonts
+%
+% \iftutex
+%   % If using xelatex or lualatex:
+%   \setmainfont{Roboto Slab} % Main (serif/roman) font
+%   \setsansfont{Lato} % Sans-serif font
+%   % \setmonofont{Fira Code} % Monospace font
+%   % \setmathfont{TeX Gyre Termes Math} % Math font (compatible with Roboto Slab)
+%   \renewcommand{\familydefault}{\sfdefault}
+% \else
+%   % If using pdflatex:
+%   \usepackage[rm]{roboto} % Main (serif/roman) font
+%   \usepackage[defaultsans]{lato} % Sans-serif font
+%   % \usepackage[ttdefault]{sourcecodepro} % Monospace font
+%   % \usepackage{newtxmath} % Math font
+%   \renewcommand{\familydefault}{\sfdefault}
+% \fi
+
+\makeatletter
+\renewcommand*{\headerfirstnamestyle}[1]{{\fontsize{32pt}{1em}\headerfontlight\color{graytext} #1}}
+\renewcommand*{\headerlastnamestyle}[1]{{\fontsize{32pt}{1em}\headerfont\bfseries\color{text} #1}}
+\renewcommand*{\headerpositionstyle}[1]{{\fontsize{7.6pt}{1em}\bodyfont\scshape\color{awesome} #1}}
+\renewcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor #1}}
+\renewcommand*{\subsectionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
+\makeatother
+
+% Colors
+%
+% Color for highlights
+% Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
+%                 awesome-nephritis, awesome-concrete, awesome-darknight
+\colorlet{awesome}{awesome-red}
+% Uncomment if you would like to specify your own color
+% \definecolor{awesome}{HTML}{3E6D9C}
+
+% Colors for text
+% Uncomment if you would like to specify your own color
+% \definecolor{darktext}{HTML}{414141}
+% \definecolor{text}{HTML}{333333}
+% \definecolor{graytext}{HTML}{5D5D5D}
+% \definecolor{lighttext}{HTML}{999999}
+% \definecolor{sectiondivider}{HTML}{5D5D5D}
+\colorlet{color0}{black}
+\colorlet{color1}{awesome-red}
+\colorlet{color2}{gray}
+
+% Set false if you don't want to highlight section with awesome color
+\setbool{acvSectionColorHighlight}{true}
+
+% Math and symbol support
+%
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+
+% Author
+%
+% Redefine \author so that it splits the given name into first and last names.
+\usepackage{xstring} % For string splitting
+\makeatletter
+\renewcommand{\author}[1]{%
+  % Use xstring to grab text before and after the first space.
+  \StrBefore{#1}{ }[\firstname]%
+  \StrBehind{#1}{ }[\lastname]%
+  % If there is no space, \lastname will be empty. In that case, just use the original.
+  \ifx\lastname\empty
+    \gdef\@author{#1}%
+  \else
+    \gdef\@author{\firstname \lastname}%
+  \fi
+}
+\makeatother
+
+% Set name using derived \firstname and \lastname
+\name{\firstname}{\lastname}
+
+% Title
+%
+\makeatletter
+\renewcommand{\title}[1]{%
+   \gdef\@title{#1}%
+}
+\position{\@title}
+\makeatother
+
+% CV Structure
+%
+% If you would like to change the social information separator from a pipe (|) to something else
+\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+
+% Other
+\renewcommand{\acvSectionTopSkip}{3mm}
+\renewcommand{\acvSectionContentTopSkip}{2.5mm}
+
+% Redfine itemize to match cvitems from awesomecv
+% This will cause Org lists to use this format instead.
+%
+\usepackage{enumitem}
+\let\olditemize\itemize
+\let\endolditemize\enditemize
+\renewenvironment{itemize}{
+  \begin{justify}
+  \begin{olditemize}[leftmargin=2ex, nosep, noitemsep]
+    \setlength{\parskip}{0pt}
+    \renewcommand{\labelitemi}{\bullet}%
+}{
+  \end{olditemize}
+  \end{justify}
+}
+
+% Define divider (replicated from altacv)
+\usepackage{dashrule}
+\newcommand{\divider}{\textcolor{color2!30}{\hdashrule{\linewidth}{0.6pt}{0.5ex}}\medskip}
+
+% CV Tags
+%
+% Set global cvtag defaults
+\newcommand{\cvtagIntensityDefault}{5}
+\newcommand{\cvtagFontDefault}{\scriptsize}
+\newcommand{\cvtagBaselineDefault}{-0.5ex}
+\newcommand{\cvtagInnerXSepDefault}{0.5ex}
+\newcommand{\cvtagInnerYSepDefault}{0.5ex}
+\newcommand{\cvtagTextHeightDefault}{1.25ex}
+\newcommand{\cvtagTextDepthDefault}{0.25ex}
+\newcommand{\cvtagCornerDefault}{rounded corners}
+
+\usepackage{tikz}
+\makeatletter
+\NewDocumentCommand{\cvtag}{m
+  O{\cvtagIntensityDefault}
+  O{\cvtagFontDefault}
+  O{\cvtagBaselineDefault}
+  O{\cvtagInnerXSepDefault}
+  O{\cvtagInnerYSepDefault}
+  O{\cvtagTextHeightDefault}
+  O{\cvtagTextDepthDefault}
+  O{\cvtagCornerDefault}}{%
+  % Calculate the intensity based on the provided level (0–5)
+  \pgfmathsetmacro{\skillIntensity}{20 + (#2 * 16)}%
+  \ifdim \skillIntensity pt > 100pt \def\skillIntensity{100}\fi
+  \ifdim \skillIntensity pt < 0pt   \def\skillIntensity{0}\fi
+  %
+  % Draw the tag using separate spacing parameters.
+  \tikz[baseline=#4]{%
+    \node[draw=black!\skillIntensity!white,
+          fill=white,
+          % Use the passed corner style
+          #9,
+          inner xsep=#5,
+          inner ysep=#6,
+          text height=#7,
+          text depth=#8,
+          font=#3,
+          text=black!\skillIntensity!white]
+          {#1};%
+  }%
+}
+\makeatother
+
+% C++ logo
+\def\Cplusplus{C{}\texttt{++}}
+
+% Add map marker symbol for addresses
+\newcommand*{\addresssymbol}{{\color{color2}\small\faMapMarker}~}
+
+% Add calendar symbol command for dates
+\newcommand{\calendarsymbol}{{\color{color2}\small\faCalendar}~}
+
+
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Test User}
+\date{\textit{<1955-11-05 Sat>}}
+\title{Test Resume}
+\hypersetup{
+ pdfauthor={Test User},
+ pdftitle={Test Resume},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 29.4 (Org mode 9.6.15)}, 
+ pdflang={English}}
+\begin{document}
+
+\colorlet{color1}{awesome-red}
+
+
+\cvsection{General Purpose Macro Tests}
+\label{sec:orgbf9b619}
+
+
+\cvsubsection{Text}
+\label{sec:org08ca375}
+\begin{itemize}
+\item Bold text with Org emphasis: \textbf{bold}
+\item Bold text with 'bf' macro: \textbf{bold}
+\item Italic text with Org emphasis: \emph{italic}
+\item Italic text with 'it' macro: \emph{italic}
+\end{itemize}
+
+
+\cvsubsection{Hyperlinks}
+\label{sec:org73ab6a2}
+\begin{itemize}
+\item A hyperlink with Org: \href{https://www.foo.bar}{www.foo.bar}
+\item A hyperlink with 'href' macro: \href{https://www.foo.bar}{www.foo.bar}
+\end{itemize}
+
+
+\cvsubsection{Symbols}
+\label{sec:org4f8c0b2}
+\begin{itemize}
+\item Calendar symbol: \calendarsymbol
+\item Address pin symbol: \addresssymbol
+\item Font Awesome symbols: {\faCogs} {\faGraduationCap} {\faGraduationCap} {\faBook} {\faWrench} {\faTrophy} {\faChalkboardTeacher} {\faUsers}
+\item Font Awesome symbol in different sizes: {\Huge\faBriefcase} {\huge\faBriefcase} {\Large\faBriefcase} {\large\faBriefcase} {\normalsize\faBriefcase} {\small\faBriefcase} {\footnotesize\faBriefcase} {\scriptsize\faBriefcase} {\tiny\faBriefcase}
+\item Font Awesome symbol in different colors: {\color{color1}\faBriefcase} {\color{black}\faBriefcase} {\color{darkgray}\faBriefcase} {\color{gray}\faBriefcase} {\color{lightgray}\faBriefcase} {\color{green}\faBriefcase} {\color{orange}\faBriefcase} {\color{purple}\faBriefcase} {\color{red}\faBriefcase} {\color{blue}\faBriefcase} {\color{awesome-emerald}\faBriefcase}
+\item Font Awesome symbol in different sizes and colors: {\color{color1}\Huge\faBriefcase} {\color{awesome-emerald}\huge\faBriefcase} {\color{awesome-darknight}\Large\faBriefcase} {\color{awesome-skyblue}\large\faBriefcase} {\color{awesome-red}\normalsize\faBriefcase} {\color{awesome-pink}\small\faBriefcase} {\color{awesome-orange}\footnotesize\faBriefcase} {\color{awesome-nephritis}\scriptsize\faBriefcase} {\color{awesome-concrete}\tiny\faBriefcase}
+\end{itemize}
+
+
+\cvsubsection{Spacing}
+\label{sec:orgc341aee}
+\begin{itemize}
+\item 1cm vspace:
+\end{itemize}
+
+\vspace{1cm}
+
+\begin{itemize}
+\item 1cm hspace: From here\ldots{} \hspace{1cm} \ldots{}to here.
+\end{itemize}
+
+
+\cvsubsection{Dividers}
+\label{sec:org7921bc6}
+\begin{itemize}
+\item Divider:
+\end{itemize}
+\divider
+
+\begin{itemize}
+\item Paragraph Divider:
+\end{itemize}
+\par\divider
+
+\begin{itemize}
+\item Tight Divider (single parameter for vspaces above and below):
+\end{itemize}
+\vspace{-1ex}\divider\vspace{-1ex}
+
+\begin{itemize}
+\item Tighter Divider (separate parameters for vspaces above and below):
+\end{itemize}
+\vspace{-2ex}\divider\vspace{1ex}
+
+
+\cvsubsection{Tables}
+\label{sec:orgb9eb744}
+\begin{itemize}
+\item Org table:
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Row 1, Col 1 & Row 1, Col 2 & Row 1, Col 3\\[0pt]
+Row 2, Col 1 & Row 2, Col 2 & Row 2, Col 3\\[0pt]
+\hline
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+\item Macro table:
+\end{itemize}
+
+\begin{tabular}{@{}l@{\hspace{10pt}}l@{\hspace{10pt}}l@{\hspace{10pt}}l@{}}
+Row 1, Col 1 & Row 1, Col 2 & Row 1, Col 3 \\
+Row 2, Col 1 & Row 2, Col 2 & Row 2, Col 3 \\
+\end{tabular}
+
+
+\cvsection{CV Macro Tests}
+\label{sec:org5b07274}
+
+
+\cvsubsection{Skill Tags}
+\label{sec:orgf7fa9b3}
+\cvtag{Python} \cvtag{Emacs} \cvtag{LaTeX} \cvtag{\Cplusplus} \cvtag{Shell}
+
+
+\cvsubsection{Skill Tags with Skill Levels}
+\label{sec:orgc7fe236}
+\cvtag{Python}[5] \cvtag{Emacs}[4] \cvtag{LaTeX}[3] \cvtag{\Cplusplus}[2] \cvtag{Shell}[1]
+
+\pagebreak
+
+
+\cvsubsection{Entries}
+\label{sec:orga5b0ad8}
+\begin{cventries}
+
+\cventry{Job Title 1}{Organization 1}{Location 1}{Dates 1}{Description 1}
+
+\cventry{Job Title 2}{Organization 2}{Location 2}{Dates 2}{Description 2}
+
+\cventry{Job Title 3}{Organization 3}{Location 3}{Dates 3}{Description 3}
+
+\end{cventries}
+
+
+\cvsubsection{Paragraphs}
+\label{sec:org56f8571}
+\begin{cvparagraph}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\end{cvparagraph}
+
+
+\cvsubsection{Honors}
+\label{sec:org948810b}
+\begin{cvhonors}
+
+\cvhonor{\faTrophy\;Fantastic Achievement 1}{Event 1}{Location 1}{Date 1}
+
+\cvhonor{\faTrophy\;Fantastic Achievement 2}{Event 2}{Location 2}{Date 2}
+
+\cvhonor{\faTrophy\;Fantastic Achievement 3}{Event 3}{Location 3}{Date 3}
+
+\end{cvhonors}
+
+
+\cvsubsection{Skills}
+\label{sec:org0d5af48}
+\begin{cvskills}
+\cvskill{Skill 1}{1}
+\cvskill{Skill 2}{2}
+\cvskill{Skill 3}{3}
+\cvskill{Skill 4}{4}
+\cvskill{Skill 5}{5}
+\end{cvskills}
+\end{document}
