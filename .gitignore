@@ -362,3 +362,15 @@ TSWLatexianTemp*
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
 /.agent-shell/
+
+# resumel test artifacts
+tests/results/
+tests/test_emacs.d/
+
+# Projectile cache
+.projectile-cache.eld
+
+# Personal / scratch files
+chat.org
+temp_headers.el
+temp_headers.org

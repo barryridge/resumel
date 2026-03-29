@@ -7,39 +7,33 @@
 
 * Overview
 
-** resumel
+=resumel= is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates. It currently supports four templates:
 
-=resumel= is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates. It currently supports three templates:
+- *[[https://github.com/moderncv/moderncv][moderncv]]*: A classic, clean LaTeX template with multiple style and colour options.
+- *[[https://github.com/liantze/AltaCV][altacv]]*: A modern two-column LaTeX template with a contemporary look.
+- *[[https://github.com/posquit0/Awesome-CV][awesomecv]]*: A sleek, professional template with strong typographic hierarchy.
+- *modaltacv*: A custom variant that combines the ModernCV aesthetic with the AltaCV two-column layout.
 
-- *[[https://github.com/moderncv/moderncv][moderncv]]*: A popular LaTeX template known for its clean and professional design.
-- *[[https://github.com/liantze/AltaCV][AltaCV]]*: A modern and minimalist two-column LaTeX template.
-- *modaltacv*: ModernCV-ified AltaCV. A customized version that combines elements from both ModernCV and AltaCV.
-
-Designed for extensibility, resumel allows easy addition of new templates by consolidating common macros.
+Designed for extensibility, resumel consolidates common macros and lets you swap templates with a single keyword.
 
 * Features
 
-- *Multiple Templates*: Choose from =moderncv=, =altacv=, or =modaltacv=.
-- *Extensible*: Easily add new LaTeX templates.
-- *Unified Macros*: Consistent formatting across templates.
-- *Automated Testing*: Verify exports with automated tests.
-- *Emacs Integration*: Compatible with Vanilla Emacs, Doom Emacs, Spacemacs, and more.
+- *Multiple Templates*: Choose from =moderncv=, =altacv=, =awesomecv=, or =modaltacv=.
+- *Template Variable Introspection*: Browse, live-edit, and query all template configuration variables without touching the template source files.
+- *Extensible*: Add new LaTeX templates by dropping an =.el= and =.org= file pair into a directory.
+- *Unified Macros*: Consistent formatting (=cvtag=, =cvtags=, =wheelchart=, etc.) across all templates.
+- *Automated Testing*: Visual PDF comparison tests for each template.
+- *Emacs Integration*: Works with Vanilla Emacs, Doom Emacs, Spacemacs, and other distributions.
 
 * How It Works
 
-Write your resume in Org files using predefined macros for sections like skills, experience, and education. resumel exports these Org files to LaTeX, applying the selected template to generate a formatted PDF. Templates are modular, each in its directory with =.el= and =.org= files. Common macros are centralized in =resumel.org= for reuse across templates, simplifying the addition of new templates.
+Write your resume in an Org file using template macros for sections like skills, experience, and education. =resumel-export= exports the file to PDF via LaTeX, applying the selected template. Templates are modular — each lives in its own directory with a =.el= file (LaTeX class definition) and a =.org= file (macros). Common macros are centralised in =resumel.org=.
 
 * Prerequisites
 
-Ensure you have the following:
-
-- *Emacs*: Version 26.1+. [[https://www.gnu.org/software/emacs/download.html][Download Emacs]]
-- *Org Mode*: Included with recent Emacs versions. [[https://orgmode.org/][[Org Mode]]
-- *LaTeX Distribution*:
-  - [[https://www.tug.org/texlive/][TeX Live]]
-  - [[https://miktex.org/][MiKTeX]]
-  - [[http://www.tug.org/mactex/][MacTeX]]
-- *diff-pdf*: For comparing PDFs during tests. [[https://github.com/vslavik/diff-pdf][diff-pdf GitHub]]
+- *Emacs* 26.1+  [[https://www.gnu.org/software/emacs/download.html][Download Emacs]]
+- *LaTeX distribution*: [[https://www.tug.org/texlive/][TeX Live]] / [[https://miktex.org/][MiKTeX]] / [[http://www.tug.org/mactex/][MacTeX]]
+- *diff-pdf*: required for running tests  [[https://github.com/vslavik/diff-pdf][diff-pdf GitHub]]
 
 * Installation
 
@@ -67,7 +61,7 @@ Ensure you have the following:
 
 4. *Optional Key Binding*
 
-   #+begin_src shell
+   #+begin_src elisp
    (global-set-key (kbd "C-c r") 'resumel-export)
    #+end_src
 
@@ -136,111 +130,85 @@ Ensure you have the following:
 ** Other Emacs Distributions
 #+html: </summary>
 
-Refer to your distribution's documentation for adding packages from GitHub or local directories. Generally, clone the repository, add it to the load path, and require the package in your configuration.
+Clone the repository, add it to your load path, and require the package in your configuration.
 
 #+html: </details>
 
 * Usage
 
-1. *Select a Template*
+** Quick Start
 
-   #+begin_src elisp
+1. Select a template:
+
+   #+begin_src
    M-x resumel-select-template RET moderncv RET
    #+end_src
 
-   Options: =moderncv=, =altacv=, =modaltacv=.
+   This writes =#+RESUMEL_TEMPLATE: moderncv= into the current Org buffer header so the selection is saved with the file.
 
-2. *Set Up resumel*
+2. Write your resume content using the provided macros (see fixture files in =tests/fixtures/= for examples).
 
-   #+begin_src elisp
-   M-x resumel-setup RET
-   #+end_src
+3. Export to PDF:
 
-3. *Create Your Resume*
-
-   - Create a new Org file or use provided examples.
-   - Use macros for sections:
-
-     #+begin_src org
-     * Personal Information
-     \name{Firstname}{Lastname}
-     \address{City, State}{}
-     \phone[mobile]{+1 (555) 555-1234}
-     \email{user@foo.bar}
-     \homepage{www.foo.bar}
-     \social[linkedin]{user-name}
-     \social[github]{username}
-
-     * Skills
-     {{{cvtags(Python,Emacs,LaTeX)}}}
-
-     * Experience
-     {{{cvevent(Job Title, Company, Duration, Location)}}}
-     - Role description {{{cvtag(Project Management)}}}
-     #+end_src
-
-4. *Export to PDF*
-
-   #+begin_src elisp
+   #+begin_src
    M-x resumel-export RET
    #+end_src
 
-   PDFs are saved in =results/= by default.
+** Template Variables
+
+Every template exposes a set of configuration variables that control fonts, colours, layout, and more. You can override any of them by adding a =#+RESUMEL_<VAR>: value= keyword to your Org file header. For example:
+
+#+begin_src org
+#+RESUMEL_TEMPLATE: moderncv
+#+RESUMEL_MODERNCV_COLOR: green
+#+RESUMEL_GEOMETRY: scale=0.8, top=1.5cm, bottom=1.5cm
+#+end_src
+
+*** Browsing variables
+
+To see all available variables for your current template, their default values, and which ones you have overridden:
+
+#+begin_src
+M-x resumel-show-variables RET        (or resumel-show-all-variables)
+M-x resumel-show-core-variables RET   (shared by all templates)
+M-x resumel-show-template-variables RET  (template-specific only)
+#+end_src
+
+This opens a =*resumel: template variables*= buffer listing every variable on its own =#+RESUMEL_VAR: value= line.
+
+*** Live editing
+
+Variables can be edited *directly in the variables buffer* — changes sync immediately back to your Org file header. Press =g= to refresh the display and =q= to close.
+
+*** Getting and setting individual variables
+
+#+begin_src
+M-x resumel-get-template-variable RET MODERNCV_COLOR RET
+M-x resumel-set-template-variable RET MODERNCV_COLOR RET burgundy RET
+#+end_src
+
+=resumel-get-template-variable= returns the effective value: the buffer keyword if set, otherwise the template default.
+=resumel-set-template-variable= inserts or updates the =#+RESUMEL_<VAR>:= keyword in your buffer header.
 
 * Testing
 
-1. *Navigate to Repository*
+#+begin_src shell
+make test    # run all tests
+make clean   # remove generated results
+#+end_src
 
-   #+begin_src shell
-   cd /path/to/resumel
-   #+end_src
-
-2. *Run Tests*
-
-   #+begin_src shell
-   make test
-   #+end_src
-
-   This cleans previous results, runs tests for each template, and compares PDFs using =diff-pdf=.
-
-3. *Review Results*
-
-   Check the terminal for test outcomes. Ensure all tests pass.
+Tests export all fixture files and compare the resulting PDFs against expected outputs using =diff-pdf=.
 
 * Adding New Templates
 
-1. *Create Template Directory*
-
-   In =templates/=, create =newtemplate/=.
-
-2. *Add .el and .org Files*
-
-   - =newtemplate.el=: Define LaTeX classes.
-   - =newtemplate.org=: Template-specific macros.
-
-3. *Register the Template*
-
-   In =resumel.el=, add to =resumel-default-template=:
-
-   #+begin_src elisp
-   (defcustom resumel-default-template "moderncv"
-     "Default resume template to use."
-     :type '(choice (const "moderncv") (const "modaltacv") (const "newtemplate"))
-     :group 'resumel)
-   #+end_src
-
-4. *Load and Test*
-
-   #+begin_src elisp
-   M-x resumel-select-template RET newtemplate RET
-   M-x resumel-setup RET
-   #+end_src
-
-   Create and export resumes to verify.
+1. Create =templates/newname/= with =newname.el= (LaTeX class definition) and =newname.org= (macros).
+2. In =newname.el=, define a =defconst resumel-newname-variable-defaults= alist listing every configuration variable and its default value.
+3. Add ="newname"= to the =resumel-default-template= choices in =resumel.el=.
+4. Add test fixture and expected PDF; run =make test=.
 
 * Acknowledgements
 
-=resumel= builds on Aidan Scannell's [[https://github.com/aidanscannell/my-org-resume][my-org-resume]]. Many thanks to Aidan for the laying the foundation.
+=resumel= builds on Aidan Scannell's [[https://github.com/aidanscannell/my-org-resume][my-org-resume]]. Many thanks to Aidan for laying the foundation.
 
 * License
 
@@ -248,7 +216,7 @@ Refer to your distribution's documentation for adding packages from GitHub or lo
 
 * Contributing
 
-Contributions are welcome! Fork the repository and submit pull requests for enhancements or fixes. Follow the project's coding standards and include relevant tests.
+Contributions are welcome! Fork the repository and submit pull requests for enhancements or fixes. Include relevant tests.
 
 * Contact
 

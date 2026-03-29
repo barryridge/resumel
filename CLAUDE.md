@@ -8,6 +8,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
+### Environment Setup (macOS)
+
+`diff-pdf` is installed via Homebrew.  Before running tests, initialise the Homebrew environment with:
+
+```bash
+init_brew    # defined in ~/.zshrc — sets up PATH for Homebrew tools
+```
+
 ### Running Tests
 
 ```bash
@@ -20,6 +28,8 @@ Tests export Org fixture files and compare generated PDFs against expected outpu
 **Tolerance env vars** (higher values needed in CI):
 - `DIFF_PDF_CHANNEL_TOLERANCE` (default: 0 locally, 150 in CI)
 - `DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE` (default: 0 locally, 50000 in CI)
+
+**Known local test failure**: `test-resumel-awesomecv-complex` fails locally but passes in CI — likely a minor rendering difference between local and CI TeX Live versions. This is a known issue; do not treat it as a regression.
 
 ### Running a Single Test
 

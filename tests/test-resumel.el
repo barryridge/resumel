@@ -223,18 +223,112 @@
     (resumel-set-template-variable "MODERNCV_COLOR" "purple")
     (should (string= (resumel-get-template-variable "MODERNCV_COLOR") "purple"))))
 
-;; ---- resumel-show-all-template-variables ------------------------------------
+;; ---- resumel-show-all-variables / resumel-show-core-variables / etc. -------
 
-(ert-deftest resumel-test-show-all-template-variables ()
-  "Produces a non-empty *resumel: template variables* buffer."
+(ert-deftest resumel-test-show-all-variables ()
+  "resumel-show-all-variables populates a variables buffer with both sections."
   (resumel-test-with-org-buffer
       "#+RESUMEL_TEMPLATE: moderncv\n#+RESUMEL_MODERNCV_COLOR: orange\n#+TITLE: Test\n"
-    (resumel-show-all-template-variables)
+    (resumel-show-all-variables)
     (let ((buf (get-buffer "*resumel: template variables*")))
       (should buf)
       (with-current-buffer buf
-        ;; Buffer should mention the template name and at least one variable
-        (should (string-match "moderncv" (buffer-string)))
-        (should (string-match "MODERNCV_COLOR" (buffer-string)))
-        ;; The buffer value should appear as "buffer" source
-        (should (string-match "buffer" (buffer-string)))))))
+        (let ((content (buffer-string)))
+          (should (string-match "moderncv" content))
+          (should (string-match "CORE VARIABLES" content))
+          (should (string-match "TEMPLATE-SPECIFIC" content))
+          (should (string-match "#\\+RESUMEL_COMPILER:" content))
+          (should (string-match "#\\+RESUMEL_MODERNCV_COLOR: orange" content)))))))
+
+(ert-deftest resumel-test-show-core-variables ()
+  "resumel-show-core-variables shows only the core section."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n#+TITLE: Test\n"
+    (resumel-show-core-variables)
+    (let ((buf (get-buffer "*resumel: template variables*")))
+      (should buf)
+      (with-current-buffer buf
+        (let ((content (buffer-string)))
+          (should (string-match "CORE VARIABLES" content))
+          (should (string-match "#\\+RESUMEL_COMPILER:" content))
+          ;; Template-specific section should NOT appear
+          (should-not (string-match "TEMPLATE-SPECIFIC" content))
+          (should-not (string-match "MODERNCV_COLOR" content)))))))
+
+(ert-deftest resumel-test-show-template-variables ()
+  "resumel-show-template-variables shows only the template-specific section."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n#+TITLE: Test\n"
+    (resumel-show-template-variables)
+    (let ((buf (get-buffer "*resumel: template variables*")))
+      (should buf)
+      (with-current-buffer buf
+        (let ((content (buffer-string)))
+          (should (string-match "TEMPLATE-SPECIFIC" content))
+          (should (string-match "MODERNCV_COLOR" content))
+          ;; Core section should NOT appear
+          (should-not (string-match "CORE VARIABLES" content))
+          (should-not (string-match "#+RESUMEL_COMPILER:" content)))))))
+
+(ert-deftest resumel-test-show-variables-is-alias ()
+  "resumel-show-variables is an alias for resumel-show-all-variables."
+  (should (fboundp 'resumel-show-variables))
+  (should (eq (indirect-function 'resumel-show-variables)
+              (indirect-function 'resumel-show-all-variables))))
+
+;; ---- resumel-variables-mode live sync ---------------------------------------
+
+(ert-deftest resumel-test-variables-mode-live-sync ()
+  "Editing a #+RESUMEL_VAR line in the variables buffer syncs to the Org buffer."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n#+RESUMEL_MODERNCV_COLOR: blue\n#+TITLE: Test\n"
+    (let ((org-buf (current-buffer)))
+      (resumel-show-all-variables)
+      (let ((vars-buf (get-buffer "*resumel: template variables*")))
+        (should vars-buf)
+        ;; Edit the MODERNCV_COLOR line in the variables buffer
+        (with-current-buffer vars-buf
+          (goto-char (point-min))
+          (re-search-forward "^#\\+RESUMEL_MODERNCV_COLOR: ")
+          (delete-region (point) (line-end-position))
+          (insert "burgundy"))
+        ;; Check that the Org buffer was updated
+        (should (string= (with-current-buffer org-buf
+                           (resumel-get-template-variable "MODERNCV_COLOR"))
+                         "burgundy"))))))
+
+;; ---- resumel-select-template updates Org header ----------------------------
+
+(ert-deftest resumel-test-select-template-updates-org-buffer ()
+  "resumel-select-template inserts #+RESUMEL_TEMPLATE when in an Org buffer."
+  (resumel-test-with-org-buffer
+      "#+TITLE: Test\n"
+    (resumel-select-template "altacv")
+    (should (string= (resumel--get-buffer-template) "altacv"))
+    ;; Keyword should now be present in the buffer
+    (save-excursion
+      (goto-char (point-min))
+      (should (re-search-forward "^#\\+RESUMEL_TEMPLATE: altacv" nil t)))))
+
+(ert-deftest resumel-test-select-template-updates-existing-keyword ()
+  "resumel-select-template updates an existing #+RESUMEL_TEMPLATE keyword."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n#+TITLE: Test\n"
+    (resumel-select-template "awesomecv")
+    (should (string= (resumel--get-buffer-template) "awesomecv"))
+    ;; Only one RESUMEL_TEMPLATE line should remain
+    (let ((count 0))
+      (save-excursion
+        (goto-char (point-min))
+        (while (re-search-forward "^#\\+RESUMEL_TEMPLATE:" nil t)
+          (setq count (1+ count))))
+      (should (= count 1)))))
+
+;; ---- resumel-core-variable-names --------------------------------------------
+
+(ert-deftest resumel-test-core-variable-names-defined ()
+  "resumel-core-variable-names is a non-empty list of strings."
+  (should (listp resumel-core-variable-names))
+  (should (> (length resumel-core-variable-names) 0))
+  (should (member "COMPILER" resumel-core-variable-names))
+  (should (member "CVTAG_CORNER_DEFAULT" resumel-core-variable-names)))
