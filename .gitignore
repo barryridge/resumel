@@ -367,10 +367,3 @@ TSWLatexianTemp*
 tests/results/
 tests/test_emacs.d/
 
-# Projectile cache
-.projectile-cache.eld
-
-# Personal / scratch files
-chat.org
-temp_headers.el
-temp_headers.org

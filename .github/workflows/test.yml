@@ -20,7 +20,7 @@ jobs:
             git
 
       - name: Set up TeX Live
-        uses: teatimeguest/setup-texlive-action@v3.4.1
+        uses: TeX-Live/setup-texlive-action@v4
         with:
           packages: |
             latexmk

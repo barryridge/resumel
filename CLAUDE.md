@@ -6,6 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **resumel** is an Emacs Lisp package that exports Org Mode files to professional PDF resumes using LaTeX templates. It supports four templates: `moderncv`, `altacv`, `awesomecv`, and `modaltacv` (a custom ModernCV-styled AltaCV variant).
 
+## Files Not to Commit
+
+The following personal/scratch files live in the repo root and must never be committed or pushed:
+
+- `chat.org` — scratch conversation notes
+- `temp_headers.el`, `temp_headers.org` — temporary scratch files
+- `.projectile-cache.eld` — Projectile IDE cache
+
 ## Commands
 
 ### Environment Setup (macOS)
