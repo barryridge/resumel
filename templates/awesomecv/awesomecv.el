@@ -209,7 +209,7 @@
 \\def\\Cplusplus{C{}\\texttt{++}}
 
 % Add map marker symbol for addresses
-\\newcommand*{\\addresssymbol}{{\\color{color2}\\small\\faMapMarker}~}
+\\newcommand*{\\addresssymbol}{{\\color{color2}\\small\\faLocationPin}~}
 
 % Add calendar symbol command for dates
 \\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendar}~}
