@@ -156,11 +156,22 @@ jobs:
 
       - name: Configure fonts for XeTeX
         run: |
+          # Roboto (used by AwesomeCV \roboto font family)
           sudo apt-get install -y fonts-roboto
-          # Symlink TeX Live font tree into a location fontconfig scans,
-          # so XeTeX/fontspec can find Source Sans 3, Roboto, etc.
-          sudo ln -sf "$(kpsewhich --var-value TEXMFDIST)/fonts" \
-            /usr/local/share/fonts/texlive
+          # Source Sans 3 (AwesomeCV main/sans font via fontspec).
+          # TeX Live's sourcesanspro package exposes fonts as "Source Sans Pro",
+          # not "Source Sans 3", so we download the renamed OTFs directly.
+          OTF_URL=$(curl -s https://api.github.com/repos/adobe-fonts/source-sans/releases/latest \
+            | python3 -c "
+import sys, json
+assets = json.load(sys.stdin)['assets']
+print(next(a['browser_download_url'] for a in assets if a['name'].startswith('OTF')))
+")
+          curl -fsSL "$OTF_URL" -o /tmp/source-sans-3.zip
+          sudo mkdir -p /usr/local/share/fonts/source-sans-3
+          sudo unzip -q /tmp/source-sans-3.zip -d /tmp/source-sans-3
+          sudo find /tmp/source-sans-3 -name "*.otf" \
+            -exec cp {} /usr/local/share/fonts/source-sans-3/ \;
           sudo fc-cache -fv
 
       - name: Setup Homebrew
