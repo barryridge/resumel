@@ -145,28 +145,28 @@
 - Project 1 description.
 @@latex:}@@
 @@latex:\\@@
-{{{vspace(-4.00mm)}}}
+# {{{vspace(-4.00mm)}}}
 ** Project 2 :ignore:
 @@latex:\cventry{\Cplusplus Library}{\textbf{Project 2}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project2}{https://github.com/user-name/project2}}{}{}{@@
 {{{vspace(-4.00mm)}}}
 - Project 2 description.
 @@latex:}@@
 @@latex:\\@@
-{{{vspace(-4.00mm)}}}
+# {{{vspace(-4.00mm)}}}
 ** Project 3 :ignore:
 @@latex:\cventry{Rust Library}{\textbf{Project 3}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project3}{https://github.com/user-name/project3}}{}{}{@@
 {{{vspace(-4.00mm)}}}
 - Project 3 description.
 @@latex:}@@
 @@latex:\\@@
-{{{vspace(-4.00mm)}}}
+# {{{vspace(-4.00mm)}}}
 ** Project 4 :ignore:
 @@latex:\cventry{Java Library}{\textbf{Project 4}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project4}{https://github.com/user-name/project4}}{}{}{@@
 {{{vspace(-4.00mm)}}}
 - Project 4 description.
 @@latex:}@@
 @@latex:\\@@
-{{{vspace(-4.00mm)}}}
+# {{{vspace(-4.00mm)}}}
 ** Project 5 :ignore:
 @@latex:\cventry{Haskell Library}{\textbf{Project 5}\textnormal{ | }\faGithub\textnormal{ }\href{https://github.com/user-name/project5}{https://github.com/user-name/project5}}{}{}{@@
 {{{vspace(-4.00mm)}}}
