@@ -138,20 +138,22 @@
 \\renewcommand{\\acvSectionTopSkip}{" awesomecv-section-top-skip "}
 \\renewcommand{\\acvSectionContentTopSkip}{" awesomecv-section-content-top-skip "}
 
-% Redfine itemize to match cvitems from awesomecv
+% Redefine itemize to match cvitems from awesomecv.
 % This will cause Org lists to use this format instead.
+% Uses \\justifying (not \\begin{justify}) to avoid the \\trivlist wrapper
+% in ragged2e's justify environment, which adds \\topsep vertical space
+% above and below every list -- causing extra spacing in nested lists.
 %
 \\usepackage{enumitem}
 \\let\\olditemize\\itemize
 \\let\\endolditemize\\enditemize
-\\renewenvironment{itemize}{
-  \\begin{justify}
+\\renewenvironment{itemize}{%
+  \\justifying
   \\begin{olditemize}[leftmargin=2ex, nosep, noitemsep]
     \\setlength{\\parskip}{0pt}
     \\renewcommand{\\labelitemi}{\\bullet}%
-}{
+}{%
   \\end{olditemize}
-  \\end{justify}
 }
 
 % Define divider (replicated from altacv)
