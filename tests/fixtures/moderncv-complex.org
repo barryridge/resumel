@@ -42,7 +42,7 @@
 @@latex:\small@@
 @@latex:\makecvtitle@@
 
-* {{{fa(Gears)}}} Skills
+* {{{fa(Cogs)}}} Skills
 
 ** Programming
 {{{cvtags(Python,Elisp,JavaScript,LaTeX,C++,Java)}}}

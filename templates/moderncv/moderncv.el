@@ -189,7 +189,8 @@
 \\newcommand{\\highlight}[1]{\\textbf{#1}} % Replace \\textbf with any desired formatting
 
 % Add map marker symbol to address
-\\renewcommand*{\\addresssymbol}{{\\color{color2}\\small\\faLocationPin}~}
+\\renewcommand*{\\addresssymbol}{{\\color{color2}\\small\\faMapMarker}~}
+% \\renewcommand*{\\addresssymbol}{{\\color{color2}\\small\\faLocationPin}~}
 
 % Add calendar symbol command for dates
 \\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendar}~}
