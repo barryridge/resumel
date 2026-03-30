@@ -162,11 +162,7 @@ jobs:
           # TeX Live's sourcesanspro package exposes fonts as "Source Sans Pro",
           # not "Source Sans 3", so we download the renamed OTFs directly.
           OTF_URL=$(curl -s https://api.github.com/repos/adobe-fonts/source-sans/releases/latest \
-            | python3 -c "
-import sys, json
-assets = json.load(sys.stdin)['assets']
-print(next(a['browser_download_url'] for a in assets if a['name'].startswith('OTF')))
-")
+            | jq -r '[.assets[] | select(.name | startswith("OTF"))][0].browser_download_url')
           curl -fsSL "$OTF_URL" -o /tmp/source-sans-3.zip
           sudo mkdir -p /usr/local/share/fonts/source-sans-3
           sudo unzip -q /tmp/source-sans-3.zip -d /tmp/source-sans-3
