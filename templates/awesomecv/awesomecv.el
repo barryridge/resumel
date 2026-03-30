@@ -66,7 +66,7 @@
 \\renewcommand*{\\headerfirstnamestyle}[1]{{" author-font "\\headerfontlight\\color{graytext} #1}}
 \\renewcommand*{\\headerlastnamestyle}[1]{{" author-font "\\headerfont\\bfseries\\color{text} #1}}
 \\renewcommand*{\\headerpositionstyle}[1]{{" title-font "\\color{awesome} #1}}
-\\renewcommand*{\\sectionstyle}[1]{{" section-font "\\color{text}\\@sectioncolor #1}}
+\\renewcommand*{\\sectionstyleface}[1]{{" section-font " #1}}
 \\renewcommand*{\\subsectionstyle}[1]{{" subsection-font "\\textcolor{text}{#1}}}
 \\makeatother
 
