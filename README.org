@@ -21,26 +21,24 @@ Templates are modular: each lives in its own directory with a =.el= file (LaTeX 
 * Template Gallery
 
 # --- resumel-auto:gallery ---
-#+begin_export html
-<table>
-  <tr>
-    <td align="center"><strong>ModernCV</strong></td>
-    <td align="center"><strong>AltaCV</strong></td>
-  </tr>
-  <tr>
-    <td><img src="docs/previews/moderncv.png" alt="ModernCV template preview" width="400"/></td>
-    <td><img src="docs/previews/altacv.png" alt="AltaCV template preview" width="400"/></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>AwesomeCV</strong></td>
-    <td align="center"><strong>ModaltaCV</strong></td>
-  </tr>
-  <tr>
-    <td><img src="docs/previews/awesomecv.png" alt="AwesomeCV template preview" width="400"/></td>
-    <td><img src="docs/previews/modaltacv.png" alt="ModaltaCV template preview" width="400"/></td>
-  </tr>
-</table>
-#+end_export
+#+html: <table>
+#+html:   <tr>
+#+html:     <td align="center"><strong>ModernCV</strong></td>
+#+html:     <td align="center"><strong>AltaCV</strong></td>
+#+html:   </tr>
+#+html:   <tr>
+#+html:     <td><img src="docs/previews/moderncv.png" alt="ModernCV template preview" width="400"/></td>
+#+html:     <td><img src="docs/previews/altacv.png" alt="AltaCV template preview" width="400"/></td>
+#+html:   </tr>
+#+html:   <tr>
+#+html:     <td align="center"><strong>AwesomeCV</strong></td>
+#+html:     <td align="center"><strong>ModaltaCV</strong></td>
+#+html:   </tr>
+#+html:   <tr>
+#+html:     <td><img src="docs/previews/awesomecv.png" alt="AwesomeCV template preview" width="400"/></td>
+#+html:     <td><img src="docs/previews/modaltacv.png" alt="ModaltaCV template preview" width="400"/></td>
+#+html:   </tr>
+#+html: </table>
 # --- end-resumel-auto:gallery ---
 
 * Prerequisites

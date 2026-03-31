@@ -80,8 +80,11 @@ def build_overview(ordered: list[str], meta: dict) -> str:
 
 
 def build_gallery(ordered: list[str], meta: dict) -> str:
-    """Return the #+begin_export html block for the Template Gallery section."""
-    rows = []
+    """Return #+html: lines for the Template Gallery section."""
+    def h(html: str) -> str:
+        return f"#+html: {html}"
+
+    lines = [h("<table>")]
     # Pair templates two per row; an odd final template gets its own row.
     it = iter(ordered)
     for left in it:
@@ -89,37 +92,29 @@ def build_gallery(ordered: list[str], meta: dict) -> str:
         lm = meta[left]
 
         # Header row (template names)
-        header = "  <tr>\n"
-        header += f'    <td align="center"><strong>{lm["display_name"]}</strong></td>\n'
+        lines.append(h("  <tr>"))
+        lines.append(h(f'    <td align="center"><strong>{lm["display_name"]}</strong></td>'))
         if right:
             rm = meta[right]
-            header += f'    <td align="center"><strong>{rm["display_name"]}</strong></td>\n'
-        header += "  </tr>"
-        rows.append(header)
+            lines.append(h(f'    <td align="center"><strong>{rm["display_name"]}</strong></td>'))
+        lines.append(h("  </tr>"))
 
         # Image row
-        img_row = "  <tr>\n"
-        img_row += (
+        lines.append(h("  <tr>"))
+        lines.append(h(
             f'    <td><img src="docs/previews/{left}.png"'
-            f' alt="{lm["display_name"]} template preview" width="400"/></td>\n'
-        )
+            f' alt="{lm["display_name"]} template preview" width="400"/></td>'
+        ))
         if right:
             rm = meta[right]
-            img_row += (
+            lines.append(h(
                 f'    <td><img src="docs/previews/{right}.png"'
-                f' alt="{rm["display_name"]} template preview" width="400"/></td>\n'
-            )
-        img_row += "  </tr>"
-        rows.append(img_row)
+                f' alt="{rm["display_name"]} template preview" width="400"/></td>'
+            ))
+        lines.append(h("  </tr>"))
 
-    table_rows = "\n".join(rows)
-    return (
-        "#+begin_export html\n"
-        "<table>\n"
-        + table_rows
-        + "\n</table>\n"
-        "#+end_export"
-    )
+    lines.append(h("</table>"))
+    return "\n".join(lines)
 
 
 def replace_section(text: str, key: str, new_content: str) -> str:
