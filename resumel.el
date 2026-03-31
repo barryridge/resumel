@@ -324,17 +324,17 @@ Uses bold, italic, and colour so the distinction is visible in any theme."
 
 (defvar resumel-variables-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "g") #'resumel--variables-refresh)
-    (define-key map (kbd "q") #'quit-window)
+    (define-key map (kbd "C-c r") #'resumel--variables-refresh)
+    (define-key map (kbd "q")     #'quit-window)
     map)
   "Keymap for `resumel-variables-mode'.")
 
 ;; When evil is present (e.g. Doom Emacs), evil's normal-state map
-;; intercepts keys like 'q' (record macro) and 'g' (motion prefix)
-;; before the buffer-local map is consulted.  Registering our map as
-;; an overriding map tells evil to check our bindings first, so 'q'
-;; quits and 'g' refreshes as advertised, while all other keys
-;; (including text insertion via 'i'/'a') continue to work normally.
+;; intercepts 'q' (record macro) before the buffer-local map is
+;; consulted.  Registering our map as an overriding map tells evil to
+;; check our binding first so 'q' quits as expected.  C-c r is used
+;; for refresh because it is universally safe and does not shadow any
+;; evil motion or operator keys.
 (with-eval-after-load 'evil
   (evil-make-overriding-map resumel-variables-mode-map 'normal))
 
@@ -401,7 +401,7 @@ explicitly set in the Org buffer are displayed."
                     (add-text-properties start (point)
                                          '(face resumel-variables-active-face)))
                   (insert "; others show template defaults.\n")))
-              (insert "Press 'g' to refresh, 'q' to close.\n\n")
+              (insert "Press 'C-c r' to refresh, 'q' to close.\n\n")
               ;; Core variables section
               (when (member filter '(all core))
                 (insert "CORE VARIABLES  (shared by all templates)\n")
