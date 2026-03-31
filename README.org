@@ -7,7 +7,7 @@
 
 * Overview
 
-=resumel= is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates. It supports four templates:
+=resumel= is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates. It supports the following templates:
 
 # --- resumel-auto:overview ---
 - *[[https://github.com/moderncv/moderncv][ModernCV]]*: A modern curriculum vitae class for LaTeX.
