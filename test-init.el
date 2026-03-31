@@ -4,15 +4,15 @@
 (require 'package)
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (setq package-archives
-      '(("gnu" . "https://elpa.gnu.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")
-        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-        ("org" . "https://orgmode.org/elpa/")))
+      '(("gnu"    . "https://elpa.gnu.org/packages/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (package-initialize)
+(package-refresh-contents)
 
-(use-package org :ensure t)
-(use-package org-contrib :ensure t)
+(dolist (pkg '(org org-contrib))
+  (unless (package-installed-p pkg)
+    (package-install pkg)))
 
 (org-babel-do-load-languages
  'org-babel-load-languages

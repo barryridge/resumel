@@ -66,7 +66,7 @@
 \\renewcommand*{\\headerfirstnamestyle}[1]{{" author-font "\\headerfontlight\\color{graytext} #1}}
 \\renewcommand*{\\headerlastnamestyle}[1]{{" author-font "\\headerfont\\bfseries\\color{text} #1}}
 \\renewcommand*{\\headerpositionstyle}[1]{{" title-font "\\color{awesome} #1}}
-\\renewcommand*{\\sectionstyle}[1]{{" section-font "\\color{text}\\@sectioncolor #1}}
+\\renewcommand*{\\sectionstyleface}[1]{{" section-font " #1}}
 \\renewcommand*{\\subsectionstyle}[1]{{" subsection-font "\\textcolor{text}{#1}}}
 \\makeatother
 
@@ -138,20 +138,22 @@
 \\renewcommand{\\acvSectionTopSkip}{" awesomecv-section-top-skip "}
 \\renewcommand{\\acvSectionContentTopSkip}{" awesomecv-section-content-top-skip "}
 
-% Redfine itemize to match cvitems from awesomecv
+% Redefine itemize to match cvitems from awesomecv.
 % This will cause Org lists to use this format instead.
+% Uses \\justifying (not \\begin{justify}) to avoid the \\trivlist wrapper
+% in ragged2e's justify environment, which adds \\topsep vertical space
+% above and below every list -- causing extra spacing in nested lists.
 %
 \\usepackage{enumitem}
 \\let\\olditemize\\itemize
 \\let\\endolditemize\\enditemize
-\\renewenvironment{itemize}{
-  \\begin{justify}
+\\renewenvironment{itemize}{%
+  \\justifying
   \\begin{olditemize}[leftmargin=2ex, nosep, noitemsep]
     \\setlength{\\parskip}{0pt}
     \\renewcommand{\\labelitemi}{\\bullet}%
-}{
+}{%
   \\end{olditemize}
-  \\end{justify}
 }
 
 % Define divider (replicated from altacv)
@@ -207,7 +209,7 @@
 \\def\\Cplusplus{C{}\\texttt{++}}
 
 % Add map marker symbol for addresses
-\\newcommand*{\\addresssymbol}{{\\color{color2}\\small\\faMapMarker}~}
+\\newcommand*{\\addresssymbol}{{\\color{color2}\\small\\faLocationPin}~}
 
 % Add calendar symbol command for dates
 \\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendar}~}
@@ -216,5 +218,36 @@
 
                  ("\n\\cvsection{%s}" . "\n\\cvsection*{%s}")
                  ("\n\\cvsubsection{%s}" . "\n\\cvsubsection*{%s}"))))
+
+(defconst resumel-awesomecv-variable-defaults
+  '(("COMPILER"                         . "xelatex")
+    ("GEOMETRY"                         . "left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm")
+    ("DOCUMENTCLASS_OPTIONS"            . "10pt,letterpaper,ragged2e,withhyper")
+    ("MAIN_FONT_XELATEX"                . "Roboto Slab")
+    ("SANS_FONT_XELATEX"                . "Lato")
+    ("MONO_FONT_XELATEX"                . "Fira Code")
+    ("MATH_FONT_XELATEX"                . "TeX Gyre Termes Math")
+    ("MAIN_FONT_PDFLATEX"               . "roboto")
+    ("SANS_FONT_PDFLATEX"               . "lato")
+    ("MONO_FONT_PDFLATEX"               . "sourcecodepro")
+    ("MATH_FONT_PDFLATEX"               . "newtxmath")
+    ("TITLE_FONT"                       . "\\fontsize{7.6pt}{1em}\\bodyfont\\scshape")
+    ("AUTHOR_FONT"                      . "\\fontsize{32pt}{1em}")
+    ("SECTION_FONT"                     . "\\fontsize{16pt}{1em}\\bodyfont\\bfseries")
+    ("SUBSECTION_FONT"                  . "\\fontsize{12pt}{1em}\\bodyfont\\scshape")
+    ("CVTAG_INTENSITY_DEFAULT"          . "5")
+    ("CVTAG_FONT_DEFAULT"               . "\\scriptsize")
+    ("CVTAG_BASELINE_DEFAULT"           . "-0.5ex")
+    ("CVTAG_INNER_X_SEP_DEFAULT"        . "0.5ex")
+    ("CVTAG_INNER_Y_SEP_DEFAULT"        . "0.5ex")
+    ("CVTAG_TEXT_HEIGHT_DEFAULT"        . "1.25ex")
+    ("CVTAG_TEXT_DEPTH_DEFAULT"         . "0.25ex")
+    ("CVTAG_CORNER_DEFAULT"             . "rounded corners")
+    ("AWESOMECV_COLOR"                  . "awesome-red")
+    ("AWESOMECV_SECTION_COLOR_HIGHLIGHT". "true")
+    ("AWESOMECV_HEADER_SOCIAL_SEP"      . "\\quad\\textbar\\quad")
+    ("AWESOMECV_SECTION_TOP_SKIP"       . "3mm")
+    ("AWESOMECV_SECTION_CONTENT_TOP_SKIP" . "2.5mm"))
+  "Default variable values for the resumel awesomecv template.")
 
 (provide 'resumel-awesomecv)

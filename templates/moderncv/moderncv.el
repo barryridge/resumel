@@ -190,6 +190,7 @@
 
 % Add map marker symbol to address
 \\renewcommand*{\\addresssymbol}{{\\color{color2}\\small\\faMapMarker}~}
+% \\renewcommand*{\\addresssymbol}{{\\color{color2}\\small\\faLocationPin}~}
 
 % Add calendar symbol command for dates
 \\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendar}~}
@@ -200,5 +201,33 @@
 ")
                  ("\n\\section{%s}" . "\n\\section*{%s}")
                  ("\n\\subsection{%s}" . "\n\\subsection*{%s}"))))
+
+(defconst resumel-moderncv-variable-defaults
+  '(("COMPILER"                  . "pdflatex")
+    ("GEOMETRY"                  . "scale=0.75, top=2cm, bottom=2cm, left=2.05cm, right=2.05cm")
+    ("DOCUMENTCLASS_OPTIONS"     . "11pt,letterpaper,sans")
+    ("MAIN_FONT_XELATEX"         . "Latin Modern Roman")
+    ("SANS_FONT_XELATEX"         . "Latin Modern Sans")
+    ("MONO_FONT_XELATEX"         . "Latin Modern Mono")
+    ("MATH_FONT_XELATEX"         . "Latin Modern Math")
+    ("MAIN_FONT_PDFLATEX"        . "lmodern")
+    ("SANS_FONT_PDFLATEX"        . "lmodern")
+    ("MONO_FONT_PDFLATEX"        . "lmodern")
+    ("MATH_FONT_PDFLATEX"        . "newtxmath")
+    ("TITLE_FONT"                . "\\LARGE\\mdseries\\slshape")
+    ("AUTHOR_FONT"               . "\\fontsize{34}{36}\\mdseries\\upshape")
+    ("SECTION_FONT"              . "\\Large\\mdseries\\upshape")
+    ("SUBSECTION_FONT"           . "\\large\\mdseries\\upshape")
+    ("CVTAG_INTENSITY_DEFAULT"   . "5")
+    ("CVTAG_FONT_DEFAULT"        . "\\scriptsize")
+    ("CVTAG_BASELINE_DEFAULT"    . "-0.5ex")
+    ("CVTAG_INNER_X_SEP_DEFAULT" . "0.5ex")
+    ("CVTAG_INNER_Y_SEP_DEFAULT" . "0.5ex")
+    ("CVTAG_TEXT_HEIGHT_DEFAULT" . "1.25ex")
+    ("CVTAG_TEXT_DEPTH_DEFAULT"  . "0.25ex")
+    ("CVTAG_CORNER_DEFAULT"      . "rounded corners")
+    ("MODERNCV_COLOR"            . "blue")
+    ("MODERNCV_STYLE"            . "classic"))
+  "Default variable values for the resumel moderncv template.")
 
 (provide 'resumel-moderncv)

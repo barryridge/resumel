@@ -35,7 +35,7 @@
 ** Symbols
 - Calendar symbol: {{{cal}}}
 - Address pin symbol: {{{pin}}}
-- Font Awesome symbols: {{{fa(Cogs)}}} {{{fa(GraduationCap)}}} {{{fa(GraduationCap)}}} {{{fa(Book)}}} {{{fa(Wrench)}}} {{{fa(Trophy)}}} {{{fa(ChalkboardTeacher)}}} {{{fa(Users)}}}
+- Font Awesome symbols: {{{fa(Gears)}}} {{{fa(GraduationCap)}}} {{{fa(Book)}}} {{{fa(Wrench)}}} {{{fa(Trophy)}}} {{{fa(ChalkboardUser)}}} {{{fa(Users)}}}
 - Font Awesome symbol in different sizes: {{{fa(Briefcase,\Huge)}}} {{{fa(Briefcase,\huge)}}} {{{fa(Briefcase,\Large)}}} {{{fa(Briefcase,\large)}}} {{{fa(Briefcase,\normalsize)}}} {{{fa(Briefcase,\small)}}} {{{fa(Briefcase,\footnotesize)}}} {{{fa(Briefcase,\scriptsize)}}} {{{fa(Briefcase,\tiny)}}}
 - Font Awesome symbol in different colors: {{{fa(Briefcase,\color{color1})}}} {{{fa(Briefcase,\color{black})}}} {{{fa(Briefcase,\color{darkgray})}}} {{{fa(Briefcase,\color{gray})}}} {{{fa(Briefcase,\color{lightgray})}}} {{{fa(Briefcase,\color{green})}}} {{{fa(Briefcase,\color{orange})}}} {{{fa(Briefcase,\color{purple})}}} {{{fa(Briefcase,\color{red})}}} {{{fa(Briefcase,\color{blue})}}} {{{fa(Briefcase,\color{awesome-emerald})}}}
 - Font Awesome symbol in different sizes and colors: {{{fa(Briefcase,\color{color1}\Huge)}}} {{{fa(Briefcase,\color{awesome-emerald}\huge)}}} {{{fa(Briefcase,\color{awesome-darknight}\Large)}}} {{{fa(Briefcase,\color{awesome-skyblue}\large)}}} {{{fa(Briefcase,\color{awesome-red}\normalsize)}}} {{{fa(Briefcase,\color{awesome-pink}\small)}}} {{{fa(Briefcase,\color{awesome-orange}\footnotesize)}}} {{{fa(Briefcase,\color{awesome-nephritis}\scriptsize)}}} {{{fa(Briefcase,\color{awesome-concrete}\tiny)}}}
@@ -86,6 +86,7 @@ Row 2, Col 1 {{{amp()}}} Row 2, Col 2 {{{amp()}}} Row 2, Col 3 {{{endl()}}}
 {{{pagebreak()}}}
 
 ** Entries
+
 @@latex:\begin{cventries}@@
 
 \cventry{Job Title 1}{Organization 1}{Location 1}{Dates 1}{Description 1}
@@ -97,11 +98,13 @@ Row 2, Col 1 {{{amp()}}} Row 2, Col 2 {{{amp()}}} Row 2, Col 3 {{{endl()}}}
 @@latex:\end{cventries}@@
 
 ** Paragraphs
+
 @@latex:\begin{cvparagraph}@@
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 @@latex:\end{cvparagraph}@@
 
 ** Honors
+
 @@latex:\begin{cvhonors}@@
 
 {{{cvhonor(\faTrophy\;Fantastic Achievement 1,Event 1,Location 1,Date 1)}}}
@@ -113,10 +116,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 @@latex:\end{cvhonors}@@
 
 ** Skills
+
 @@latex:\begin{cvskills}@@
+
 {{{cvskill(Skill 1,1)}}}
+
 {{{cvskill(Skill 2,2)}}}
+
 {{{cvskill(Skill 3,3)}}}
+
 {{{cvskill(Skill 4,4)}}}
+
 {{{cvskill(Skill 5,5)}}}
+
 @@latex:\end{cvskills}@@
