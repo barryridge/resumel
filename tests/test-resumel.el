@@ -1,5 +1,13 @@
 (require 'ert)
+(require 'cl-lib)
 (require 'resumel)
+
+;; Declare completion-UI variables as special so let-bindings in tests
+;; work correctly for simulating vertico/ivy state.
+(defvar vertico-mode)
+(defvar vertico--index)
+(defvar vertico--candidates)
+(defvar ivy-mode)
 
 ;; Define test directories
 (defvar resumel-test-dir (file-name-directory (or load-file-name buffer-file-name))
@@ -459,3 +467,267 @@
   (should (> (length resumel-core-variable-names) 0))
   (should (member "COMPILER" resumel-core-variable-names))
   (should (member "CVTAG_CORNER_DEFAULT" resumel-core-variable-names)))
+
+;;; ---------------------------------------------------------------------------
+;;; Unit tests for template preview
+;;; ---------------------------------------------------------------------------
+
+;; ---- resumel--find-preview-pdf ----------------------------------------------
+
+(ert-deftest resumel-test-find-preview-pdf-finds-matching ()
+  "resumel--find-preview-pdf returns a PDF path matching the template name."
+  (let ((resumel-preview-pdf-dir (expand-file-name "expected" resumel-test-dir)))
+    (let ((result (resumel--find-preview-pdf "moderncv")))
+      (should (stringp result))
+      (should (file-exists-p result))
+      (should (string-match "moderncv-" (file-name-nondirectory result))))))
+
+(ert-deftest resumel-test-find-preview-pdf-prefers-pattern-match ()
+  "resumel--find-preview-pdf returns the first PDF matching resumel-preview-pdf-pattern."
+  (let ((resumel-preview-pdf-dir (expand-file-name "expected" resumel-test-dir))
+        (resumel-preview-pdf-pattern "-complex\\.pdf$"))
+    ;; moderncv has basic-blue, basic-green, complex — pattern selects complex
+    (let ((result (resumel--find-preview-pdf "moderncv")))
+      (should (string-match "moderncv-complex\\.pdf$" result)))))
+
+(ert-deftest resumel-test-find-preview-pdf-falls-back-without-pattern-match ()
+  "resumel--find-preview-pdf falls back to first alphabetical when pattern matches nothing."
+  (let ((resumel-preview-pdf-dir (expand-file-name "expected" resumel-test-dir))
+        (resumel-preview-pdf-pattern "-XXXXNOMATCH\\.pdf$"))
+    ;; Pattern matches nothing, so fall back to first alphabetically: basic-blue
+    (let ((result (resumel--find-preview-pdf "moderncv")))
+      (should (string-match "moderncv-basic-blue\\.pdf$" result)))))
+
+(ert-deftest resumel-test-find-preview-pdf-returns-nil-for-unknown-template ()
+  "resumel--find-preview-pdf returns nil when no matching PDF exists."
+  (let ((resumel-preview-pdf-dir (expand-file-name "expected" resumel-test-dir)))
+    (should (null (resumel--find-preview-pdf "nonexistent-template")))))
+
+(ert-deftest resumel-test-find-preview-pdf-returns-nil-for-missing-dir ()
+  "resumel--find-preview-pdf returns nil when the preview directory does not exist."
+  (let ((resumel-preview-pdf-dir "/nonexistent/path/to/pdfs"))
+    (should (null (resumel--find-preview-pdf "moderncv")))))
+
+;; ---- resumel-select-template preview integration ----------------------------
+
+(ert-deftest resumel-test-select-template-no-preview-non-interactive ()
+  "Calling resumel-select-template non-interactively never triggers preview.
+Preview only fires via the interactive form's minibuffer hooks."
+  (let ((preview-called nil))
+    (cl-letf (((symbol-function 'resumel--show-preview)
+               (lambda (_tmpl) (setq preview-called t))))
+      (resumel-test-with-org-buffer
+          "#+TITLE: Test\n"
+        (resumel-select-template "altacv")))
+    (should-not preview-called)))
+
+(ert-deftest resumel-test-select-template-uses-with-live-preview ()
+  "resumel-select-template delegates to resumel--with-live-preview interactively."
+  (let ((called-templates nil)
+        (called-prompt nil))
+    (cl-letf (((symbol-function 'resumel--with-live-preview)
+               (lambda (templates prompt &optional _force)
+                 (setq called-templates templates
+                       called-prompt prompt)
+                 "altacv")))
+      (call-interactively #'resumel-select-template))
+    (should (equal called-templates '("moderncv" "altacv" "modaltacv" "awesomecv")))
+    (should (stringp called-prompt))))
+
+;; ---- resumel--with-live-preview ---------------------------------------------
+
+(ert-deftest resumel-test-with-live-preview-returns-selection-when-disabled ()
+  "resumel--with-live-preview returns the completing-read selection (disabled path)."
+  (let ((resumel-show-preview-on-select nil))
+    (cl-letf (((symbol-function 'completing-read)
+               (lambda (&rest _) "altacv")))
+      (should (string= (resumel--with-live-preview
+                        '("moderncv" "altacv" "modaltacv" "awesomecv")
+                        "Test: ")
+                       "altacv")))))
+
+(ert-deftest resumel-test-with-live-preview-returns-selection-when-enabled ()
+  "resumel--with-live-preview returns the completing-read selection (enabled path)."
+  ;; When enabled, uses minibuffer-with-setup-hook which still calls completing-read.
+  ;; In batch/test mode the post-command-hook never fires, but the selection
+  ;; is still returned correctly.
+  (let ((resumel-show-preview-on-select t))
+    (cl-letf (((symbol-function 'completing-read)
+               (lambda (&rest _) "modaltacv")))
+      (should (string= (resumel--with-live-preview
+                        '("moderncv" "altacv" "modaltacv" "awesomecv")
+                        "Test: ")
+                       "modaltacv")))))
+
+;; ---- resumel--minibuffer-current-candidate ----------------------------------
+
+(ert-deftest resumel-test-minibuffer-current-candidate-exact-input ()
+  "Returns exact match when minibuffer input equals a template name."
+  (let ((templates '("moderncv" "altacv" "modaltacv" "awesomecv"))
+        (vertico-mode nil)
+        (ivy-mode nil))
+    (cl-letf (((symbol-function 'minibuffer-contents-no-properties)
+               (lambda () "altacv")))
+      (should (string= (resumel--minibuffer-current-candidate templates)
+                       "altacv")))))
+
+(ert-deftest resumel-test-minibuffer-current-candidate-prefix-input ()
+  "Returns first prefix match when minibuffer input is a partial name."
+  (let ((templates '("moderncv" "altacv" "modaltacv" "awesomecv"))
+        (vertico-mode nil)
+        (ivy-mode nil))
+    (cl-letf (((symbol-function 'minibuffer-contents-no-properties)
+               (lambda () "mod")))
+      ;; "mod" is a prefix of "moderncv" and "modaltacv"; first match wins
+      (should (string= (resumel--minibuffer-current-candidate templates)
+                       "moderncv")))))
+
+(ert-deftest resumel-test-minibuffer-current-candidate-empty-input ()
+  "Returns first template when minibuffer input is empty."
+  (let ((templates '("moderncv" "altacv" "modaltacv" "awesomecv"))
+        (vertico-mode nil)
+        (ivy-mode nil))
+    (cl-letf (((symbol-function 'minibuffer-contents-no-properties)
+               (lambda () "")))
+      ;; Empty string is a prefix of everything; returns first
+      (should (string= (resumel--minibuffer-current-candidate templates)
+                       "moderncv")))))
+
+(ert-deftest resumel-test-minibuffer-current-candidate-no-match ()
+  "Returns nil when minibuffer input matches no template."
+  (let ((templates '("moderncv" "altacv" "modaltacv" "awesomecv"))
+        (vertico-mode nil)
+        (ivy-mode nil))
+    (cl-letf (((symbol-function 'minibuffer-contents-no-properties)
+               (lambda () "xyz-no-such-template")))
+      (should (null (resumel--minibuffer-current-candidate templates))))))
+
+(ert-deftest resumel-test-minibuffer-current-candidate-vertico ()
+  "Returns vertico's highlighted candidate when vertico-mode is active."
+  (let ((templates '("moderncv" "altacv" "modaltacv" "awesomecv"))
+        (vertico-mode t)
+        (vertico--candidates '("altacv" "awesomecv" "modaltacv" "moderncv"))
+        (vertico--index 2))          ; highlights "modaltacv"
+    (cl-letf (((symbol-function 'minibuffer-contents-no-properties)
+               (lambda () "")))    ; input is empty — would default to "moderncv"
+      (should (string= (resumel--minibuffer-current-candidate templates)
+                       "modaltacv")))))
+
+(ert-deftest resumel-test-minibuffer-current-candidate-vertico-ignores-non-templates ()
+  "Ignores vertico candidate when it is not in the templates list."
+  (let ((templates '("moderncv" "altacv" "modaltacv" "awesomecv"))
+        (vertico-mode t)
+        (vertico--candidates '("some-other-value"))
+        (vertico--index 0))
+    (cl-letf (((symbol-function 'minibuffer-contents-no-properties)
+               (lambda () "alt")))
+      ;; vertico candidate is not in templates; falls through to prefix match
+      (should (string= (resumel--minibuffer-current-candidate templates)
+                       "altacv")))))
+
+;;; ---------------------------------------------------------------------------
+;;; Unit tests for template file viewing
+;;; ---------------------------------------------------------------------------
+
+;; ---- resumel-view-template-el -----------------------------------------------
+
+(ert-deftest resumel-test-view-template-el-opens-correct-file ()
+  "resumel-view-template-el calls find-file-other-window on the correct .el file."
+  (let (opened-file)
+    (cl-letf (((symbol-function 'find-file-other-window)
+               (lambda (f) (setq opened-file f))))
+      (resumel-view-template-el "moderncv"))
+    (should (stringp opened-file))
+    (should (string-suffix-p "moderncv/moderncv.el" opened-file))
+    (should (file-exists-p opened-file))))
+
+(ert-deftest resumel-test-view-template-el-all-templates ()
+  "resumel-view-template-el resolves .el paths for all four templates."
+  (dolist (tmpl '("moderncv" "altacv" "modaltacv" "awesomecv"))
+    (let (opened-file)
+      (cl-letf (((symbol-function 'find-file-other-window)
+                 (lambda (f) (setq opened-file f))))
+        (resumel-view-template-el tmpl))
+      (should (file-exists-p opened-file))
+      (should (string-suffix-p (format "%s/%s.el" tmpl tmpl) opened-file)))))
+
+(ert-deftest resumel-test-view-template-el-errors-for-nonexistent ()
+  "resumel-view-template-el signals an error for an unknown template."
+  (cl-letf (((symbol-function 'find-file-other-window) #'ignore))
+    (should-error (resumel-view-template-el "not-a-real-template"))))
+
+;; ---- resumel-view-template-org ----------------------------------------------
+
+(ert-deftest resumel-test-view-template-org-opens-correct-file ()
+  "resumel-view-template-org calls find-file-other-window on the correct .org file."
+  (let (opened-file)
+    (cl-letf (((symbol-function 'find-file-other-window)
+               (lambda (f) (setq opened-file f))))
+      (resumel-view-template-org "altacv"))
+    (should (stringp opened-file))
+    (should (string-suffix-p "altacv/altacv.org" opened-file))
+    (should (file-exists-p opened-file))))
+
+(ert-deftest resumel-test-view-template-org-all-templates ()
+  "resumel-view-template-org resolves .org paths for all four templates."
+  (dolist (tmpl '("moderncv" "altacv" "modaltacv" "awesomecv"))
+    (let (opened-file)
+      (cl-letf (((symbol-function 'find-file-other-window)
+                 (lambda (f) (setq opened-file f))))
+        (resumel-view-template-org tmpl))
+      (should (file-exists-p opened-file))
+      (should (string-suffix-p (format "%s/%s.org" tmpl tmpl) opened-file)))))
+
+(ert-deftest resumel-test-view-template-org-errors-for-nonexistent ()
+  "resumel-view-template-org signals an error for an unknown template."
+  (cl-letf (((symbol-function 'find-file-other-window) #'ignore))
+    (should-error (resumel-view-template-org "not-a-real-template"))))
+
+;; ---- resumel-view-template-pdf ----------------------------------------------
+
+(ert-deftest resumel-test-view-template-pdf-opens-correct-file ()
+  "resumel-view-template-pdf calls find-file-other-window on the matching PDF."
+  (let (opened-file)
+    (cl-letf (((symbol-function 'find-file-other-window)
+               (lambda (f) (setq opened-file f))))
+      (let ((resumel-preview-pdf-dir (expand-file-name "expected" resumel-test-dir))
+            (resumel-preview-pdf-pattern "-complex\\.pdf$"))
+        (resumel-view-template-pdf "moderncv")))
+    (should (stringp opened-file))
+    (should (string-match "moderncv-complex\\.pdf$" opened-file))
+    (should (file-exists-p opened-file))))
+
+(ert-deftest resumel-test-view-template-pdf-all-templates ()
+  "resumel-view-template-pdf resolves a PDF for all four templates."
+  (dolist (tmpl '("moderncv" "altacv" "modaltacv" "awesomecv"))
+    (let (opened-file)
+      (cl-letf (((symbol-function 'find-file-other-window)
+                 (lambda (f) (setq opened-file f))))
+        (let ((resumel-preview-pdf-dir (expand-file-name "expected" resumel-test-dir)))
+          (resumel-view-template-pdf tmpl)))
+      (should (file-exists-p opened-file))
+      (should (string-match (concat "^" (regexp-quote tmpl) "-")
+                             (file-name-nondirectory opened-file))))))
+
+(ert-deftest resumel-test-view-template-pdf-messages-when-no-pdf ()
+  "resumel-view-template-pdf messages the user when no PDF is found."
+  (let (last-message)
+    (cl-letf (((symbol-function 'message)
+               (lambda (fmt &rest args)
+                 (setq last-message (apply #'format fmt args)))))
+      (let ((resumel-preview-pdf-dir "/nonexistent/path"))
+        (resumel-view-template-pdf "moderncv")))
+    (should (stringp last-message))
+    (should (string-match "moderncv" last-message))))
+
+(ert-deftest resumel-test-view-template-pdf-uses-with-live-preview-forced ()
+  "resumel-view-template-pdf calls resumel--with-live-preview with force=t."
+  (let (called-force)
+    (cl-letf (((symbol-function 'resumel--with-live-preview)
+               (lambda (_templates _prompt &optional force)
+                 (setq called-force force)
+                 "moderncv"))
+              ((symbol-function 'find-file-other-window) #'ignore))
+      (let ((resumel-preview-pdf-dir (expand-file-name "expected" resumel-test-dir)))
+        (call-interactively #'resumel-view-template-pdf)))
+    (should called-force)))
