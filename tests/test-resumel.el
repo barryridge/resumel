@@ -276,6 +276,24 @@
   (should (eq (indirect-function 'resumel-show-variables)
               (indirect-function 'resumel-show-all-variables))))
 
+(ert-deftest resumel-test-show-all-template-variables-is-alias ()
+  "resumel-show-all-template-variables is an alias for resumel-show-all-variables."
+  (should (fboundp 'resumel-show-all-template-variables))
+  (should (eq (indirect-function 'resumel-show-all-template-variables)
+              (indirect-function 'resumel-show-all-variables))))
+
+;; ---- resumel-show-* does not pollute the Org buffer ------------------------
+
+(ert-deftest resumel-test-show-variables-no-pollution ()
+  "Calling resumel-show-all-variables must not write default vars to the Org buffer."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n#+RESUMEL_MODERNCV_COLOR: blue\n#+TITLE: Test\n"
+    (let* ((org-buf  (current-buffer))
+           (initial  (buffer-string)))
+      (resumel-show-all-variables)
+      ;; The Org buffer content must be identical after showing variables.
+      (should (string= (buffer-string) initial)))))
+
 ;; ---- resumel-variables-mode live sync ---------------------------------------
 
 (ert-deftest resumel-test-variables-mode-live-sync ()
@@ -286,13 +304,69 @@
       (resumel-show-all-variables)
       (let ((vars-buf (get-buffer "*resumel: template variables*")))
         (should vars-buf)
-        ;; Edit the MODERNCV_COLOR line in the variables buffer
         (with-current-buffer vars-buf
+          ;; Edit the MODERNCV_COLOR line (already in buffer — pre-highlighted)
           (goto-char (point-min))
           (re-search-forward "^#\\+RESUMEL_MODERNCV_COLOR: ")
           (delete-region (point) (line-end-position))
-          (insert "burgundy"))
+          (insert "burgundy")
+          ;; The entire line must carry the active face after the edit
+          (goto-char (point-min))
+          (re-search-forward "^#\\+RESUMEL_MODERNCV_COLOR:")
+          (should (eq (get-text-property (line-beginning-position) 'face)
+                      'resumel-variables-active-face)))
         ;; Check that the Org buffer was updated
+        (should (string= (with-current-buffer org-buf
+                           (resumel-get-template-variable "MODERNCV_COLOR"))
+                         "burgundy"))))))
+
+(ert-deftest resumel-test-variables-mode-reverts-highlight-to-default ()
+  "Changing a variable back to its default removes the active face."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n#+RESUMEL_MODERNCV_COLOR: burgundy\n#+TITLE: Test\n"
+    (let ((org-buf (current-buffer)))
+      (resumel-show-all-variables)
+      (let ((vars-buf (get-buffer "*resumel: template variables*")))
+        (should vars-buf)
+        (with-current-buffer vars-buf
+          ;; MODERNCV_COLOR is set in the buffer — line should be highlighted
+          (goto-char (point-min))
+          (re-search-forward "^#\\+RESUMEL_MODERNCV_COLOR: ")
+          (should (eq (get-text-property (line-beginning-position) 'face)
+                      'resumel-variables-active-face))
+          ;; Change it back to the template default value
+          (delete-region (point) (line-end-position))
+          (insert "blue")
+          ;; The active face must now be gone
+          (goto-char (point-min))
+          (re-search-forward "^#\\+RESUMEL_MODERNCV_COLOR:")
+          (should-not (eq (get-text-property (line-beginning-position) 'face)
+                          'resumel-variables-active-face)))))))
+
+(ert-deftest resumel-test-variables-mode-default-promotes-to-highlighted ()
+  "Editing a default-value line immediately highlights it in the variables buffer."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n#+TITLE: Test\n"
+    (let ((org-buf (current-buffer)))
+      (resumel-show-all-variables)
+      (let ((vars-buf (get-buffer "*resumel: template variables*")))
+        (should vars-buf)
+        (with-current-buffer vars-buf
+          ;; MODERNCV_COLOR is not set in the buffer — it shows the default
+          (goto-char (point-min))
+          (re-search-forward "^#\\+RESUMEL_MODERNCV_COLOR: ")
+          ;; Not yet highlighted
+          (should-not (eq (get-text-property (line-beginning-position) 'face)
+                          'resumel-variables-active-face))
+          ;; Edit it (promoting from default to buffer-set)
+          (delete-region (point) (line-end-position))
+          (insert "burgundy")
+          ;; Must now carry the active face
+          (goto-char (point-min))
+          (re-search-forward "^#\\+RESUMEL_MODERNCV_COLOR:")
+          (should (eq (get-text-property (line-beginning-position) 'face)
+                      'resumel-variables-active-face)))
+        ;; Variable must be set in Org buffer
         (should (string= (with-current-buffer org-buf
                            (resumel-get-template-variable "MODERNCV_COLOR"))
                          "burgundy"))))))

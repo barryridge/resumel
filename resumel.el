@@ -279,18 +279,48 @@ Loads the template .el file if the defaults are not yet available."
 (defvar-local resumel-variables--show-fn nil
   "The function used to populate this variables buffer (for 'g' refresh).")
 
+(defvar-local resumel-variables--populating nil
+  "Non-nil while the buffer is being programmatically populated.
+Suppresses live-sync so that displaying default values does not write
+them into the Org buffer.")
+
+(defface resumel-variables-active-face
+  '((t (:weight bold :slant italic :foreground "#2080c0")))
+  "Face for variables that are explicitly set in the current Org buffer.
+Variables shown in this face override the template default.
+Uses bold, italic, and colour so the distinction is visible in any theme."
+  :group 'resumel)
+
 (defun resumel--variables-after-change (beg _end _len)
   "Sync an edited variable line back to the source Org buffer."
-  (when (and resumel-variables--source-buffer
-             (buffer-live-p resumel-variables--source-buffer))
-    (save-excursion
-      (goto-char beg)
-      (beginning-of-line)
-      (when (looking-at "^#\\+RESUMEL_\\([^:[:space:]]+\\): *\\(.*\\)$")
-        (let ((var (string-trim (match-string 1)))
-              (val (string-trim (match-string 2))))
-          (with-current-buffer resumel-variables--source-buffer
-            (resumel-set-template-variable var val)))))))
+  (unless resumel-variables--populating
+    (when (and resumel-variables--source-buffer
+               (buffer-live-p resumel-variables--source-buffer))
+      (save-excursion
+        (goto-char beg)
+        (beginning-of-line)
+        (when (looking-at "^[ \t]*#\\+RESUMEL_\\([^:[:space:]]+\\): *\\(.*\\)$")
+          (let* ((var      (string-trim (match-string 1)))
+                 (val      (string-trim (match-string 2)))
+                 (line-beg (line-beginning-position))
+                 (line-end (line-end-position))
+                 (src-buf  resumel-variables--source-buffer)
+                 (default  (with-current-buffer src-buf
+                             (cdr (assoc var (resumel--get-template-defaults
+                                             (resumel--get-buffer-template)))))))
+            ;; Update face immediately — this is safe in the vars buffer.
+            (if (and default (string= val default))
+                (remove-text-properties line-beg line-end '(face nil))
+              (add-text-properties line-beg line-end
+                                   '(face resumel-variables-active-face)))
+            ;; Emacs sets inhibit-modification-hooks = t while running
+            ;; after-change-functions, which would suppress org-indent-mode's
+            ;; own after-change hook when we write to the Org buffer.
+            ;; Binding it to nil here re-enables those hooks so org-mode
+            ;; (including org-indent-mode) processes our insertion normally.
+            (let ((inhibit-modification-hooks nil))
+              (with-current-buffer src-buf
+                (resumel-set-template-variable var val)))))))))
 
 (defvar resumel-variables-mode-map
   (let ((map (make-sparse-keymap)))
@@ -335,36 +365,53 @@ SHOW-FN is stored for refresh.  FILTER is one of: \\='all, \\='core,
     (with-current-buffer buf
       (let ((inhibit-read-only t)
             (saved-pt (point)))
-        (erase-buffer)
-        (insert (format "Resumel template variables  [template: %s]\n" template))
-        (insert (make-string 70 ?=) "\n")
-        (insert "\nEdit #+RESUMEL_* values directly — ")
-        (insert "changes sync live to your Org buffer.\n")
-        (insert "Press 'g' to refresh, 'q' to close.\n\n")
-        ;; Core variables section
-        (when (member filter '(all core))
-          (insert (format "CORE VARIABLES  (shared by all templates)\n"))
-          (insert (make-string 70 ?-) "\n")
-          (dolist (name core-names)
-            (let* ((bval (cdr (assoc name buf-vars)))
-                   (dval (cdr (assoc name defaults)))
-                   (val  (or bval dval "")))
-              (insert (format "#+RESUMEL_%s: %s\n" name val))))
-          (insert "\n"))
-        ;; Template-specific section
-        (when (member filter '(all template-specific))
-          (insert (format "TEMPLATE-SPECIFIC VARIABLES  [%s]\n" template))
-          (insert (make-string 70 ?-) "\n")
-          (dolist (name tmpl-names)
-            (let* ((bval (cdr (assoc name buf-vars)))
-                   (dval (cdr (assoc name defaults)))
-                   (val  (or bval dval "")))
-              (insert (format "#+RESUMEL_%s: %s\n" name val))))
-          (insert "\n"))
         (unless (resumel-variables-mode-p)
           (resumel-variables-mode))
         (setq resumel-variables--source-buffer org-buf)
         (setq resumel-variables--show-fn show-fn)
+        (setq resumel-variables--populating t)
+        (unwind-protect
+            (progn
+              (erase-buffer)
+              (insert (format "Resumel template variables  [template: %s]\n" template))
+              (insert (make-string 70 ?=) "\n")
+              (insert "\nEdit #+RESUMEL_* values directly — ")
+              (insert "changes sync live to your Org buffer.\n")
+              (insert "Variables set in the buffer are shown ")
+              (let ((start (point)))
+                (insert "highlighted")
+                (add-text-properties start (point) '(face resumel-variables-active-face)))
+              (insert "; others show template defaults.\n")
+              (insert "Press 'g' to refresh, 'q' to close.\n\n")
+              ;; Core variables section
+              (when (member filter '(all core))
+                (insert "CORE VARIABLES  (shared by all templates)\n")
+                (insert (make-string 70 ?-) "\n")
+                (dolist (name core-names)
+                  (let* ((bval (cdr (assoc name buf-vars)))
+                         (dval (cdr (assoc name defaults)))
+                         (val  (or bval dval "")))
+                    (let ((line-start (point)))
+                      (insert (format "#+RESUMEL_%s: %s\n" name val))
+                      (when bval
+                        (add-text-properties line-start (1- (point))
+                                             '(face resumel-variables-active-face))))))
+                (insert "\n"))
+              ;; Template-specific section
+              (when (member filter '(all template-specific))
+                (insert (format "TEMPLATE-SPECIFIC VARIABLES  [%s]\n" template))
+                (insert (make-string 70 ?-) "\n")
+                (dolist (name tmpl-names)
+                  (let* ((bval (cdr (assoc name buf-vars)))
+                         (dval (cdr (assoc name defaults)))
+                         (val  (or bval dval "")))
+                    (let ((line-start (point)))
+                      (insert (format "#+RESUMEL_%s: %s\n" name val))
+                      (when bval
+                        (add-text-properties line-start (1- (point))
+                                             '(face resumel-variables-active-face))))))
+                (insert "\n")))
+          (setq resumel-variables--populating nil))
         (goto-char (min saved-pt (point-max))))
       (display-buffer buf))))
 
@@ -426,31 +473,47 @@ source files — the change applies to this buffer only."
   (unless (derived-mode-p 'org-mode)
     (error "resumel-set-template-variable must be called from an Org buffer"))
   (let ((keyword   (format "#+RESUMEL_%s" var))
-        (search-re (format "^#\\+RESUMEL_%s:" (regexp-quote var))))
+        (search-re (format "^[ \t]*#\\+RESUMEL_%s:" (regexp-quote var)))
+        (any-re    "^[ \t]*#\\+RESUMEL_"))
     (save-excursion
       (goto-char (point-min))
       (if (re-search-forward search-re nil t)
-          (progn
-            (beginning-of-line)
-            (kill-line)
-            (insert (format "%s: %s" keyword value)))
-        (goto-char (point-min))
-        (if (re-search-forward "^#\\+RESUMEL_" nil t)
-            (let (last-pos)
-              (goto-char (point-min))
-              (while (re-search-forward "^#\\+RESUMEL_" nil t)
-                (setq last-pos (line-end-position)))
-              (goto-char last-pos)
-              (insert (format "\n%s: %s" keyword value)))
+          ;; Update existing line in-place, reading indent directly from buffer.
+          (let* ((bol (line-beginning-position))
+                 (indent (save-excursion
+                           (goto-char bol)
+                           (skip-chars-forward " \t")
+                           (buffer-substring-no-properties bol (point)))))
+            (delete-region bol (line-end-position))
+            (insert (format "%s%s: %s" indent keyword value)))
+        ;; Variable not yet in buffer — find the right insertion point.
+        (let ((insert-pos nil)
+              (insert-indent ""))
           (goto-char (point-min))
-          (let (last-kw-end)
-            (while (looking-at "^#\\+")
-              (setq last-kw-end (line-end-position))
-              (forward-line 1))
-            (if last-kw-end
-                (progn (goto-char last-kw-end)
-                       (insert (format "\n%s: %s" keyword value)))
-              (insert (format "%s: %s\n" keyword value)))))))))
+          (while (re-search-forward any-re nil t)
+            ;; Read indent directly from buffer bytes, not from match-data.
+            (let ((bol (line-beginning-position)))
+              (setq insert-indent
+                    (save-excursion
+                      (goto-char bol)
+                      (skip-chars-forward " \t")
+                      (buffer-substring-no-properties bol (point))))
+              (setq insert-pos (line-end-position))))
+          (if insert-pos
+              ;; Insert after the last #+RESUMEL_ line, inheriting its indent.
+              (progn
+                (goto-char insert-pos)
+                (insert (format "\n%s%s: %s" insert-indent keyword value)))
+            ;; No #+RESUMEL_ lines yet: insert after the last #+keyword block.
+            (goto-char (point-min))
+            (let (last-kw-end)
+              (while (looking-at "^[ \t]*#\\+")
+                (setq last-kw-end (line-end-position))
+                (forward-line 1))
+              (if last-kw-end
+                  (progn (goto-char last-kw-end)
+                         (insert (format "\n%s: %s" keyword value)))
+                (insert (format "%s: %s\n" keyword value))))))))))
 
 ;;;###autoload
 (defun resumel-show-all-variables ()
@@ -490,6 +553,10 @@ source files — the change applies to this buffer only."
 
 ;;;###autoload
 (defalias 'resumel-show-variables #'resumel-show-all-variables
+  "Show all resumel template variables.  Alias for `resumel-show-all-variables'.")
+
+;;;###autoload
+(defalias 'resumel-show-all-template-variables #'resumel-show-all-variables
   "Show all resumel template variables.  Alias for `resumel-show-all-variables'.")
 
 (provide 'resumel)
