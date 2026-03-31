@@ -90,7 +90,9 @@ Clone the repository, add it to your load path, and require the package.
    M-x resumel-select-template RET moderncv RET
    #+end_src
 
-   This writes =#+RESUMEL_TEMPLATE: moderncv= into the buffer header.
+   This writes =#+RESUMEL_TEMPLATE: moderncv= into the buffer header and opens a
+   side-window PDF preview of the template (requires PDF files in
+   =resumel-preview-pdf-dir=; see [[*Template Previews][Template Previews]] below).
 
 2. Write your resume using the provided macros (see =tests/fixtures/= for examples).
 
@@ -99,6 +101,46 @@ Clone the repository, add it to your load path, and require the package.
    #+begin_src
    M-x resumel-export RET
    #+end_src
+
+** Template Previews
+
+When =resumel-select-template= is called, resumel shows a live PDF preview in a
+right side window as you scroll through the template candidates.  The preview
+updates with each candidate and is automatically removed once you confirm or
+cancel the selection.
+
+By default, previews are *enabled* (=resumel-show-preview-on-select= is =t=) and
+resumel looks for sample PDFs in the =tests/expected/= directory of the package
+installation.  If you clone the full repository and run the tests, the PDF files
+will already be there.
+
+To disable previews:
+
+#+begin_src elisp
+(setq resumel-show-preview-on-select nil)
+#+end_src
+
+To point resumel at a custom directory of sample PDFs (e.g. your own previously
+exported resumes):
+
+#+begin_src elisp
+(setq resumel-preview-pdf-dir "/path/to/my/sample-resumes/")
+#+end_src
+
+PDF files in that directory should be named =<template>-*.pdf= (e.g.
+=moderncv-mine.pdf=, =altacv-mine.pdf=).
+
+resumel selects among multiple matches using =resumel-preview-pdf-pattern=, a
+regexp matched against the filename.  The default =-complex\.pdf$= prefers the
+more detailed fixture PDFs.  Override to taste:
+
+#+begin_src elisp
+(setq resumel-preview-pdf-pattern "-basic\\.pdf$")  ; prefer basic PDFs
+(setq resumel-preview-pdf-pattern "")               ; first alphabetically
+#+end_src
+
+The preview buffer uses whatever PDF viewer Emacs has configured: =pdf-view-mode=
+(pdf-tools) if installed, or =doc-view-mode= otherwise.
 
 ** Template Variables
 
@@ -133,6 +175,30 @@ M-x resumel-set-template-variable RET MODERNCV_COLOR RET burgundy RET
 #+end_src
 
 =resumel-get-template-variable= returns the effective value (buffer keyword if set, otherwise the template default). =resumel-set-template-variable= inserts or updates the =#+RESUMEL_<VAR>:= keyword.
+
+** Viewing Template Files
+
+To inspect a template's LaTeX class definition or available macros, open the
+template source files directly:
+
+#+begin_src
+M-x resumel-view-template-el RET moderncv RET   ; open moderncv.el
+M-x resumel-view-template-org RET moderncv RET  ; open moderncv.org
+#+end_src
+
+Both commands prompt with completion and default to the template currently
+selected in the active Org buffer.  The file opens in another window via
+=find-file-other-window=.
+
+| Command                         | Opens                                               |
+|---------------------------------+-----------------------------------------------------|
+| =M-x resumel-view-template-el=  | =templates/<name>/<name>.el= — LaTeX class & defaults |
+| =M-x resumel-view-template-org= | =templates/<name>/<name>.org= — Org macros             |
+| =M-x resumel-view-template-pdf= | Sample PDF for the chosen template                  |
+
+=resumel-view-template-pdf= also shows a live side-window preview while you
+navigate candidates (like =resumel-select-template=), but does not change the
+template selection in your Org file.
 
 * Testing
 

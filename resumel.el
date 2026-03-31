@@ -90,6 +90,36 @@ text-width color detail value text-width color detail...)."
   :type '(choice (const "moderncv") (const "altacv") (const "modaltacv") (const "awesomecv"))
   :group 'resumel)
 
+(defcustom resumel-show-preview-on-select t
+  "When non-nil, display a sample PDF preview when selecting a template.
+The preview is shown in a side window using whatever PDF viewer Emacs
+has configured (pdf-tools if installed, otherwise doc-view-mode).
+Set to nil to disable previews."
+  :type 'boolean
+  :group 'resumel)
+
+(defcustom resumel-preview-pdf-dir nil
+  "Directory to search for template preview PDFs.
+When nil, defaults to the `tests/expected/' directory within the
+resumel package installation.  Set this to a custom directory if you
+have sample PDFs elsewhere (e.g. your own exported resumes)."
+  :type '(choice (const nil) directory)
+  :group 'resumel)
+
+(defcustom resumel-preview-pdf-pattern "-complex\\.pdf$"
+  "Regexp matched against PDF filenames when choosing a template preview.
+resumel collects all files in `resumel-preview-pdf-dir' whose names
+match `<template>-*.pdf', then prefers those whose filename also
+matches this pattern.  The first alphabetical match wins; if nothing
+matches the pattern, the first available PDF is used as a fallback.
+
+Examples:
+  \"-complex\\.pdf$\"   prefer the complex fixture PDF (default)
+  \"-basic\\.pdf$\"     prefer the basic fixture PDF
+  \"\"                  match everything (first alphabetically)"
+  :type 'string
+  :group 'resumel)
+
 ;; Buffer-local alist of RESUMEL_* keyword values parsed from the Org file.
 ;; Declared as defvar so template .el files can read it via dynamic binding.
 (defvar resumel-template-vars nil
@@ -106,6 +136,110 @@ configuration variables.")
 (defvar resumel-templates-dir
   (expand-file-name "templates" resumel-base-dir)
   "Directory where resumel templates are stored.")
+
+;;; Template preview
+
+(defun resumel--preview-pdf-dir ()
+  "Return the directory used to find template preview PDFs."
+  (or resumel-preview-pdf-dir
+      (expand-file-name "tests/expected" resumel-base-dir)))
+
+(defun resumel--find-preview-pdf (template)
+  "Find a sample PDF for TEMPLATE.
+Searches `resumel--preview-pdf-dir' for PDF files whose names begin
+with TEMPLATE followed by a hyphen.  Files matching
+`resumel-preview-pdf-pattern' are preferred; the first match
+alphabetically wins.  Falls back to the first available PDF when
+nothing matches the pattern.  Returns nil if no PDFs are found."
+  (let* ((dir (resumel--preview-pdf-dir))
+         (base-re (concat "^" (regexp-quote template) "-.*\\.pdf$"))
+         (all-files (when (file-directory-p dir)
+                      (sort (directory-files dir t base-re) #'string<)))
+         (preferred (seq-filter
+                     (lambda (f)
+                       (string-match resumel-preview-pdf-pattern
+                                     (file-name-nondirectory f)))
+                     all-files)))
+    (or (car preferred) (car all-files))))
+
+;; Forward-declare variables from optional completion UIs to suppress
+;; byte-compiler "free variable" warnings when those packages are absent.
+(defvar vertico--index)
+(defvar vertico--candidates)
+(defvar vertico-mode)
+(defvar ivy-last)
+
+(defun resumel--minibuffer-current-candidate (templates)
+  "Return the currently highlighted candidate among TEMPLATES.
+Tries to read the live selection from vertico or ivy before falling
+back to prefix-matching `minibuffer-contents-no-properties'.
+Returns nil when no candidate matches."
+  (or
+   ;; Vertico: candidate is tracked by index into its candidate list.
+   (and (bound-and-true-p vertico-mode)
+        (boundp 'vertico--candidates)
+        (boundp 'vertico--index)
+        (>= vertico--index 0)
+        (car (member (nth vertico--index vertico--candidates) templates)))
+   ;; Ivy: current selection is stored in ivy-last.
+   (and (bound-and-true-p ivy-mode)
+        (boundp 'ivy-last)
+        (fboundp 'ivy-state-current)
+        (car (member (ivy-state-current ivy-last) templates)))
+   ;; Default / icomplete: match the minibuffer input text.
+   (let ((input (minibuffer-contents-no-properties)))
+     (or (car (member input templates))
+         (car (seq-filter
+               (lambda (c) (string-prefix-p input c))
+               templates))))))
+
+(defun resumel--show-preview (template)
+  "Display a sample PDF for TEMPLATE in a right side window.
+The PDF is located via `resumel--find-preview-pdf'.  Does nothing
+silently when no matching PDF is found.  Returns the window showing
+the PDF, or nil."
+  (when-let* ((pdf (resumel--find-preview-pdf template))
+              ((file-exists-p pdf)))
+    (let ((buf (find-file-noselect pdf)))
+      (display-buffer buf
+                      '((display-buffer-reuse-window
+                         display-buffer-in-side-window)
+                        (side . right)
+                        (window-width . 0.45))))))
+
+(defun resumel--with-live-preview (templates prompt &optional force)
+  "Run completing-read PROMPT over TEMPLATES with a live PDF side-window preview.
+As the user navigates candidates the matching template PDF is shown in
+a right side window via `resumel--show-preview'.  The preview window
+is removed when the selection is confirmed or the minibuffer exits.
+
+When `resumel-show-preview-on-select' is nil and FORCE is nil, falls
+back to a plain `completing-read' call without any preview setup.
+Pass FORCE non-nil to always enable the preview (e.g. for commands
+whose entire purpose is to view PDFs).
+
+Returns the selected template string."
+  (if (not (or force resumel-show-preview-on-select))
+      (completing-read prompt templates nil t)
+    (let ((preview-window nil)
+          (last-preview nil))
+      (unwind-protect
+          (minibuffer-with-setup-hook
+              (lambda ()
+                (add-hook 'post-command-hook
+                          (lambda ()
+                            (let ((candidate
+                                   (resumel--minibuffer-current-candidate
+                                    templates)))
+                              (when (and candidate
+                                         (not (equal candidate last-preview)))
+                                (setq last-preview candidate)
+                                (when-let ((w (resumel--show-preview candidate)))
+                                  (setq preview-window w)))))
+                          nil t))
+            (completing-read prompt templates nil t))
+        (when (and preview-window (window-live-p preview-window))
+          (delete-window preview-window))))))
 
 ;; Helper function for including template Org file
 (defun resumel-insert-template-include ()
@@ -155,7 +289,9 @@ configuration variables.")
 Sets `resumel-default-template' globally.  When called from an Org
 buffer, also inserts or updates #+RESUMEL_TEMPLATE: in the file header."
   (interactive
-   (list (completing-read "Select template: " '("moderncv" "altacv" "modaltacv" "awesomecv") nil t)))
+   (list (resumel--with-live-preview
+          '("moderncv" "altacv" "modaltacv" "awesomecv")
+          "Select template: ")))
   (setq resumel-default-template template)
   (when (derived-mode-p 'org-mode)
     (save-excursion
@@ -218,6 +354,65 @@ buffer, also inserts or updates #+RESUMEL_TEMPLATE: in the file header."
       (resumel-setup)
       ;; Export to PDF
       (org-latex-export-to-pdf))))
+
+;;; Template file viewing
+
+;;;###autoload
+(defun resumel-view-template-el (&optional template)
+  "Open the .el file for TEMPLATE in another window.
+When called interactively from an Org buffer, defaults to the template
+currently selected in that buffer.  Useful for inspecting LaTeX class
+definitions and template variable defaults."
+  (interactive
+   (list (completing-read "Template: "
+                          '("moderncv" "altacv" "modaltacv" "awesomecv")
+                          nil t nil nil
+                          (when (derived-mode-p 'org-mode)
+                            (resumel--get-buffer-template)))))
+  (let* ((tmpl (or template resumel-default-template))
+         (file (expand-file-name (format "%s/%s.el" tmpl tmpl)
+                                 resumel-templates-dir)))
+    (unless (file-exists-p file)
+      (error "Template file not found: %s" file))
+    (find-file-other-window file)))
+
+;;;###autoload
+(defun resumel-view-template-org (&optional template)
+  "Open the .org file for TEMPLATE in another window.
+When called interactively from an Org buffer, defaults to the template
+currently selected in that buffer.  Useful for inspecting the template
+macros available for use in your resume file."
+  (interactive
+   (list (completing-read "Template: "
+                          '("moderncv" "altacv" "modaltacv" "awesomecv")
+                          nil t nil nil
+                          (when (derived-mode-p 'org-mode)
+                            (resumel--get-buffer-template)))))
+  (let* ((tmpl (or template resumel-default-template))
+         (file (expand-file-name (format "%s/%s.org" tmpl tmpl)
+                                 resumel-templates-dir)))
+    (unless (file-exists-p file)
+      (error "Template file not found: %s" file))
+    (find-file-other-window file)))
+
+;;;###autoload
+(defun resumel-view-template-pdf (&optional template)
+  "Open a sample PDF for TEMPLATE in another window.
+Shows a live PDF preview in a side window as the user navigates
+candidates, then opens the final selection via `find-file-other-window'.
+Does not alter the template selection in the current Org buffer.
+Requires PDF files in `resumel-preview-pdf-dir'."
+  (interactive
+   (list (resumel--with-live-preview
+          '("moderncv" "altacv" "modaltacv" "awesomecv")
+          "View template PDF: "
+          t)))
+  (let* ((tmpl (or template resumel-default-template))
+         (pdf (resumel--find-preview-pdf tmpl)))
+    (if (and pdf (file-exists-p pdf))
+        (find-file-other-window pdf)
+      (message "No preview PDF found for template: %s (check `resumel-preview-pdf-dir')"
+               tmpl))))
 
 ;;; Template variable introspection
 
