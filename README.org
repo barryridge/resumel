@@ -7,33 +7,20 @@
 
 * Overview
 
-=resumel= is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates. It currently supports four templates:
+=resumel= is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates. It supports four templates:
 
-- *[[https://github.com/moderncv/moderncv][moderncv]]*: A classic, clean LaTeX template with multiple style and colour options.
-- *[[https://github.com/liantze/AltaCV][altacv]]*: A modern two-column LaTeX template with a contemporary look.
-- *[[https://github.com/posquit0/Awesome-CV][awesomecv]]*: A sleek, professional template with strong typographic hierarchy.
-- *modaltacv*: A custom variant that combines the ModernCV aesthetic with the AltaCV two-column layout.
+- *[[https://github.com/moderncv/moderncv][moderncv]]*: Classic, clean template with multiple style and colour options.
+- *[[https://github.com/liantze/AltaCV][altacv]]*: Modern two-column layout.
+- *[[https://github.com/posquit0/Awesome-CV][awesomecv]]*: Sleek template with strong typographic hierarchy.
+- *modaltacv*: Custom variant combining the ModernCV aesthetic with AltaCV's two-column layout.
 
-Designed for extensibility, resumel consolidates common macros and lets you swap templates with a single keyword.
-
-* Features
-
-- *Multiple Templates*: Choose from =moderncv=, =altacv=, =awesomecv=, or =modaltacv=.
-- *Template Variable Introspection*: Browse, live-edit, and query all template configuration variables without touching the template source files.
-- *Extensible*: Add new LaTeX templates by dropping an =.el= and =.org= file pair into a directory.
-- *Unified Macros*: Consistent formatting (=cvtag=, =cvtags=, =wheelchart=, etc.) across all templates.
-- *Automated Testing*: Visual PDF comparison tests for each template.
-- *Emacs Integration*: Works with Vanilla Emacs, Doom Emacs, Spacemacs, and other distributions.
-
-* How It Works
-
-Write your resume in an Org file using template macros for sections like skills, experience, and education. =resumel-export= exports the file to PDF via LaTeX, applying the selected template. Templates are modular — each lives in its own directory with a =.el= file (LaTeX class definition) and a =.org= file (macros). Common macros are centralised in =resumel.org=.
+Templates are modular — each lives in its own directory with a =.el= file (LaTeX class definition) and a =.org= file (macros). Common macros are shared via =resumel.org=. Swap templates with a single keyword.
 
 * Prerequisites
 
 - *Emacs* 26.1+  [[https://www.gnu.org/software/emacs/download.html][Download Emacs]]
 - *LaTeX distribution*: [[https://www.tug.org/texlive/][TeX Live]] / [[https://miktex.org/][MiKTeX]] / [[http://www.tug.org/mactex/][MacTeX]]
-- *diff-pdf*: required for running tests  [[https://github.com/vslavik/diff-pdf][diff-pdf GitHub]]
+- *diff-pdf*: required for tests  [[https://github.com/vslavik/diff-pdf][diff-pdf GitHub]]
 
 * Installation
 
@@ -41,29 +28,16 @@ Write your resume in an Org file using template macros for sections like skills,
 ** Vanilla Emacs
 #+html: </summary>
 
-1. *Clone the Repository*
+#+begin_src shell
+git clone https://github.com/barryridge/resumel.git
+#+end_src
 
-   #+begin_src shell
-   git clone https://github.com/barryridge/resumel.git
-   #+end_src
-
-2. *Add to Load Path*
-
-   #+begin_src elisp
-   (add-to-list 'load-path "/path/to/resumel/")
-   #+end_src
-
-3. *Load resumel*
-
-   #+begin_src elisp
-   (require 'resumel)
-   #+end_src
-
-4. *Optional Key Binding*
-
-   #+begin_src elisp
-   (global-set-key (kbd "C-c r") 'resumel-export)
-   #+end_src
+#+begin_src elisp
+(add-to-list 'load-path "/path/to/resumel/")
+(require 'resumel)
+;; optional key binding:
+(global-set-key (kbd "C-c r") 'resumel-export)
+#+end_src
 
 #+html: </details>
 
@@ -71,36 +45,22 @@ Write your resume in an Org file using template macros for sections like skills,
 ** Doom Emacs
 #+html: </summary>
 
-1. *Add to packages.el*
+In =packages.el=:
 
-   #+begin_src elisp
-   (package! resumel
-   :recipe (:host github :repo "barryridge/resumel"
-           :files ("*.el"
-                   "*.org"
-                   "templates"
-                   )))
-   #+end_src
+#+begin_src elisp
+(package! resumel
+  :recipe (:host github :repo "barryridge/resumel"
+           :files ("*.el" "*.org" "templates")))
+#+end_src
 
-2. *Sync Packages*
+Run =doom sync=, then in =config.el=:
 
-   #+begin_src shell
-   doom sync
-   #+end_src
-
-3. *Configure in config.el*
-
-   #+begin_src elisp
-   (use-package resumel
-     :config
-     (require 'resumel))
-   #+end_src
-
-4. *Optional Key Binding*
-
-   #+begin_src elisp
-   (map! :global "C-c r" #'resumel-export)
-   #+end_src
+#+begin_src elisp
+(use-package resumel
+  :config (require 'resumel))
+;; optional key binding:
+(map! :global "C-c r" #'resumel-export)
+#+end_src
 
 #+html: </details>
 
@@ -108,21 +68,7 @@ Write your resume in an Org file using template macros for sections like skills,
 ** Spacemacs
 #+html: </summary>
 
-1. *Add to Configuration Layers*
-
-   Add =resumel= to =dotspacemacs-configuration-layers=:
-
-   #+begin_src elisp
-   dotspacemacs-configuration-layers
-   '(
-     ;; other layers
-     resumel
-     )
-   #+end_src
-
-2. *Reload Configuration*
-
-   Press =SPC f e R=.
+Add =resumel= to =dotspacemacs-configuration-layers= and press =SPC f e R=.
 
 #+html: </details>
 
@@ -130,7 +76,7 @@ Write your resume in an Org file using template macros for sections like skills,
 ** Other Emacs Distributions
 #+html: </summary>
 
-Clone the repository, add it to your load path, and require the package in your configuration.
+Clone the repository, add it to your load path, and require the package.
 
 #+html: </details>
 
@@ -144,9 +90,9 @@ Clone the repository, add it to your load path, and require the package in your 
    M-x resumel-select-template RET moderncv RET
    #+end_src
 
-   This writes =#+RESUMEL_TEMPLATE: moderncv= into the current Org buffer header so the selection is saved with the file.
+   This writes =#+RESUMEL_TEMPLATE: moderncv= into the buffer header.
 
-2. Write your resume content using the provided macros (see fixture files in =tests/fixtures/= for examples).
+2. Write your resume using the provided macros (see =tests/fixtures/= for examples).
 
 3. Export to PDF:
 
@@ -156,7 +102,7 @@ Clone the repository, add it to your load path, and require the package in your 
 
 ** Template Variables
 
-Every template exposes a set of configuration variables that control fonts, colours, layout, and more. You can override any of them by adding a =#+RESUMEL_<VAR>: value= keyword to your Org file header. For example:
+Override any template variable by adding a =#+RESUMEL_<VAR>: value= keyword to your Org file header:
 
 #+begin_src org
 #+RESUMEL_TEMPLATE: moderncv
@@ -166,22 +112,18 @@ Every template exposes a set of configuration variables that control fonts, colo
 
 *** Browsing variables
 
-Six commands let you browse variables at different scopes. The =show-X= commands show only variables you have explicitly set in the buffer; the =show-all-X= commands show every available variable (including defaults):
+=show-X= commands show only buffer-set variables; =show-all-X= commands show all variables including defaults:
 
-| Command                              | Scope                        | Shows          |
-|--------------------------------------+------------------------------+----------------|
-| =M-x resumel-show-variables=         | Core + template              | Set only       |
-| =M-x resumel-show-all-variables=     | Core + template              | All (defaults) |
-| =M-x resumel-show-core-variables=    | Shared (all templates)       | Set only       |
-| =M-x resumel-show-all-core-variables= | Shared (all templates)      | All (defaults) |
-| =M-x resumel-show-template-variables= | Current template only       | Set only       |
+| Command                                   | Scope                  | Shows          |
+|-------------------------------------------+------------------------+----------------|
+| =M-x resumel-show-variables=              | Core + template        | Set only       |
+| =M-x resumel-show-all-variables=          | Core + template        | All (defaults) |
+| =M-x resumel-show-core-variables=         | Shared (all templates) | Set only       |
+| =M-x resumel-show-all-core-variables=     | Shared (all templates) | All (defaults) |
+| =M-x resumel-show-template-variables=     | Current template only  | Set only       |
 | =M-x resumel-show-all-template-variables= | Current template only  | All (defaults) |
 
-Each command opens a =*resumel: template variables*= buffer listing variables on =#+RESUMEL_VAR: value= lines, with overridden values highlighted.
-
-*** Live editing
-
-Variables can be edited *directly in the variables buffer* — changes sync immediately back to your Org file header. Press =C-c r= to refresh the display and =q= to close.
+This opens a =*resumel: template variables*= buffer with overridden values highlighted. Edit variables directly in the buffer — changes sync immediately back to the Org file. Press =C-c r= to refresh, =q= to close.
 
 *** Getting and setting individual variables
 
@@ -190,8 +132,7 @@ M-x resumel-get-template-variable RET MODERNCV_COLOR RET
 M-x resumel-set-template-variable RET MODERNCV_COLOR RET burgundy RET
 #+end_src
 
-=resumel-get-template-variable= returns the effective value: the buffer keyword if set, otherwise the template default.
-=resumel-set-template-variable= inserts or updates the =#+RESUMEL_<VAR>:= keyword in your buffer header.
+=resumel-get-template-variable= returns the effective value (buffer keyword if set, otherwise the template default). =resumel-set-template-variable= inserts or updates the =#+RESUMEL_<VAR>:= keyword.
 
 * Testing
 
@@ -200,25 +141,20 @@ make test    # run all tests
 make clean   # remove generated results
 #+end_src
 
-Tests export all fixture files and compare the resulting PDFs against expected outputs using =diff-pdf=.
+Tests export all fixture files and compare resulting PDFs against expected outputs using =diff-pdf=.
 
 * Adding New Templates
 
-1. Create =templates/newname/= with =newname.el= (LaTeX class definition) and =newname.org= (macros).
-2. In =newname.el=, define a =defconst resumel-newname-variable-defaults= alist listing every configuration variable and its default value.
+1. Create =templates/newname/= with =newname.el= (LaTeX class) and =newname.org= (macros).
+2. In =newname.el=, define =resumel-newname-variable-defaults= as a defaults alist.
 3. Add ="newname"= to the =resumel-default-template= choices in =resumel.el=.
-4. Add test fixture and expected PDF; run =make test=.
+4. Add a test fixture and expected PDF; run =make test=.
 
 * Acknowledgements
 
-=resumel= builds on Aidan Scannell's [[https://github.com/aidanscannell/my-org-resume][my-org-resume]]. Many thanks to Aidan for laying the foundation.
+=resumel= builds on Aidan Scannell's [[https://github.com/aidanscannell/my-org-resume][my-org-resume]].
 
-The template variable introspection feature was developed with the assistance of AI coding tools:
-
-- [[https://www.anthropic.com][Anthropic]] / [[https://claude.ai][Claude]] — AI assistant used throughout development
-- [[https://openai.com][OpenAI]] / [[https://chatgpt.com][ChatGPT]] — AI assistant used in earlier exploratory work
-- [[https://github.com/karthink/gptel][gptel]] — Emacs LLM client used to interact with the above from within Emacs
-- [[https://github.com/xenodium/agent-shell][agent-shell]] — Emacs package providing an agentic shell interface for AI-assisted coding
+Developed with the assistance of [[https://www.anthropic.com][Anthropic]]/[[https://claude.ai][Claude]], [[https://openai.com][OpenAI]]/[[https://chatgpt.com][ChatGPT]], [[https://github.com/karthink/gptel][gptel]], and [[https://github.com/xenodium/agent-shell][agent-shell]].
 
 * License
 
@@ -226,8 +162,8 @@ The template variable introspection feature was developed with the assistance of
 
 * Contributing
 
-Contributions are welcome! Fork the repository and submit pull requests for enhancements or fixes. Include relevant tests.
+Contributions are welcome. Fork the repository and submit pull requests with relevant tests.
 
 * Contact
 
-For questions or support, please open an issue on the [[https://github.com/barryridge/resumel/issues][GitHub repository]].
+Please open an issue on the [[https://github.com/barryridge/resumel/issues][GitHub repository]].
