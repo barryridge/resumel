@@ -329,6 +329,15 @@ Uses bold, italic, and colour so the distinction is visible in any theme."
     map)
   "Keymap for `resumel-variables-mode'.")
 
+;; When evil is present (e.g. Doom Emacs), evil's normal-state map
+;; intercepts keys like 'q' (record macro) and 'g' (motion prefix)
+;; before the buffer-local map is consulted.  Registering our map as
+;; an overriding map tells evil to check our bindings first, so 'q'
+;; quits and 'g' refreshes as advertised, while all other keys
+;; (including text insertion via 'i'/'a') continue to work normally.
+(with-eval-after-load 'evil
+  (evil-make-overriding-map resumel-variables-mode-map 'normal))
+
 (define-derived-mode resumel-variables-mode nil "Resumel-Vars"
   "Major mode for viewing and live-editing resumel template variables.
 Variable values can be edited directly on their #+RESUMEL_VAR: lines;
