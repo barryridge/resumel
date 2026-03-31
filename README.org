@@ -166,19 +166,22 @@ Every template exposes a set of configuration variables that control fonts, colo
 
 *** Browsing variables
 
-To see all available variables for your current template, their default values, and which ones you have overridden:
+Six commands let you browse variables at different scopes. The =show-X= commands show only variables you have explicitly set in the buffer; the =show-all-X= commands show every available variable (including defaults):
 
-#+begin_src
-M-x resumel-show-variables RET        (or resumel-show-all-variables)
-M-x resumel-show-core-variables RET   (shared by all templates)
-M-x resumel-show-template-variables RET  (template-specific only)
-#+end_src
+| Command                              | Scope                        | Shows          |
+|--------------------------------------+------------------------------+----------------|
+| =M-x resumel-show-variables=         | Core + template              | Set only       |
+| =M-x resumel-show-all-variables=     | Core + template              | All (defaults) |
+| =M-x resumel-show-core-variables=    | Shared (all templates)       | Set only       |
+| =M-x resumel-show-all-core-variables= | Shared (all templates)      | All (defaults) |
+| =M-x resumel-show-template-variables= | Current template only       | Set only       |
+| =M-x resumel-show-all-template-variables= | Current template only  | All (defaults) |
 
-This opens a =*resumel: template variables*= buffer listing every variable on its own =#+RESUMEL_VAR: value= line.
+Each command opens a =*resumel: template variables*= buffer listing variables on =#+RESUMEL_VAR: value= lines, with overridden values highlighted.
 
 *** Live editing
 
-Variables can be edited *directly in the variables buffer* — changes sync immediately back to your Org file header. Press =g= to refresh the display and =q= to close.
+Variables can be edited *directly in the variables buffer* — changes sync immediately back to your Org file header. Press =C-c r= to refresh the display and =q= to close.
 
 *** Getting and setting individual variables
 
@@ -209,6 +212,13 @@ Tests export all fixture files and compare the resulting PDFs against expected o
 * Acknowledgements
 
 =resumel= builds on Aidan Scannell's [[https://github.com/aidanscannell/my-org-resume][my-org-resume]]. Many thanks to Aidan for laying the foundation.
+
+The template variable introspection feature was developed with the assistance of AI coding tools:
+
+- [[https://www.anthropic.com][Anthropic]] / [[https://claude.ai][Claude]] — AI assistant used throughout development
+- [[https://openai.com][OpenAI]] / [[https://chatgpt.com][ChatGPT]] — AI assistant used in earlier exploratory work
+- [[https://github.com/karthink/gptel][gptel]] — Emacs LLM client used to interact with the above from within Emacs
+- [[https://github.com/xenodium/agent-shell][agent-shell]] — Emacs package providing an agentic shell interface for AI-assisted coding
 
 * License
 
