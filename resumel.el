@@ -348,10 +348,12 @@ changes are immediately synced to the associated Org buffer.
             (funcall resumel-variables--show-fn))
         (message "Source Org buffer no longer exists.")))))
 
-(defun resumel--populate-variables-buffer (buf org-buf template show-fn filter)
+(defun resumel--populate-variables-buffer (buf org-buf template show-fn filter
+                                               &optional set-only)
   "Populate the variables display BUF for ORG-BUF and TEMPLATE.
 SHOW-FN is stored for refresh.  FILTER is one of: \\='all, \\='core,
-\\='template-specific."
+\\='template-specific.  When SET-ONLY is non-nil, only variables
+explicitly set in the Org buffer are displayed."
   (let* ((defaults  (resumel--get-template-defaults template))
          (buf-vars  (with-current-buffer org-buf (resumel--get-buffer-vars)))
          (core-names (seq-filter
@@ -362,6 +364,10 @@ SHOW-FN is stored for refresh.  FILTER is one of: \\='all, \\='core,
                       (delete-dups
                        (append (mapcar #'car defaults)
                                (mapcar #'car buf-vars))))))
+    ;; In set-only mode restrict each list to variables present in the buffer.
+    (when set-only
+      (setq core-names (seq-filter (lambda (n) (assoc n buf-vars)) core-names))
+      (setq tmpl-names (seq-filter (lambda (n) (assoc n buf-vars)) tmpl-names)))
     (with-current-buffer buf
       (let ((inhibit-read-only t)
             (saved-pt (point)))
@@ -377,44 +383,51 @@ SHOW-FN is stored for refresh.  FILTER is one of: \\='all, \\='core,
               (insert (make-string 70 ?=) "\n")
               (insert "\nEdit #+RESUMEL_* values directly — ")
               (insert "changes sync live to your Org buffer.\n")
-              (insert "Variables set in the buffer are shown ")
-              (let ((start (point)))
-                (insert "highlighted")
-                (add-text-properties start (point) '(face resumel-variables-active-face)))
-              (insert "; others show template defaults.\n")
+              (if set-only
+                  (insert "Showing only variables currently set in this buffer.\n")
+                (progn
+                  (insert "Variables set in the buffer are shown ")
+                  (let ((start (point)))
+                    (insert "highlighted")
+                    (add-text-properties start (point)
+                                         '(face resumel-variables-active-face)))
+                  (insert "; others show template defaults.\n")))
               (insert "Press 'g' to refresh, 'q' to close.\n\n")
               ;; Core variables section
               (when (member filter '(all core))
                 (insert "CORE VARIABLES  (shared by all templates)\n")
                 (insert (make-string 70 ?-) "\n")
-                (dolist (name core-names)
-                  (let* ((bval (cdr (assoc name buf-vars)))
-                         (dval (cdr (assoc name defaults)))
-                         (val  (or bval dval "")))
-                    (let ((line-start (point)))
-                      (insert (format "#+RESUMEL_%s: %s\n" name val))
-                      (when bval
-                        (add-text-properties line-start (1- (point))
-                                             '(face resumel-variables-active-face))))))
+                (if (null core-names)
+                    (insert "(none set)\n")
+                  (dolist (name core-names)
+                    (let* ((bval (cdr (assoc name buf-vars)))
+                           (dval (cdr (assoc name defaults)))
+                           (val  (or bval dval "")))
+                      (let ((line-start (point)))
+                        (insert (format "#+RESUMEL_%s: %s\n" name val))
+                        (when bval
+                          (add-text-properties line-start (1- (point))
+                                               '(face resumel-variables-active-face)))))))
                 (insert "\n"))
               ;; Template-specific section
               (when (member filter '(all template-specific))
                 (insert (format "TEMPLATE-SPECIFIC VARIABLES  [%s]\n" template))
                 (insert (make-string 70 ?-) "\n")
-                (dolist (name tmpl-names)
-                  (let* ((bval (cdr (assoc name buf-vars)))
-                         (dval (cdr (assoc name defaults)))
-                         (val  (or bval dval "")))
-                    (let ((line-start (point)))
-                      (insert (format "#+RESUMEL_%s: %s\n" name val))
-                      (when bval
-                        (add-text-properties line-start (1- (point))
-                                             '(face resumel-variables-active-face))))))
+                (if (null tmpl-names)
+                    (insert "(none set)\n")
+                  (dolist (name tmpl-names)
+                    (let* ((bval (cdr (assoc name buf-vars)))
+                           (dval (cdr (assoc name defaults)))
+                           (val  (or bval dval "")))
+                      (let ((line-start (point)))
+                        (insert (format "#+RESUMEL_%s: %s\n" name val))
+                        (when bval
+                          (add-text-properties line-start (1- (point))
+                                               '(face resumel-variables-active-face)))))))
                 (insert "\n")))
           (setq resumel-variables--populating nil))
         (goto-char (min saved-pt (point-max))))
       (display-buffer buf))))
-
 (defun resumel-variables-mode-p ()
   "Return non-nil if the current buffer is in `resumel-variables-mode'."
   (eq major-mode 'resumel-variables-mode))
@@ -516,8 +529,10 @@ source files — the change applies to this buffer only."
                 (insert (format "%s: %s\n" keyword value))))))))))
 
 ;;;###autoload
-(defun resumel-show-all-variables ()
-  "Show all template variables (core + template-specific) in a live-edit buffer."
+(defun resumel-show-variables ()
+  "Show variables currently set in the Org buffer (core and template-specific).
+Only variables with an explicit #+RESUMEL_* keyword in the buffer are shown.
+Use \[resumel-show-all-variables] to also see available template defaults."
   (interactive)
   (let* ((org-buf  (if (resumel-variables-mode-p)
                        resumel-variables--source-buffer
@@ -525,11 +540,27 @@ source files — the change applies to this buffer only."
          (template (with-current-buffer org-buf (resumel--get-buffer-template)))
          (buf      (get-buffer-create "*resumel: template variables*")))
     (resumel--populate-variables-buffer
-     buf org-buf template #'resumel-show-all-variables 'all)))
+     buf org-buf template #'resumel-show-variables 'all t)))
+
+;;;###autoload
+(defun resumel-show-all-variables ()
+  "Show all available template variables (core and template-specific).
+Variables explicitly set in the buffer are highlighted; others show template
+defaults.  Use \[resumel-show-variables] to see only variables set in the buffer."
+  (interactive)
+  (let* ((org-buf  (if (resumel-variables-mode-p)
+                       resumel-variables--source-buffer
+                     (current-buffer)))
+         (template (with-current-buffer org-buf (resumel--get-buffer-template)))
+         (buf      (get-buffer-create "*resumel: template variables*")))
+    (resumel--populate-variables-buffer
+     buf org-buf template #'resumel-show-all-variables 'all nil)))
 
 ;;;###autoload
 (defun resumel-show-core-variables ()
-  "Show only the core variables (shared by all templates) in a live-edit buffer."
+  "Show core variables currently set in the Org buffer.
+Only core #+RESUMEL_* keywords present in the buffer are shown.
+Use \[resumel-show-all-core-variables] to also see available core defaults."
   (interactive)
   (let* ((org-buf  (if (resumel-variables-mode-p)
                        resumel-variables--source-buffer
@@ -537,11 +568,27 @@ source files — the change applies to this buffer only."
          (template (with-current-buffer org-buf (resumel--get-buffer-template)))
          (buf      (get-buffer-create "*resumel: template variables*")))
     (resumel--populate-variables-buffer
-     buf org-buf template #'resumel-show-core-variables 'core)))
+     buf org-buf template #'resumel-show-core-variables 'core t)))
+
+;;;###autoload
+(defun resumel-show-all-core-variables ()
+  "Show all core variables (shared by all templates), including defaults.
+Variables explicitly set in the buffer are highlighted; others show template
+defaults.  Use \[resumel-show-core-variables] to see only variables set in the buffer."
+  (interactive)
+  (let* ((org-buf  (if (resumel-variables-mode-p)
+                       resumel-variables--source-buffer
+                     (current-buffer)))
+         (template (with-current-buffer org-buf (resumel--get-buffer-template)))
+         (buf      (get-buffer-create "*resumel: template variables*")))
+    (resumel--populate-variables-buffer
+     buf org-buf template #'resumel-show-all-core-variables 'core nil)))
 
 ;;;###autoload
 (defun resumel-show-template-variables ()
-  "Show only the template-specific variables in a live-edit buffer."
+  "Show template-specific variables currently set in the Org buffer.
+Only template-specific #+RESUMEL_* keywords present in the buffer are shown.
+Use \[resumel-show-all-template-variables] to also see available template defaults."
   (interactive)
   (let* ((org-buf  (if (resumel-variables-mode-p)
                        resumel-variables--source-buffer
@@ -549,15 +596,21 @@ source files — the change applies to this buffer only."
          (template (with-current-buffer org-buf (resumel--get-buffer-template)))
          (buf      (get-buffer-create "*resumel: template variables*")))
     (resumel--populate-variables-buffer
-     buf org-buf template #'resumel-show-template-variables 'template-specific)))
+     buf org-buf template #'resumel-show-template-variables 'template-specific t)))
 
 ;;;###autoload
-(defalias 'resumel-show-variables #'resumel-show-all-variables
-  "Show all resumel template variables.  Alias for `resumel-show-all-variables'.")
-
-;;;###autoload
-(defalias 'resumel-show-all-template-variables #'resumel-show-all-variables
-  "Show all resumel template variables.  Alias for `resumel-show-all-variables'.")
+(defun resumel-show-all-template-variables ()
+  "Show all template-specific variables, including defaults.
+Variables explicitly set in the buffer are highlighted; others show template
+defaults.  Use \[resumel-show-template-variables] to see only variables set in the buffer."
+  (interactive)
+  (let* ((org-buf  (if (resumel-variables-mode-p)
+                       resumel-variables--source-buffer
+                     (current-buffer)))
+         (template (with-current-buffer org-buf (resumel--get-buffer-template)))
+         (buf      (get-buffer-create "*resumel: template variables*")))
+    (resumel--populate-variables-buffer
+     buf org-buf template #'resumel-show-all-template-variables 'template-specific nil)))
 
 (provide 'resumel)
 ;;; resumel.el ends here

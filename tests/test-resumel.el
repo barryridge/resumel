@@ -225,10 +225,31 @@
 
 ;; ---- resumel-show-all-variables / resumel-show-core-variables / etc. -------
 
-(ert-deftest resumel-test-show-all-variables ()
-  "resumel-show-all-variables populates a variables buffer with both sections."
+(ert-deftest resumel-test-show-variables ()
+  "resumel-show-variables shows only variables set in the buffer (both sections)."
   (resumel-test-with-org-buffer
-      "#+RESUMEL_TEMPLATE: moderncv\n#+RESUMEL_MODERNCV_COLOR: orange\n#+TITLE: Test\n"
+      "#+RESUMEL_TEMPLATE: moderncv
+#+RESUMEL_MODERNCV_COLOR: orange
+#+TITLE: Test
+"
+    (resumel-show-variables)
+    (let ((buf (get-buffer "*resumel: template variables*")))
+      (should buf)
+      (with-current-buffer buf
+        (let ((content (buffer-string)))
+          (should (string-match "TEMPLATE-SPECIFIC" content))
+          ;; MODERNCV_COLOR is set — must appear
+          (should (string-match "#\+RESUMEL_MODERNCV_COLOR: orange" content))
+          ;; COMPILER is not set — must not appear
+          (should-not (string-match "#\+RESUMEL_COMPILER:" content)))))))
+
+(ert-deftest resumel-test-show-all-variables ()
+  "resumel-show-all-variables shows all variables including defaults (both sections)."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv
+#+RESUMEL_MODERNCV_COLOR: orange
+#+TITLE: Test
+"
     (resumel-show-all-variables)
     (let ((buf (get-buffer "*resumel: template variables*")))
       (should buf)
@@ -237,51 +258,83 @@
           (should (string-match "moderncv" content))
           (should (string-match "CORE VARIABLES" content))
           (should (string-match "TEMPLATE-SPECIFIC" content))
-          (should (string-match "#\\+RESUMEL_COMPILER:" content))
-          (should (string-match "#\\+RESUMEL_MODERNCV_COLOR: orange" content)))))))
+          ;; Default core variable must appear
+          (should (string-match "#\+RESUMEL_COMPILER:" content))
+          (should (string-match "#\+RESUMEL_MODERNCV_COLOR: orange" content)))))))
 
 (ert-deftest resumel-test-show-core-variables ()
-  "resumel-show-core-variables shows only the core section."
+  "resumel-show-core-variables shows only core variables set in the buffer."
   (resumel-test-with-org-buffer
-      "#+RESUMEL_TEMPLATE: moderncv\n#+TITLE: Test\n"
+      "#+RESUMEL_TEMPLATE: moderncv
+#+RESUMEL_COMPILER: xelatex
+#+TITLE: Test
+"
     (resumel-show-core-variables)
     (let ((buf (get-buffer "*resumel: template variables*")))
       (should buf)
       (with-current-buffer buf
         (let ((content (buffer-string)))
           (should (string-match "CORE VARIABLES" content))
-          (should (string-match "#\\+RESUMEL_COMPILER:" content))
-          ;; Template-specific section should NOT appear
+          ;; COMPILER is set — must appear
+          (should (string-match "#\+RESUMEL_COMPILER: xelatex" content))
+          ;; Template-specific section must not appear
+          (should-not (string-match "TEMPLATE-SPECIFIC" content))
+          (should-not (string-match "MODERNCV_COLOR" content)))))))
+
+(ert-deftest resumel-test-show-all-core-variables ()
+  "resumel-show-all-core-variables shows all core variables including defaults."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv
+#+TITLE: Test
+"
+    (resumel-show-all-core-variables)
+    (let ((buf (get-buffer "*resumel: template variables*")))
+      (should buf)
+      (with-current-buffer buf
+        (let ((content (buffer-string)))
+          (should (string-match "CORE VARIABLES" content))
+          ;; Default core variable must appear even though not set
+          (should (string-match "#\+RESUMEL_COMPILER:" content))
+          ;; Template-specific section must not appear
           (should-not (string-match "TEMPLATE-SPECIFIC" content))
           (should-not (string-match "MODERNCV_COLOR" content)))))))
 
 (ert-deftest resumel-test-show-template-variables ()
-  "resumel-show-template-variables shows only the template-specific section."
+  "resumel-show-template-variables shows only template-specific variables set in the buffer."
   (resumel-test-with-org-buffer
-      "#+RESUMEL_TEMPLATE: moderncv\n#+TITLE: Test\n"
+      "#+RESUMEL_TEMPLATE: moderncv
+#+RESUMEL_MODERNCV_COLOR: orange
+#+TITLE: Test
+"
     (resumel-show-template-variables)
     (let ((buf (get-buffer "*resumel: template variables*")))
       (should buf)
       (with-current-buffer buf
         (let ((content (buffer-string)))
           (should (string-match "TEMPLATE-SPECIFIC" content))
-          (should (string-match "MODERNCV_COLOR" content))
-          ;; Core section should NOT appear
+          ;; MODERNCV_COLOR is set — must appear
+          (should (string-match "#\+RESUMEL_MODERNCV_COLOR: orange" content))
+          ;; Core section must not appear
           (should-not (string-match "CORE VARIABLES" content))
-          (should-not (string-match "#+RESUMEL_COMPILER:" content)))))))
+          (should-not (string-match "#\+RESUMEL_COMPILER:" content)))))))
 
-(ert-deftest resumel-test-show-variables-is-alias ()
-  "resumel-show-variables is an alias for resumel-show-all-variables."
-  (should (fboundp 'resumel-show-variables))
-  (should (eq (indirect-function 'resumel-show-variables)
-              (indirect-function 'resumel-show-all-variables))))
-
-(ert-deftest resumel-test-show-all-template-variables-is-alias ()
-  "resumel-show-all-template-variables is an alias for resumel-show-all-variables."
-  (should (fboundp 'resumel-show-all-template-variables))
-  (should (eq (indirect-function 'resumel-show-all-template-variables)
-              (indirect-function 'resumel-show-all-variables))))
-
+(ert-deftest resumel-test-show-all-template-variables ()
+  "resumel-show-all-template-variables shows all template-specific variables including defaults."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv
+#+TITLE: Test
+"
+    (resumel-show-all-template-variables)
+    (let ((buf (get-buffer "*resumel: template variables*")))
+      (should buf)
+      (with-current-buffer buf
+        (let ((content (buffer-string)))
+          (should (string-match "TEMPLATE-SPECIFIC" content))
+          ;; Default template variable must appear even though not set
+          (should (string-match "#\+RESUMEL_MODERNCV_COLOR:" content))
+          ;; Core section must not appear
+          (should-not (string-match "CORE VARIABLES" content))
+          (should-not (string-match "#\+RESUMEL_COMPILER:" content)))))))
 ;; ---- resumel-show-* does not pollute the Org buffer ------------------------
 
 (ert-deftest resumel-test-show-variables-no-pollution ()
