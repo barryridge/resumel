@@ -9,35 +9,39 @@
 
 =resumel= is an Emacs package for creating professional resumes and CVs using Org Mode and LaTeX templates. It supports four templates:
 
-- *[[https://github.com/moderncv/moderncv][moderncv]]*: Classic, clean template with multiple style and colour options.
-- *[[https://github.com/liantze/AltaCV][altacv]]*: Modern two-column layout.
-- *[[https://github.com/posquit0/Awesome-CV][awesomecv]]*: Sleek template with strong typographic hierarchy.
-- *modaltacv*: Custom variant combining the ModernCV aesthetic with AltaCV's two-column layout.
+# --- resumel-auto:overview ---
+- *[[https://github.com/moderncv/moderncv][ModernCV]]*: A modern curriculum vitae class for LaTeX.
+- *[[https://github.com/liantze/AltaCV][AltaCV]]*: Yet another LaTeX CV template / résumé.
+- *[[https://github.com/posquit0/Awesome-CV][AwesomeCV]]*: Awesome CV is LaTeX template for your outstanding job application.
+- *ModaltaCV*: Custom variant combining the ModernCV aesthetic with AltaCV's two-column layout.
+# --- end-resumel-auto:overview ---
 
 Templates are modular: each lives in its own directory with a =.el= file (LaTeX class definition) and a =.org= file (macros). Common macros are shared via =resumel.org=. Swap templates with a single keyword.
 
 * Template Gallery
 
+# --- resumel-auto:gallery ---
 #+begin_export html
 <table>
   <tr>
-    <td align="center"><strong>moderncv</strong></td>
-    <td align="center"><strong>altacv</strong></td>
+    <td align="center"><strong>ModernCV</strong></td>
+    <td align="center"><strong>AltaCV</strong></td>
   </tr>
   <tr>
-    <td><img src="docs/previews/moderncv.png" alt="moderncv template preview" width="400"/></td>
-    <td><img src="docs/previews/altacv.png"   alt="altacv template preview"   width="400"/></td>
+    <td><img src="docs/previews/moderncv.png" alt="ModernCV template preview" width="400"/></td>
+    <td><img src="docs/previews/altacv.png" alt="AltaCV template preview" width="400"/></td>
   </tr>
   <tr>
-    <td align="center"><strong>awesomecv</strong></td>
-    <td align="center"><strong>modaltacv</strong></td>
+    <td align="center"><strong>AwesomeCV</strong></td>
+    <td align="center"><strong>ModaltaCV</strong></td>
   </tr>
   <tr>
-    <td><img src="docs/previews/awesomecv.png"  alt="awesomecv template preview"  width="400"/></td>
-    <td><img src="docs/previews/modaltacv.png"  alt="modaltacv template preview"  width="400"/></td>
+    <td><img src="docs/previews/awesomecv.png" alt="AwesomeCV template preview" width="400"/></td>
+    <td><img src="docs/previews/modaltacv.png" alt="ModaltaCV template preview" width="400"/></td>
   </tr>
 </table>
 #+end_export
+# --- end-resumel-auto:gallery ---
 
 * Prerequisites
 

@@ -10,6 +10,8 @@ on:
     branches: [main]
     paths:
       - 'tests/expected/**'
+      - 'templates/**/metadata.json'
+      - 'scripts/update-readme.py'
       - '.github/workflows/preview-images.yml'
   workflow_dispatch:
 
@@ -60,14 +62,17 @@ jobs:
             fi
           done
 
-      - name: Commit and push updated preview images
+      - name: Update README auto-generated sections
+        run: python3 scripts/update-readme.py
+
+      - name: Commit and push updated preview images and README
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/previews/
+          git add docs/previews/ README.org
           if git diff --staged --quiet; then
-            echo "Preview images are already up to date — nothing to commit."
+            echo "Everything is already up to date — nothing to commit."
           else
-            git commit -m "docs: regenerate template preview images"
+            git commit -m "docs: regenerate template preview images and README"
             git push
           fi
