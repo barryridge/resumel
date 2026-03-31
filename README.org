@@ -14,7 +14,7 @@
 - *[[https://github.com/posquit0/Awesome-CV][awesomecv]]*: Sleek template with strong typographic hierarchy.
 - *modaltacv*: Custom variant combining the ModernCV aesthetic with AltaCV's two-column layout.
 
-Templates are modular — each lives in its own directory with a =.el= file (LaTeX class definition) and a =.org= file (macros). Common macros are shared via =resumel.org=. Swap templates with a single keyword.
+Templates are modular: each lives in its own directory with a =.el= file (LaTeX class definition) and a =.org= file (macros). Common macros are shared via =resumel.org=. Swap templates with a single keyword.
 
 * Prerequisites
 
@@ -152,9 +152,9 @@ Tests export all fixture files and compare resulting PDFs against expected outpu
 
 * Acknowledgements
 
-=resumel= builds on Aidan Scannell's [[https://github.com/aidanscannell/my-org-resume][my-org-resume]].
+=resumel= is inspired by and builds on Aidan Scannell's [[https://github.com/aidanscannell/my-org-resume][my-org-resume]].
 
-Developed with the assistance of [[https://www.anthropic.com][Anthropic]]/[[https://claude.ai][Claude]], [[https://openai.com][OpenAI]]/[[https://chatgpt.com][ChatGPT]], [[https://github.com/karthink/gptel][gptel]], and [[https://github.com/xenodium/agent-shell][agent-shell]].
+Developed with the assistance of [[https://claude.ai][Claude]], [[https://chatgpt.com][ChatGPT]], [[https://github.com/karthink/gptel][gptel]], and [[https://github.com/xenodium/agent-shell][agent-shell]].
 
 * License
 
