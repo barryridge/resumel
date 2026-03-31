@@ -15,19 +15,22 @@ Run from the repository root:
 
   python3 scripts/update-readme.py
 
+Templates are discovered automatically: any subdirectory of templates/ that
+contains a metadata.yaml file is included.  Display order is controlled by the
+optional `order` field in each metadata.yaml (lower numbers appear first);
+templates without an `order` field sort after those with one, then
+alphabetically.
+
 To add a new template:
-  1. Create templates/<name>/metadata.json  (see existing files for the schema)
-  2. Add "<name>" to the TEMPLATES list below in the desired display order.
-  3. Run this script (or let CI do it on the next push).
+  1. Create templates/<name>/metadata.yaml  (see existing files for the schema)
+  2. Run this script (or let CI do it on the next push).
 """
 
-import json
 import re
 import sys
 from pathlib import Path
 
-# Display order for the README.  Add new template names here.
-TEMPLATES = ["moderncv", "altacv", "awesomecv", "modaltacv"]
+import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -36,23 +39,35 @@ ROOT = Path(__file__).resolve().parent.parent
 # Helpers
 
 
-def load_metadata() -> dict:
-    """Load metadata.json for every template in TEMPLATES."""
+def load_metadata() -> tuple[list[str], dict]:
+    """Discover templates and load their metadata.yaml files.
+
+    Returns (ordered_names, meta_dict) where ordered_names respects the
+    `order` field in each file (then alphabetical as a tiebreaker).
+    """
+    templates_dir = ROOT / "templates"
     meta = {}
-    for tmpl in TEMPLATES:
-        path = ROOT / "templates" / tmpl / "metadata.json"
-        if not path.exists():
-            print(f"ERROR: metadata file missing: {path}", file=sys.stderr)
-            sys.exit(1)
-        with open(path) as f:
-            meta[tmpl] = json.load(f)
-    return meta
+    for subdir in templates_dir.iterdir():
+        if not subdir.is_dir():
+            continue
+        yaml_path = subdir / "metadata.yaml"
+        if not yaml_path.exists():
+            continue
+        with open(yaml_path) as f:
+            meta[subdir.name] = yaml.safe_load(f)
+
+    if not meta:
+        print("ERROR: no template metadata.yaml files found", file=sys.stderr)
+        sys.exit(1)
+
+    ordered = sorted(meta, key=lambda k: (meta[k].get("order", 999), k))
+    return ordered, meta
 
 
-def build_overview(meta: dict) -> str:
+def build_overview(ordered: list[str], meta: dict) -> str:
     """Return the Org-mode bullet list of templates (links + descriptions)."""
     lines = []
-    for tmpl in TEMPLATES:
+    for tmpl in ordered:
         m = meta[tmpl]
         name = m["display_name"]
         url = m.get("url")
@@ -64,11 +79,11 @@ def build_overview(meta: dict) -> str:
     return "\n".join(lines)
 
 
-def build_gallery(meta: dict) -> str:
+def build_gallery(ordered: list[str], meta: dict) -> str:
     """Return the #+begin_export html block for the Template Gallery section."""
     rows = []
     # Pair templates two per row; an odd final template gets its own row.
-    it = iter(TEMPLATES)
+    it = iter(ordered)
     for left in it:
         right = next(it, None)
         lm = meta[left]
@@ -132,12 +147,12 @@ def main() -> None:
         print("ERROR: README.org not found", file=sys.stderr)
         sys.exit(1)
 
-    meta = load_metadata()
+    ordered, meta = load_metadata()
     original = readme_path.read_text()
 
     updated = original
-    updated = replace_section(updated, "overview", build_overview(meta))
-    updated = replace_section(updated, "gallery", build_gallery(meta))
+    updated = replace_section(updated, "overview", build_overview(ordered, meta))
+    updated = replace_section(updated, "gallery", build_gallery(ordered, meta))
 
     if updated == original:
         print("README.org is already up to date.")

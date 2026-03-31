@@ -10,7 +10,7 @@ on:
     branches: [main]
     paths:
       - 'tests/expected/**'
-      - 'templates/**/metadata.json'
+      - 'templates/**/metadata.yaml'
       - 'scripts/update-readme.py'
       - '.github/workflows/preview-images.yml'
   workflow_dispatch:
@@ -27,16 +27,19 @@ jobs:
         with:
           lfs: true          # required: expected PDFs are stored in Git LFS
 
-      - name: Install poppler-utils
+      - name: Install dependencies
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y poppler-utils
+          sudo apt-get install -y poppler-utils python3-yaml
 
       - name: Generate PNG previews
         run: |
           mkdir -p docs/previews
 
-          for template in moderncv altacv modaltacv awesomecv; do
+          # Discover templates dynamically from metadata.yaml files.
+          for yaml_path in templates/*/metadata.yaml; do
+            template=$(basename "$(dirname "$yaml_path")")
+
             # Prefer the *-complex fixture (richest content); fall back to
             # the first available PDF for this template.
             pdf="tests/expected/${template}-complex.pdf"
