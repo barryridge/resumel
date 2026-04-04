@@ -9,7 +9,7 @@
 #+TITLE: Jake's Resume Complex Test
 #+AUTHOR: Jake Ryan
 #+DATE: <1955-11-05 Sat>
-#+EXPORT_FILE_NAME: ../results/jakes-complex.pdf
+#+EXPORT_FILE_NAME: ../results/jakes-orig.pdf
 #+OPTIONS: toc:nil H:1
 
 * Education

@@ -79,7 +79,8 @@
     ("awesomecv-basic.org" "awesomecv-basic.pdf")
     ("awesomecv-complex.org" "awesomecv-complex.pdf")
     ("jakes-basic.org" "jakes-basic.pdf")
-    ("jakes-complex.org" "jakes-complex.pdf"))
+    ("jakes-complex.org" "jakes-complex.pdf")
+    ("jakes-orig.org" "jakes-orig.pdf"))
   "List of test cases. Each entry is a list of Org file and expected PDF file.")
 
 ;; Define a test for each test case
