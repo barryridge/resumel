@@ -123,8 +123,7 @@
 }
 
 \\setlist[itemize,2]{
-  label=\\footnotesize$\\vcenter{\\hbox{\\tiny$\\bullet$}}$,
-  before=\\small
+  label=\\footnotesize$\\vcenter{\\hbox{\\tiny$\\bullet$}}$
 }
 
 \\setlist[description]{
@@ -286,7 +285,6 @@
                             "")
                           "
   \\end{center}
-  \\vspace{-8pt}
 }
 \\makeatother
 ")
