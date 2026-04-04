@@ -14,6 +14,7 @@
 - *[[https://github.com/liantze/AltaCV][AltaCV]]*: Yet another LaTeX CV template / résumé.
 - *[[https://github.com/posquit0/Awesome-CV][AwesomeCV]]*: Awesome CV is LaTeX template for your outstanding job application.
 - *ModaltaCV*: Custom variant combining the ModernCV aesthetic with AltaCV's two-column layout.
+- *[[https://github.com/jakegut/resume][Jake's Resume]]*: A simple, ATS-friendly single-column resume template.
 # --- end-resumel-auto:overview ---
 
 Templates are modular: each lives in its own directory with a =.el= file (LaTeX class definition) and a =.org= file (macros). Common macros are shared via =resumel.org=. Swap templates with a single keyword.
@@ -37,6 +38,12 @@ Templates are modular: each lives in its own directory with a =.el= file (LaTeX 
 #+html:   <tr>
 #+html:     <td><img src="docs/previews/awesomecv.png" alt="AwesomeCV template preview" width="400"/></td>
 #+html:     <td><img src="docs/previews/modaltacv.png" alt="ModaltaCV template preview" width="400"/></td>
+#+html:   </tr>
+#+html:   <tr>
+#+html:     <td align="center"><strong>Jake's Resume</strong></td>
+#+html:   </tr>
+#+html:   <tr>
+#+html:     <td><img src="docs/previews/jakes.png" alt="Jake's Resume template preview" width="400"/></td>
 #+html:   </tr>
 #+html: </table>
 # --- end-resumel-auto:gallery ---
