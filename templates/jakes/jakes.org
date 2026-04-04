@@ -1,0 +1,26 @@
+#+INCLUDE: "../../resumel.org"
+
+# ------------------------------------------------------------------------------
+# Common CV Macros (resumel common interface):
+# ------------------------------------------------------------------------------
+#+MACRO: cvevent @@latex:\cvevent{$1}{$2}{$3}{$4}@@
+#+MACRO: cvachievement @@latex:\cvachievement{$1}{$2}{$3}@@
+#+MACRO: cvref @@latex:\cvref{$1}{$2}{$3}@@
+#+MACRO: cvskill @@latex:\cvskill{$1}{$2}@@
+
+# ------------------------------------------------------------------------------
+# Jake's Template-Specific Macros:
+# ------------------------------------------------------------------------------
+#+MACRO: cvitem @@latex:\resumeItem{$1}@@
+#+MACRO: resumeSubHeadingListStart @@latex:\resumeSubHeadingListStart@@
+#+MACRO: resumeSubHeadingListEnd @@latex:\resumeSubHeadingListEnd@@
+#+MACRO: resumeItemListStart @@latex:\resumeItemListStart@@
+#+MACRO: resumeItemListEnd @@latex:\resumeItemListEnd@@
+#+MACRO: resumeItem @@latex:\resumeItem{$1}@@
+#+MACRO: resumeSubheading @@latex:\resumeSubheading{$1}{$2}{$3}{$4}@@
+#+MACRO: resumeSubSubheading @@latex:\resumeSubSubheading{$1}{$2}@@
+#+MACRO: resumeProjectHeading @@latex:\resumeProjectHeading{$1}{$2}@@
+#+MACRO: resumeSubItem @@latex:\resumeSubItem{$1}@@
+#+MACRO: resumeSkillsStart @@latex:\begin{itemize}[leftmargin=0.15in, label={}]\small{\item{@@
+#+MACRO: resumeSkillsEnd @@latex:}}\end{itemize}@@
+#+MACRO: resumeSkillItem @@latex:\textbf{$1}{: $2}\\@@

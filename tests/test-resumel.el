@@ -77,7 +77,9 @@
     ("modaltacv-basic.org" "modaltacv-basic.pdf")
     ("modaltacv-complex.org" "modaltacv-complex.pdf")
     ("awesomecv-basic.org" "awesomecv-basic.pdf")
-    ("awesomecv-complex.org" "awesomecv-complex.pdf"))
+    ("awesomecv-complex.org" "awesomecv-complex.pdf")
+    ("jakes-basic.org" "jakes-basic.pdf")
+    ("jakes-complex.org" "jakes-complex.pdf"))
   "List of test cases. Each entry is a list of Org file and expected PDF file.")
 
 ;; Define a test for each test case
@@ -180,6 +182,15 @@
     (should (listp defaults))
     (should (assoc "MODALTACV_COLUMNRATIO" defaults))
     (should (string= (cdr (assoc "MODALTACV_COLUMNRATIO" defaults)) "0.6"))))
+
+(ert-deftest resumel-test-get-template-defaults-jakes ()
+  "Loads and returns defaults for the jakes template."
+  (let ((defaults (resumel--get-template-defaults "jakes")))
+    (should (listp defaults))
+    (should (assoc "JAKES_FONT" defaults))
+    (should (string= (cdr (assoc "JAKES_FONT" defaults)) "default"))
+    (should (assoc "COMPILER" defaults))
+    (should (string= (cdr (assoc "COMPILER" defaults)) "pdflatex"))))
 
 ;; ---- resumel-get-template-variable ------------------------------------------
 
@@ -531,7 +542,7 @@ Preview only fires via the interactive form's minibuffer hooks."
                        called-prompt prompt)
                  "altacv")))
       (call-interactively #'resumel-select-template))
-    (should (equal called-templates '("moderncv" "altacv" "modaltacv" "awesomecv")))
+    (should (equal called-templates '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes")))
     (should (stringp called-prompt))))
 
 ;; ---- resumel--with-live-preview ---------------------------------------------
@@ -642,8 +653,8 @@ Preview only fires via the interactive form's minibuffer hooks."
     (should (file-exists-p opened-file))))
 
 (ert-deftest resumel-test-view-template-el-all-templates ()
-  "resumel-view-template-el resolves .el paths for all four templates."
-  (dolist (tmpl '("moderncv" "altacv" "modaltacv" "awesomecv"))
+  "resumel-view-template-el resolves .el paths for all five templates."
+  (dolist (tmpl '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes"))
     (let (opened-file)
       (cl-letf (((symbol-function 'find-file-other-window)
                  (lambda (f) (setq opened-file f))))
@@ -669,8 +680,8 @@ Preview only fires via the interactive form's minibuffer hooks."
     (should (file-exists-p opened-file))))
 
 (ert-deftest resumel-test-view-template-org-all-templates ()
-  "resumel-view-template-org resolves .org paths for all four templates."
-  (dolist (tmpl '("moderncv" "altacv" "modaltacv" "awesomecv"))
+  "resumel-view-template-org resolves .org paths for all five templates."
+  (dolist (tmpl '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes"))
     (let (opened-file)
       (cl-letf (((symbol-function 'find-file-other-window)
                  (lambda (f) (setq opened-file f))))
@@ -698,8 +709,8 @@ Preview only fires via the interactive form's minibuffer hooks."
     (should (file-exists-p opened-file))))
 
 (ert-deftest resumel-test-view-template-pdf-all-templates ()
-  "resumel-view-template-pdf resolves a PDF for all four templates."
-  (dolist (tmpl '("moderncv" "altacv" "modaltacv" "awesomecv"))
+  "resumel-view-template-pdf resolves a PDF for all five templates."
+  (dolist (tmpl '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes"))
     (let (opened-file)
       (cl-letf (((symbol-function 'find-file-other-window)
                  (lambda (f) (setq opened-file f))))

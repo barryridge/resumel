@@ -87,7 +87,7 @@ text-width color detail value text-width color detail...)."
 
 (defcustom resumel-default-template "moderncv"
   "Default resumel template to use."
-  :type '(choice (const "moderncv") (const "altacv") (const "modaltacv") (const "awesomecv"))
+  :type '(choice (const "moderncv") (const "altacv") (const "modaltacv") (const "awesomecv") (const "jakes"))
   :group 'resumel)
 
 (defcustom resumel-show-preview-on-select t
@@ -290,7 +290,7 @@ Sets `resumel-default-template' globally.  When called from an Org
 buffer, also inserts or updates #+RESUMEL_TEMPLATE: in the file header."
   (interactive
    (list (resumel--with-live-preview
-          '("moderncv" "altacv" "modaltacv" "awesomecv")
+          '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes")
           "Select template: ")))
   (setq resumel-default-template template)
   (when (derived-mode-p 'org-mode)
@@ -365,7 +365,7 @@ currently selected in that buffer.  Useful for inspecting LaTeX class
 definitions and template variable defaults."
   (interactive
    (list (completing-read "Template: "
-                          '("moderncv" "altacv" "modaltacv" "awesomecv")
+                          '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes")
                           nil t nil nil
                           (when (derived-mode-p 'org-mode)
                             (resumel--get-buffer-template)))))
@@ -384,7 +384,7 @@ currently selected in that buffer.  Useful for inspecting the template
 macros available for use in your resume file."
   (interactive
    (list (completing-read "Template: "
-                          '("moderncv" "altacv" "modaltacv" "awesomecv")
+                          '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes")
                           nil t nil nil
                           (when (derived-mode-p 'org-mode)
                             (resumel--get-buffer-template)))))
@@ -404,7 +404,7 @@ Does not alter the template selection in the current Org buffer.
 Requires PDF files in `resumel-preview-pdf-dir'."
   (interactive
    (list (resumel--with-live-preview
-          '("moderncv" "altacv" "modaltacv" "awesomecv")
+          '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes")
           "View template PDF: "
           t)))
   (let* ((tmpl (or template resumel-default-template))
