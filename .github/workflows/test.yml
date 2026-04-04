@@ -139,6 +139,7 @@ jobs:
             setspace
             sourcesanspro
             bookmark
+            fullpage
 
       - name: Clone AltaCV Repository
         run: |
