@@ -1,3 +1,5 @@
+(require 'resumel)
+
 ;; Disable Org's hyperref template - let moderncv handle it
 (setq org-latex-hyperref-template nil)
 (setq org-latex-default-packages-alist nil)
@@ -35,8 +37,11 @@
                `("resumel-moderncv"
                  ,(concat "\\documentclass[" documentclass-options "]{moderncv}
 
+% Resumel shared color registry
+" (resumel--latex-color-registry) "
 % Set default ModernCV color
 \\moderncvcolor{" moderncv-color "}
+\\colorlet{accent}{color1}
 
 % Set default ModernCV theme
 \\moderncvstyle{" moderncv-style "}
@@ -81,19 +86,6 @@
 \\renewcommand*{\\sectionfont}{" section-font "}
 \\renewcommand*{\\subsectionfont}{" subsection-font "}
 
-% Colors
-%
-% Redefine moderncv colors (they seem to not propagate from the package and cause xcolor 'Undefined color' errors)
-\\definecolor{black}{RGB}{0, 0, 0}
-\\definecolor{red}{rgb}{0.95, 0.20, 0.20}
-\\definecolor{darkgrey}{rgb}{0.45, 0.45, 0.45}
-\\definecolor{orange}{rgb}{0.95, 0.55, 0.15}
-\\definecolor{burgundy}{rgb}{0.596078, 0, 0}% 139/255 (0.545098) or 152/255 (0.596078)
-\\definecolor{purple}{rgb}{0.50, 0.33, 0.80}
-\\definecolor{lightblue}{rgb}{0.22, 0.45, 0.70}
-\\definecolor{green}{rgb}{0.35, 0.70, 0.30}
-
-
 % Math and symbol support
 %
 \\usepackage{amsmath}
@@ -123,11 +115,12 @@
 % Custom commands
 %
 \\newcommand*{\\Cplusplus}{C{}\\texttt{++}}
+\\setlength{\\tabcolsep}{8pt}
 \\renewcommand*{\\cventry}[7][.25em]{%
   \\cvitem[#1]{#2}{%
     {\\bfseries#3}%
-    \\ifthenelse{\\equal{#4}{}}{}{{\\slshape#4}}%
-    \\ifthenelse{\\equal{#5}{}}{}{#5}%
+    \\ifthenelse{\\equal{#4}{}}{}{ {\\slshape#4}}%
+    \\ifthenelse{\\equal{#5}{}}{}{, #5}%
     \\ifthenelse{\\equal{#6}{}}{}{#6}%
     \\strut%
     \\ifx&#7&%
@@ -153,6 +146,7 @@
 \\newcommand{\\cvtagCornerDefault}{" cvtag-corner-default "}
 
 \\usepackage{tikz}
+" (resumel--latex-wheelchart) "
 \\makeatletter
 \\NewDocumentCommand{\\cvtag}{m
   O{\\cvtagIntensityDefault}
@@ -189,11 +183,10 @@
 \\newcommand{\\highlight}[1]{\\textbf{#1}} % Replace \\textbf with any desired formatting
 
 % Add map marker symbol to address
-\\renewcommand*{\\addresssymbol}{{\\color{color2}\\small\\faMapMarker}~}
-% \\renewcommand*{\\addresssymbol}{{\\color{color2}\\small\\faLocationPin}~}
+\\renewcommand*{\\addresssymbol}{{\\color{color2}\\small\\faLocationDot}~}
 
 % Add calendar symbol command for dates
-\\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendar}~}
+\\newcommand{\\calendarsymbol}{{\\color{color2}\\small\\faCalendarDays}~}
 
 % For pdf attachments
 \\usepackage{pdfpages}

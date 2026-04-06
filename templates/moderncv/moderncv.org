@@ -7,3 +7,33 @@
 #+MACRO: cventry @@latex:\cventry{$1}{$2}{$3}{$4}{$5}{$6}@@
 #+MACRO: cvlistitem @@latex:\cvlistitem{$1}@@
 #+MACRO: cvlistdoubleitem @@latex:\cvlistdoubleitem{$1}{$2}@@
+
+# ------------------------------------------------------------------------------
+# Unified complex interface (see docs/unified-complex-interface.md)
+# ------------------------------------------------------------------------------
+#+MACRO: beginparacol @@latex:@@
+#+MACRO: endparacol @@latex:@@
+#+MACRO: switchcol @@latex:\par\vspace{0.75\baselineskip}@@
+#+MACRO: cvevent @@latex:\subsection*{$1}\cvitem{}{$2}\cvitem{\calendarsymbol}{$3}\cvitem{\addresssymbol}{$4}@@
+#+MACRO: cvproject @@latex:\cvitem{}{\textbf{$1} {\small($2)}\quad\href{$3}{\faGithub\ $4}}@@
+#+MACRO: cvthesis @@latex:\cvitem{}{\faBook \emph{\href{$1}{$2}}}@@
+#+MACRO: cvachievement @@latex:\cvitem{\mbox{$1}}{\textbf{$2} --- $3}@@
+#+MACRO: cvhonors-begin @@latex:@@
+#+MACRO: cvhonors-end @@latex:@@
+
+# ------------------------------------------------------------------------------
+# Unified basic interface (see docs/unified-basic-interface.md)
+# ------------------------------------------------------------------------------
+#+MACRO: fa-basic-icons {{{fa(Gears)}}} {{{fa(GraduationCap)}}} {{{fa(Book)}}} {{{fa(Wrench)}}} {{{fa(Trophy)}}} {{{fa(ChalkboardTeacher)}}} {{{fa(Users)}}}
+#+MACRO: fa-briefcase-colors {{{fa(Briefcase,\color{color1})}}} {{{fa(Briefcase,\color{black})}}} {{{fa(Briefcase,\color{red})}}} {{{fa(Briefcase,\color{darkgrey})}}} {{{fa(Briefcase,\color{orange})}}} {{{fa(Briefcase,\color{burgundy})}}} {{{fa(Briefcase,\color{purple})}}} {{{fa(Briefcase,\color{lightblue})}}} {{{fa(Briefcase,\color{green})}}}
+#+MACRO: fa-briefcase-sizes-colors {{{fa(Briefcase,\color{color1}\Huge)}}} {{{fa(Briefcase,\color{black}\huge)}}} {{{fa(Briefcase,\color{red}\Large)}}} {{{fa(Briefcase,\color{darkgrey}\large)}}} {{{fa(Briefcase,\color{orange}\normalsize)}}} {{{fa(Briefcase,\color{burgundy}\small)}}} {{{fa(Briefcase,\color{purple}\footnotesize)}}} {{{fa(Briefcase,\color{lightblue}\scriptsize)}}} {{{fa(Briefcase,\color{green}\tiny)}}}
+#+MACRO: item @@latex:\cvitem{$1}{$2}@@
+#+MACRO: double @@latex:\cvdoubleitem{$1}{$2}{$3}{$4}@@
+#+MACRO: itemc @@latex:\cvitemwithcomment{$1}{$2}{$3}@@
+#+MACRO: listdouble @@latex:\cvlistdoubleitem{$1}{$2}@@
+#+MACRO: entries-begin @@latex:@@
+#+MACRO: entries-end @@latex:@@
+#+MACRO: entry @@latex:\cventry{$4}{$1}{$2}{$3}{}{$5}@@
+#+MACRO: achievement @@latex:\cvitem{\textbf{Achievement}}{$1~$2 --- $3}@@
+#+MACRO: reference @@latex:\cvitem{Reference}{$1, $2, $3}@@
+#+MACRO: skill @@latex:\cvitem{$1}{Level $2}@@
