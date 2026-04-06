@@ -44,7 +44,7 @@
           (progn
             ;; Call resumel-setup before exporting
             (resumel-setup)
-            ;; Export to PDF
+            (resumel--merge-profile-export-keywords)
             (org-latex-export-to-pdf)
             (unless (file-exists-p pdf-file)
               (message "LaTeX Output:\n%s" (with-current-buffer "*Org PDF LaTeX Output*" (buffer-string)))
@@ -70,12 +70,10 @@ on exec-path (from the environment that started Emacs)."
                          "--per-page-pixel-tolerance" per-page-pixel-tolerance
                          file1 file2))))
 
-(ert-deftest resumel-test-expand-tags-and-aliases ()
-  "resumel-expand-tags matches deprecated cvtags alias; same for ltags/cvltags."
-  (should (string= (resumel-expand-tags "A" "B")
-                   (resumel-expand-cvtags "A" "B")))
-  (should (string= (resumel-expand-ltags "X" "1" "Y" "2")
-                   (resumel-expand-cvltags "X" "1" "Y" "2"))))
+(ert-deftest resumel-test-expand-tags ()
+  "resumel-expand-tags and resumel-expand-ltags produce correct LaTeX."
+  (should (string-match-p "\\\\cvtag{A}" (resumel-expand-tags "A" "B")))
+  (should (string-match-p "\\\\cvtag{X}" (resumel-expand-ltags "X" "1" "Y" "2"))))
 
 ;; List of test cases
 (defvar resumel-test-cases

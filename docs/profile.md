@@ -8,7 +8,9 @@ Use the same Org file with any template by setting a **portable** profile in the
 2. **Template-specific** — e.g. `#+RESUMEL_JAKES_EMAIL:` when the portable key is unset.
 3. **Standard Org** — `#+AUTHOR`, `#+TITLE`, `#+EMAIL` in the file when profile keys are absent.
 
-When you use `M-x resumel-export`, portable `NAME` / `HEADLINE` / `EMAIL` are merged into `#+AUTHOR` / `#+TITLE` / `#+EMAIL` in the temporary export buffer so LaTeX classes that rely on Org export (moderncv, Awesome-CV, AltaCV, modAltacv) receive a consistent header. If both `#+RESUMEL_NAME` and `#+AUTHOR` are present, **`RESUMEL_NAME` wins** during that export.
+When exporting (via `M-x resumel-export` or the test harness), portable `NAME` / `HEADLINE` / `EMAIL` are merged into `#+AUTHOR` / `#+TITLE` / `#+EMAIL` so LaTeX classes that rely on Org export (moderncv, Awesome-CV, AltaCV, modAltacv, jakes) receive a consistent header.
+
+**Override rules**: `RESUMEL_NAME` overrides `#+AUTHOR`; `RESUMEL_HEADLINE` overrides `#+TITLE`; `RESUMEL_EMAIL` overrides `#+EMAIL`. The standard Org keywords serve as fallbacks for users who do not set the portable RESUMEL_ keywords.
 
 ## Keyword reference
 

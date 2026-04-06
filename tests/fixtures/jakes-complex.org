@@ -10,7 +10,7 @@
 #+RESUMEL_GITHUB: username
 #+RESUMEL_GITHUB_LABEL: github.com/username
 #+TITLE: World Expert
-#+AUTHOR: Firstname Lastname
+#+AUTHOR: Lorem Ipsum
 #+DATE: <1955-11-05 Sat>
 #+EXPORT_FILE_NAME: ../results/jakes-complex.pdf
 #+OPTIONS: toc:nil H:2

@@ -31,7 +31,7 @@
 * Footer :ignore:
 # Print the footer with 3 arguments(<left>, <center>, <right>)
 # Leave any of these blank if they are not needed
-@@latex:\makecvfooter{\today}{Firstname Lastname~~~·~~~Résumé}{\thepage}@@
+@@latex:\makecvfooter{November 5, 1955}{Firstname Lastname~~~·~~~Résumé}{\thepage}@@
 
 * Color Customization :ignore:
 # colorlet macro: {{{colorlet(var,color)}}}

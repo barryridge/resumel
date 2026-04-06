@@ -32,7 +32,7 @@
 * Footer :ignore:
 # Print the footer with 3 arguments(<left>, <center>, <right>)
 # Leave any of these blank if they are not needed
-@@latex:\makecvfooter{\today}{Firstname Lastname~~~·~~~Résumé}{\thepage}@@
+@@latex:\makecvfooter{November 5, 1955}{Firstname Lastname~~~·~~~Résumé}{\thepage}@@
 
 * Color Customization :ignore:
 # colorlet macro: {{{colorlet(var,color)}}}
@@ -111,11 +111,11 @@
 @@latex:\cventry{VP Underlings}{\href{https://www.company-3-site.com}{Company 3}\textnormal{ | }\href{https://www.company-3-site.com/department/group}{Group}, \href{https://www.company-3-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
 {{{vspace(-4.00mm)}}}
 - *Role 1*
-  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 1 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 2*
-  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 2 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 3*
-  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 3 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 {{{vspace(-4.00mm)}}}
 @@latex:}@@
 @@latex:\\@@
@@ -124,11 +124,11 @@
 @@latex:\cventry{Senior Underling}{\href{https://www.company-4-site.com}{Company 4}\textnormal{ | }\href{https://www.company-4-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
 {{{vspace(-4.00mm)}}}
 - *Role 1*
-  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 1 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 2*
-  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 2 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 3*
-  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 3 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 {{{vspace(-4.00mm)}}}
 @@latex:}@@
 @@latex:\\@@
@@ -137,11 +137,11 @@
 @@latex:\cventry{Junior Underling}{\href{https://www.company-5-site.com}{Company 5}\textnormal{ | }\href{https://www.company-5-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
 {{{vspace(-4.00mm)}}}
 - *Role 1*
-  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 1 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 2*
-  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 2 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 3*
-  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 3 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 {{{vspace(-4.00mm)}}}
 @@latex:}@@
 @@latex:\\@@
