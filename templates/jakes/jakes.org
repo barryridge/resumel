@@ -7,6 +7,14 @@
 #+MACRO: cvachievement @@latex:\cvachievement{$1}{$2}{$3}@@
 #+MACRO: cvref @@latex:\cvref{$1}{$2}{$3}@@
 #+MACRO: cvskill @@latex:\cvskill{$1}{$2}@@
+#+MACRO: beginparacol @@latex:@@
+#+MACRO: endparacol @@latex:@@
+#+MACRO: switchcol @@latex:\par\medskip@@
+#+MACRO: cvproject @@latex:\cvprojectheading{\textbf{$1} $|$ \emph{$2}}{\href{$3}{\faGithub\ $4}}@@
+#+MACRO: cvthesis @@latex:{\small\faBook\ \emph{\href{$1}{$2}}}\par@@
+#+MACRO: cvachievement @@latex:\cvachievement{$1}{$2}{$3}@@
+#+MACRO: cvhonors-begin @@latex:@@
+#+MACRO: cvhonors-end @@latex:@@
 
 # ------------------------------------------------------------------------------
 # Jake's Template-Specific Macros:
@@ -25,3 +33,20 @@
 #+MACRO: resumeSkillsEnd @@latex:}}\end{itemize}@@
 #+MACRO: resumeSkillItem @@latex:\textbf{$1}{: $2} \\@@
 #+MACRO: resumeSkillItemLast @@latex:\textbf{$1}{: $2}@@
+
+# ------------------------------------------------------------------------------
+# Unified basic interface (see docs/unified-basic-interface.md)
+# ------------------------------------------------------------------------------
+#+MACRO: fa-basic-icons {{{fa(Cogs)}}} {{{fa(GraduationCap)}}} {{{fa(Book)}}} {{{fa(Wrench)}}} {{{fa(Trophy)}}} {{{fa(ChalkboardTeacher)}}} {{{fa(Users)}}}
+#+MACRO: fa-briefcase-colors {{{fa(Briefcase,\color{color1})}}} {{{fa(Briefcase,\color{black})}}} {{{fa(Briefcase,\color{darkgray})}}} {{{fa(Briefcase,\color{gray})}}} {{{fa(Briefcase,\color{red})}}} {{{fa(Briefcase,\color{blue})}}} {{{fa(Briefcase,\color{green})}}} {{{fa(Briefcase,\color{orange})}}} {{{fa(Briefcase,\color{purple})}}}
+#+MACRO: fa-briefcase-sizes-colors {{{fa(Briefcase,\color{color1}\Huge)}}} {{{fa(Briefcase,\color{black}\huge)}}} {{{fa(Briefcase,\color{darkgray}\Large)}}} {{{fa(Briefcase,\color{gray}\large)}}} {{{fa(Briefcase,\color{red}\normalsize)}}} {{{fa(Briefcase,\color{blue}\small)}}} {{{fa(Briefcase,\color{green}\footnotesize)}}} {{{fa(Briefcase,\color{orange}\scriptsize)}}} {{{fa(Briefcase,\color{purple}\tiny)}}}
+#+MACRO: item @@latex:{\small \textbf{$1}: $2\par}@@
+#+MACRO: double @@latex:{\small \textbf{$1}: $2 \quad \textbf{$3}: $4\par}@@
+#+MACRO: itemc @@latex:{\small \textbf{$1}: $2 \hfill \textit{$3}\par}@@
+#+MACRO: listdouble @@latex:{\small $1 \hfill $2\par}@@
+#+MACRO: entries-begin @@latex:\resumeSubHeadingListStart@@
+#+MACRO: entries-end @@latex:\resumeSubHeadingListEnd@@
+#+MACRO: entry @@latex:\resumeSubheading{$1}{$4}{$2}{$3}\resumeItemListStart\resumeItem{$5}\resumeItemListEnd@@
+#+MACRO: achievement @@latex:{\small $1~\textbf{$2} --- $3\par}@@
+#+MACRO: reference @@latex:{\small $1, $2, $3\par}@@
+#+MACRO: skill @@latex:\cvskill{$1}{$2}@@
