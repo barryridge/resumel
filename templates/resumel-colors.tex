@@ -1,0 +1,64 @@
+% resumel-colors.tex --- shared color registry for all resumel templates
+% Injected into each template preamble after \documentclass (xcolor must be
+% loaded by the class). Uses \providecolor so upstream .cls definitions win.
+
+% ----- Moderncv-style (lowercase) canonical -----
+\providecolor{ResumelMcBlack}{RGB}{0,0,0}
+\providecolor{ResumelMcRed}{rgb}{0.95,0.20,0.20}
+\providecolor{ResumelMcDarkgrey}{rgb}{0.45,0.45,0.45}
+\providecolor{ResumelMcOrange}{rgb}{0.95,0.55,0.15}
+\providecolor{ResumelMcBurgundy}{rgb}{0.596078,0,0}
+\providecolor{ResumelMcPurple}{rgb}{0.50,0.33,0.80}
+\providecolor{ResumelMcLightblue}{rgb}{0.22,0.45,0.70}
+\providecolor{ResumelMcGreen}{rgb}{0.35,0.70,0.30}
+
+% ----- AltaCV-style (capitalized) canonical -----
+\providecolor{ResumelAltaBlack}{HTML}{000000}
+\providecolor{ResumelAltaSlateGrey}{HTML}{2E2E2E}
+\providecolor{ResumelAltaLightGrey}{HTML}{666666}
+\providecolor{ResumelAltaDarkPastelRed}{HTML}{450808}
+\providecolor{ResumelAltaPastelRed}{HTML}{8F0D0D}
+\providecolor{ResumelAltaBlue}{HTML}{3872B2}
+\providecolor{ResumelAltaDarkBlue}{HTML}{1F4064}
+\providecolor{ResumelAltaGoldenEarth}{HTML}{E7D192}
+\providecolor{ResumelAltaCoolSky}{HTML}{92CDE7}
+\providecolor{ResumelAltaSoftSkyBlue}{HTML}{97D5EF}
+
+% ----- Awesome-CV palette (matches posquit0 awesome-cv.cls) -----
+\providecolor{awesome-emerald}{HTML}{00A388}
+\providecolor{awesome-skyblue}{HTML}{0395DE}
+\providecolor{awesome-red}{HTML}{DC3522}
+\providecolor{awesome-pink}{HTML}{EF4089}
+\providecolor{awesome-orange}{HTML}{FF6138}
+\providecolor{awesome-nephritis}{HTML}{27AE60}
+\providecolor{awesome-concrete}{HTML}{95A5A6}
+\providecolor{awesome-darknight}{HTML}{131A28}
+
+% ----- Portable semantic names (template-agnostic Org content) -----
+\providecolor{ResumelAccent}{HTML}{3872B2}
+\providecolor{ResumelBody}{HTML}{666666}
+\providecolor{ResumelMuted}{HTML}{999999}
+\providecolor{ResumelHeading}{HTML}{450808}
+\providecolor{ResumelName}{HTML}{000000}
+
+% ----- Backward-compatible aliases (moderncv lowercase) -----
+\colorlet{black}{ResumelMcBlack}
+\colorlet{red}{ResumelMcRed}
+\colorlet{darkgrey}{ResumelMcDarkgrey}
+\colorlet{orange}{ResumelMcOrange}
+\colorlet{burgundy}{ResumelMcBurgundy}
+\colorlet{purple}{ResumelMcPurple}
+\colorlet{lightblue}{ResumelMcLightblue}
+\colorlet{green}{ResumelMcGreen}
+
+% ----- Backward-compatible aliases (AltaCV capitalization) -----
+\colorlet{Black}{ResumelAltaBlack}
+\colorlet{SlateGrey}{ResumelAltaSlateGrey}
+\colorlet{LightGrey}{ResumelAltaLightGrey}
+\colorlet{DarkPastelRed}{ResumelAltaDarkPastelRed}
+\colorlet{PastelRed}{ResumelAltaPastelRed}
+\colorlet{Blue}{ResumelAltaBlue}
+\colorlet{DarkBlue}{ResumelAltaDarkBlue}
+\colorlet{GoldenEarth}{ResumelAltaGoldenEarth}
+\colorlet{CoolSky}{ResumelAltaCoolSky}
+\colorlet{SoftSkyBlue}{ResumelAltaSoftSkyBlue}
