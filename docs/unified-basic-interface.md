@@ -8,7 +8,7 @@ This document fixes the **portable surface** shared by all templates in the basi
 - Paragraphs, plain emphasis (`*bold*`, `/italic/`), `[[url][desc]]` links
 - Unordered lists (exported via the template’s normal list path)
 - One Org table and one `tabular` block using shared `amp` / `endl` macros
-- `tags` / `ltags` from `resumel.org` (`cvtags` / `cvltags` remain as aliases)
+- `tags` / `ltags` from `resumel.org` (list helpers); `tag` / `ltag` (single-tag primitives)
 
 ## Awesome-CV: local spacing vs CI
 
@@ -34,6 +34,7 @@ Awesome-CV PDFs may look **vertically tight** on some local TeX setups (fonts, c
 | `entry` | title, organization, location, dates, description | One experience row |
 | `achievement` | icon, title, details | Single highlight line (maps to `cvachievement` or a fallback) |
 | `reference` | name, place, contact | Reference line |
+| `skills-begin` / `skills-end` | none | Wrap skill rows (e.g. AwesomeCV `cvskills`; empty on others) |
 | `skill` | name, level | Discrete skill level (1–5 style) |
 
 Template-specific names such as `cvitem`, `cvevent`, and raw `\cventry{...}` remain available for complex and upstream-faithful fixtures; **basic** tests use the unified names above.

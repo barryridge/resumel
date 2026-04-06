@@ -13,7 +13,7 @@ This document complements [unified-basic-interface.md](unified-basic-interface.m
 | `cvthesis` | url, title | Thesis line after education `cvevent`. |
 | `wheelchart` | (see `resumel.org`) | AltaCV / modAltacv use class `\wheelchart`. Other templates load `templates/resumel-wheelchart.tex` when the class does not define it. Requires `\colorlet{accent}{...}` (set in template `.el` where needed). |
 | `cvhonors-begin` / `cvhonors-end` | — | awesomecv: wraps `\begin{cvhonors}` / `\end{cvhonors}`; other templates: empty. |
-| `cvachievement` | icon, title, description | AltaCV / modAltacv: `\cvachievement`; awesomecv: maps to `\cvhonor`; moderncv: `\cvitem`; jakes: `\resumeItem`. |
+| `cvachievement` | icon, level, title, date, details | AltaCV / modAltacv: `\cvachievement` (icon separate, level+title as heading); awesomecv: maps to `\cvhonor` (icon+level in position column); moderncv: `\cvitem`; jakes: `\cvachievement`. |
 
 Org comma rules from the basic doc still apply (use `\,` inside macro arguments where needed).
 
