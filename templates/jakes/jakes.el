@@ -1,3 +1,18 @@
+(require 'resumel nil t)
+(unless (fboundp 'resumel--latex-color-registry)
+  (load (expand-file-name "../../resumel.el"
+           (file-name-directory (or load-file-name buffer-file-name)))))
+
+(defun resumel-jakes--nonempty (canonical jakes-key)
+  "Prefer CANONICAL profile key, then JAKES_KEY in `resumel-template-vars'.
+Defined in this file so contact fields work even if other helpers are not
+yet bound when the template is loaded."
+  (let ((v (or (cdr (assoc canonical resumel-template-vars))
+               (cdr (assoc jakes-key resumel-template-vars)))))
+    (if (and v (not (string-empty-p (string-trim v))))
+        (string-trim v)
+      "")))
+
 ;; Disable Org's default hyperref template and package lists -
 ;; Jake's template manages its own package loading.
 (setq org-latex-hyperref-template nil)
@@ -7,13 +22,13 @@
 (let* ((compiler (or (cdr (assoc "COMPILER" resumel-template-vars)) "pdflatex"))
        (documentclass-options (or (cdr (assoc "DOCUMENTCLASS_OPTIONS" resumel-template-vars)) "letterpaper,11pt"))
        (font (or (cdr (assoc "JAKES_FONT" resumel-template-vars)) "default"))
-       (phone (or (cdr (assoc "JAKES_PHONE" resumel-template-vars)) ""))
-       (email (or (cdr (assoc "JAKES_EMAIL" resumel-template-vars)) ""))
-       (linkedin (or (cdr (assoc "JAKES_LINKEDIN" resumel-template-vars)) ""))
-       (linkedin-label (let ((l (or (cdr (assoc "JAKES_LINKEDIN_LABEL" resumel-template-vars)) "")))
-                         (if (string-empty-p l) linkedin l)))
-       (github (or (cdr (assoc "JAKES_GITHUB" resumel-template-vars)) ""))
-       (github-label (let ((l (or (cdr (assoc "JAKES_GITHUB_LABEL" resumel-template-vars)) "")))
+       (phone (resumel-jakes--nonempty "PHONE" "JAKES_PHONE"))
+       (email (resumel-jakes--nonempty "EMAIL" "JAKES_EMAIL"))
+       (linkedin (resumel-jakes--nonempty "LINKEDIN" "JAKES_LINKEDIN"))
+       (linkedin-label (let ((l (resumel-jakes--nonempty "LINKEDIN_LABEL" "JAKES_LINKEDIN_LABEL")))
+                           (if (string-empty-p l) linkedin l)))
+       (github (resumel-jakes--nonempty "GITHUB" "JAKES_GITHUB"))
+       (github-label (let ((l (resumel-jakes--nonempty "GITHUB_LABEL" "JAKES_GITHUB_LABEL")))
                        (if (string-empty-p l) github l)))
        ;; cvtag defaults
        (cvtag-intensity-default (or (cdr (assoc "CVTAG_INTENSITY_DEFAULT" resumel-template-vars)) "5"))
@@ -60,6 +75,9 @@
 \\usepackage{titlesec}
 \\usepackage{marvosym}
 \\usepackage[usenames,dvipsnames]{xcolor}
+
+% Resumel shared color registry
+" (resumel--latex-color-registry) "
 \\usepackage{verbatim}
 \\usepackage{enumitem}
 \\usepackage[hidelinks]{hyperref}
@@ -68,6 +86,7 @@
 \\usepackage{tabularx}
 \\usepackage{fontawesome5}
 \\usepackage{tikz}
+" (resumel--latex-wheelchart) "
 \\usepackage{dashrule}
 
 % ATS-parsable PDF (pdflatex only)
@@ -80,6 +99,7 @@
 \\colorlet{color0}{black}
 \\colorlet{color1}{black}
 \\colorlet{color2}{darkgray}
+\\colorlet{accent}{color1}
 
 \\pagestyle{fancy}
 \\fancyhf{}
@@ -145,6 +165,10 @@
 
 \\newcommand*{\\Cplusplus}{C\\nolinebreak\\hspace{-.05em}\\raisebox{.4ex}{\\tiny\\textbf{++}}}
 
+% FA5/FA6 compatibility aliases
+\\providecommand{\\faGears}{\\faCogs}
+\\providecommand{\\faChalkboardUser}{\\faChalkboardTeacher}
+
 %-------------------------
 % Symbols
 
@@ -154,7 +178,7 @@
 %-------------------------
 % Divider
 
-\\newcommand{\\divider}{\\textcolor{color2!30}{\\hdashrule{\\linewidth}{0.6pt}{0.5ex}}\\medskip}
+\\newcommand{\\divider}{\\medskip\\textcolor{color2!30}{\\hdashrule{\\linewidth}{0.6pt}{0.5ex}}\\medskip}
 
 %-------------------------
 % CV Tags
@@ -242,13 +266,19 @@
 % These provide a template-agnostic interface matching the other resumel templates.
 
 % cvevent: {title}{organization}{dates}{location}
-% Maps to Jake's 2-row tabular layout (bold title + dates, italic org + location)
 \\newcommand{\\cvevent}[4]{%
-  \\vspace{-2pt}%
+  \\vspace{4pt}%
   \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
     \\textbf{#1} & #3 \\\\
     \\textit{\\small#2} & \\textit{\\small #4} \\\\
-  \\end{tabular*}\\vspace{-7pt}
+  \\end{tabular*}\\vspace{-2pt}
+}
+% cvprojectheading: single-row variant for projects (title | type on left, link on right)
+\\newcommand{\\cvprojectheading}[2]{%
+  \\vspace{4pt}%
+  \\begin{tabular*}{0.97\\textwidth}{l@{\\extracolsep{\\fill}}r}
+    \\small#1 & #2 \\\\
+  \\end{tabular*}\\vspace{-2pt}
 }
 
 % cvachievement: {icon}{title}{description}
@@ -258,10 +288,11 @@
 
 % cvref: {name}{institution}{email}
 \\newcommand{\\cvref}[3]{%
+  \\vspace{4pt}%
   \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
     \\textbf{#1} & \\href{mailto:#3}{\\underline{#3}} \\\\
     \\textit{\\small#2} \\\\
-  \\end{tabular*}\\vspace{-7pt}
+  \\end{tabular*}\\vspace{-2pt}
 }
 
 % cvskill: {name}{level} where level is 1-5

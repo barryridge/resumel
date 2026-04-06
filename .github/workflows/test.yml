@@ -151,6 +151,11 @@ jobs:
           mkdir -p $TEXMFHOME/tex/latex
           git clone https://github.com/posquit0/Awesome-CV.git $TEXMFHOME/tex/latex/awesomecv
 
+      - name: Clone moderncv Repository
+        run: |
+          mkdir -p $TEXMFHOME/tex/latex
+          git clone https://github.com/moderncv/moderncv.git $TEXMFHOME/tex/latex/moderncv
+
       - name: Refresh TeX Live Filename Database
         run: |
           mktexlsr $TEXMFHOME

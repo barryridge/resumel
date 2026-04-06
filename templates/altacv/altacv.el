@@ -1,3 +1,5 @@
+(require 'resumel)
+
 (let* ((compiler (or (cdr (assoc "COMPILER" resumel-template-vars)) "pdflatex"))
        (geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm"))
        (documentclass-options (or (cdr (assoc "DOCUMENTCLASS_OPTIONS" resumel-template-vars)) "10pt,letterpaper,ragged2e,withhyper"))
@@ -29,6 +31,8 @@
                `("resumel-altacv"
                  ,(concat "\\documentclass[" documentclass-options "]{altacv}
 
+% Resumel shared color registry
+" (resumel--latex-color-registry) "
 % Layout
 %
 \\geometry{" geometry "}
@@ -64,18 +68,8 @@
 \\renewcommand{\\cvsectionfont}{" section-font "}
 \\renewcommand{\\cvsubsectionfont}{" subsection-font "}
 
-% Colors
+% Colors (base names from resumel-colors.tex)
 %
-\\definecolor{Black}{HTML}{000000}
-\\definecolor{SlateGrey}{HTML}{2E2E2E}
-\\definecolor{LightGrey}{HTML}{666666}
-\\definecolor{DarkPastelRed}{HTML}{450808}
-\\definecolor{PastelRed}{HTML}{8F0D0D}
-\\definecolor{Blue}{HTML}{3872B2}
-\\definecolor{DarkBlue}{HTML}{1F4064}
-\\definecolor{GoldenEarth}{HTML}{E7D192}
-\\definecolor{CoolSky}{HTML}{92CDE7}
-\\definecolor{SoftSkyBlue}{HTML}{97D5EF}
 \\colorlet{name}{Black}
 \\colorlet{tagline}{PastelRed}
 \\colorlet{heading}{DarkPastelRed}

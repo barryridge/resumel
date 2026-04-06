@@ -1,3 +1,5 @@
+(require 'resumel)
+
 (let* ((compiler (or (cdr (assoc "COMPILER" resumel-template-vars)) "xelatex"))
        (geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm"))
        (documentclass-options (or (cdr (assoc "DOCUMENTCLASS_OPTIONS" resumel-template-vars)) "10pt,letterpaper,ragged2e,withhyper"))
@@ -40,10 +42,13 @@
                `("resumel-awesomecv"
                  ,(concat "\\documentclass[" documentclass-options "]{awesome-cv}
 
+% Resumel shared color registry
+" (resumel--latex-color-registry) "
 % Layout
 %
 \\geometry{" geometry "}
 
+" (resumel--latex-wheelchart) "
 % Fonts
 %
 % \\iftutex
@@ -76,6 +81,7 @@
 % Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
 %                 awesome-nephritis, awesome-concrete, awesome-darknight
 \\colorlet{awesome}{" awesomecv-color "}
+\\colorlet{accent}{awesome}
 % Uncomment if you would like to specify your own color
 % \\definecolor{awesome}{HTML}{3E6D9C}
 
@@ -145,20 +151,30 @@
 % above and below every list -- causing extra spacing in nested lists.
 %
 \\usepackage{enumitem}
-\\let\\olditemize\\itemize
-\\let\\endolditemize\\enditemize
-\\renewenvironment{itemize}{%
-  \\justifying
-  \\begin{olditemize}[leftmargin=2ex, nosep, noitemsep]
-    \\setlength{\\parskip}{0pt}
-    \\renewcommand{\\labelitemi}{\\bullet}%
-}{%
-  \\end{olditemize}
-}
+\\setlist[itemize]{nosep,noitemsep,leftmargin=2ex,topsep=0pt,parsep=0pt,partopsep=0pt}
 
 % Define divider (replicated from altacv)
 \\usepackage{dashrule}
 \\newcommand{\\divider}{\\textcolor{color2!30}{\\hdashrule{\\linewidth}{0.6pt}{0.5ex}}\\medskip}
+
+% Loosen the class's aggressive -2mm inter-entry spacing so descriptions
+% don't bleed into the next entry's title.
+\\makeatletter
+\\renewcommand*{\\cventry}[5]{%
+  \\vspace{0.5mm}
+  \\setlength\\tabcolsep{0pt}
+  \\setlength{\\extrarowheight}{0pt}
+  \\begin{tabular*}{\\textwidth}{@{\\extracolsep{\\fill}} L{\\textwidth - 4.5cm} R{4.5cm}}
+    \\ifempty{#2#3}
+      {\\entrypositionstyle{#1} & \\entrydatestyle{#4} \\\\}
+      {\\entrytitlestyle{#2} & \\entrylocationstyle{#3} \\\\
+      \\entrypositionstyle{#1} & \\entrydatestyle{#4} \\\\}
+    \\ifstrempty{#5}
+      {}
+      {\\multicolumn{2}{L{\\textwidth}}{\\descriptionstyle{#5}} \\\\}
+  \\end{tabular*}%
+}
+\\makeatother
 
 % CV Tags
 %

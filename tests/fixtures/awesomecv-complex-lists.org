@@ -32,7 +32,7 @@
 * Footer :ignore:
 # Print the footer with 3 arguments(<left>, <center>, <right>)
 # Leave any of these blank if they are not needed
-@@latex:\makecvfooter{\today}{Firstname Lastname~~~·~~~Résumé}{\thepage}@@
+@@latex:\makecvfooter{November 5, 1955}{Firstname Lastname~~~·~~~Résumé}{\thepage}@@
 
 * Color Customization :ignore:
 # colorlet macro: {{{colorlet(var,color)}}}
@@ -49,10 +49,10 @@
 * Skills
 
 ** Programming
-{{{cvtags(Python,Elisp,JavaScript,LaTeX,C++,Java)}}}
+{{{tags(Python,Elisp,JavaScript,LaTeX,C++,Java)}}}
 
 ** Tools & Technologies
-{{{cvltags(Emacs,5,Git,4,Docker,3,AWS,2)}}}
+{{{ltags(Emacs,5,Git,4,Docker,3,AWS,2)}}}
 
 * Education
 @@latex:\begin{cventries}@@
@@ -94,7 +94,7 @@
 @@latex:\cventry{Senior Developer \& General Guru}{Tech Corp\textnormal{ | }Group, Department}{City, State.}{2018--2020}{@@
 {{{vspace(-4.00mm)}}}
 - Led team of 5 developers
-- Implemented CI/CD pipeline {{{cvtags(Python,Docker,Git)}}}
+- Implemented CI/CD pipeline {{{tags(Python,Docker,Git)}}}
 {{{vspace(-4.00mm)}}}
 @@latex:}@@
 @@latex:\\@@
@@ -102,7 +102,7 @@
 ** Job 2 :ignore:
 @@latex:\cventry{Software Engineer \& Elite Hacker}{Start-up Inc\textnormal{ | }Group, Department}{City, State.}{2015--2018}{@@
 {{{vspace(-4.00mm)}}}
-- Full-stack development {{{cvltags(JavaScript,4,React,3,Node.js,4)}}}
+- Full-stack development {{{ltags(JavaScript,4,React,3,Node.js,4)}}}
 {{{vspace(-4.00mm)}}}
 @@latex:}@@
 @@latex:\\@@
@@ -111,11 +111,11 @@
 @@latex:\cventry{VP Underlings}{\href{https://www.company-3-site.com}{Company 3}\textnormal{ | }\href{https://www.company-3-site.com/department/group}{Group}, \href{https://www.company-3-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
 {{{vspace(-4.00mm)}}}
 - *Role 1*
-  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 1 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 2*
-  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 2 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 3*
-  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 3 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 {{{vspace(-4.00mm)}}}
 @@latex:}@@
 @@latex:\\@@
@@ -124,11 +124,11 @@
 @@latex:\cventry{Senior Underling}{\href{https://www.company-4-site.com}{Company 4}\textnormal{ | }\href{https://www.company-4-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
 {{{vspace(-4.00mm)}}}
 - *Role 1*
-  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 1 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 2*
-  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 2 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 3*
-  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 3 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 {{{vspace(-4.00mm)}}}
 @@latex:}@@
 @@latex:\\@@
@@ -137,11 +137,11 @@
 @@latex:\cventry{Junior Underling}{\href{https://www.company-5-site.com}{Company 5}\textnormal{ | }\href{https://www.company-5-site.com/department/group}{Group}, \href{https://www.company-4-site.com/department}{Department}}{City, State.}{May 9 1806 -- Apr 7 2025}{@@
 {{{vspace(-4.00mm)}}}
 - *Role 1*
-  - Role 1 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 1 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 2*
-  - Role 2 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 2 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 - *Role 3*
-  - Role 3 description. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+  - Role 3 description. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 {{{vspace(-4.00mm)}}}
 @@latex:}@@
 @@latex:\\@@

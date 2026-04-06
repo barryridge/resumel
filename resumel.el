@@ -24,7 +24,7 @@
 (require 'ox-extra)      ;; For ignore-headlines
 (require 'subr-x)        ;; For string-trim
 
-(defun resumel-expand-cvtags (&rest strings)
+(defun resumel-expand-tags (&rest strings)
   "Return a string of \\cvtag{...} expansions from each argument in
 STRINGS (skill skill skill...).  Ignores nil or empty entries."
   ;; Remove any nil arguments
@@ -39,7 +39,7 @@ STRINGS (skill skill skill...).  Ignores nil or empty entries."
              strings
              " "))
 
-(defun resumel-expand-cvltags (&rest strings)
+(defun resumel-expand-ltags (&rest strings)
   "Return a string of \\cvtag{Skill}[Level] expansions for each (skill level)
 argument pair in STRINGS (skill level skill level...)."
   (let (result)
@@ -136,6 +136,28 @@ configuration variables.")
 (defvar resumel-templates-dir
   (expand-file-name "templates" resumel-base-dir)
   "Directory where resumel templates are stored.")
+
+(defun resumel--latex-color-registry ()
+  "Return the shared LaTeX color registry (contents of resumel-colors.tex).
+Requires xcolor; all resumel document classes load it before the preamble
+continues past \\`resumel--latex-color-registry' insertion."
+  (let ((file (expand-file-name "resumel-colors.tex" resumel-templates-dir)))
+    (unless (file-readable-p file)
+      (error "Resumel color registry not found: %s" file))
+    (with-temp-buffer
+      (insert-file-contents file)
+      (buffer-string))))
+
+(defun resumel--latex-wheelchart ()
+  "Return optional \\`wheelchart' implementation (resumel-wheelchart.tex).
+Skipped at run time when the document class already defines \\`wheelchart'
+(e.g. altacv)."
+  (let ((file (expand-file-name "resumel-wheelchart.tex" resumel-templates-dir)))
+    (if (file-readable-p file)
+        (with-temp-buffer
+          (insert-file-contents file)
+          (buffer-string))
+      "")))
 
 ;;; Template preview
 
@@ -271,6 +293,49 @@ Returns the selected template string."
                       (string= (car entry) template))
                     org-latex-classes)))
 
+(defun resumel--first-nonempty-var (&rest keys)
+  "Return trimmed value for the first KEY in `resumel-template-vars' that is set.
+KEYS are upper-case names without the RESUMEL_ prefix (e.g. \"PHONE\",
+\"JAKES_PHONE\").  Must be defined before template \\`.el' files are loaded."
+  (let (found)
+    (dolist (k keys)
+      (unless found
+        (let ((v (cdr (assoc k resumel-template-vars))))
+          (when (and v (not (string-empty-p (string-trim v))))
+            (setq found (string-trim v))))))
+    found))
+
+(defun resumel--set-or-insert-org-keyword (key value)
+  "Replace or insert a line #+KEY: VALUE (Org export keyword, not RESUMEL_*).
+VALUE must not contain newlines."
+  (save-excursion
+    (goto-char (point-min))
+    (let ((re (format "^[ \t]*#\\+%s:" (regexp-quote key))))
+      (if (re-search-forward re nil t)
+          (progn
+            (beginning-of-line)
+            (delete-region (point) (line-end-position))
+            (insert (format "#+%s: %s" key value)))
+        (let ((insert-at (point-min)))
+          (goto-char (point-min))
+          (while (re-search-forward "^[ \t]*#\\+RESUMEL_" nil t)
+            (setq insert-at (line-end-position)))
+          (goto-char insert-at)
+          (unless (bolp) (insert "\n"))
+          (insert "\n" (format "#+%s: %s" key value)))))))
+
+(defun resumel--merge-profile-export-keywords ()
+  "Sync Org export keywords from portable profile keys in `resumel-template-vars'.
+When #+RESUMEL_NAME, #+RESUMEL_HEADLINE, or #+RESUMEL_EMAIL are set, update or
+insert #+AUTHOR, #+TITLE, and #+EMAIL so `org-latex-export' sees them.
+Intended for the temporary buffer used by `resumel-export'."
+  (when-let ((name (resumel--first-nonempty-var "NAME")))
+    (resumel--set-or-insert-org-keyword "AUTHOR" name))
+  (when-let ((head (resumel--first-nonempty-var "HEADLINE")))
+    (resumel--set-or-insert-org-keyword "TITLE" head))
+  (when-let ((em (resumel--first-nonempty-var "EMAIL")))
+    (resumel--set-or-insert-org-keyword "EMAIL" em)))
+
 ;; Load a resumel template
 (defun resumel--load-template (template) "Load the specified TEMPLATE from `resumel-templates-dir`."
   (let* ((template-dir (expand-file-name template resumel-templates-dir))
@@ -352,6 +417,8 @@ buffer, also inserts or updates #+RESUMEL_TEMPLATE: in the file header."
       (org-mode)
       ;; Set up resumel in the temporary buffer
       (resumel-setup)
+      ;; Map portable profile keywords to Org export keywords (#+AUTHOR / #+TITLE / #+EMAIL)
+      (resumel--merge-profile-export-keywords)
       ;; Export to PDF
       (org-latex-export-to-pdf))))
 
@@ -416,15 +483,23 @@ Requires PDF files in `resumel-preview-pdf-dir'."
 
 ;;; Template variable introspection
 
+(defconst resumel-profile-variable-names
+  '("NAME" "HEADLINE" "EMAIL" "PHONE" "LOCATION"
+    "LINKEDIN" "LINKEDIN_LABEL" "GITHUB" "GITHUB_LABEL")
+  "Portable #+RESUMEL_* profile keywords (same main Org file across templates).
+See `docs/profile.md'.")
+
 (defconst resumel-core-variable-names
-  '("COMPILER" "GEOMETRY" "DOCUMENTCLASS_OPTIONS"
-    "MAIN_FONT_XELATEX" "SANS_FONT_XELATEX" "MONO_FONT_XELATEX" "MATH_FONT_XELATEX"
-    "MAIN_FONT_PDFLATEX" "SANS_FONT_PDFLATEX" "MONO_FONT_PDFLATEX" "MATH_FONT_PDFLATEX"
-    "TITLE_FONT" "AUTHOR_FONT" "SECTION_FONT" "SUBSECTION_FONT"
-    "CVTAG_INTENSITY_DEFAULT" "CVTAG_FONT_DEFAULT" "CVTAG_BASELINE_DEFAULT"
-    "CVTAG_INNER_X_SEP_DEFAULT" "CVTAG_INNER_Y_SEP_DEFAULT"
-    "CVTAG_TEXT_HEIGHT_DEFAULT" "CVTAG_TEXT_DEPTH_DEFAULT" "CVTAG_CORNER_DEFAULT")
-  "Variable names common to all resumel templates.")
+  (append
+   '("COMPILER" "GEOMETRY" "DOCUMENTCLASS_OPTIONS"
+     "MAIN_FONT_XELATEX" "SANS_FONT_XELATEX" "MONO_FONT_XELATEX" "MATH_FONT_XELATEX"
+     "MAIN_FONT_PDFLATEX" "SANS_FONT_PDFLATEX" "MONO_FONT_PDFLATEX" "MATH_FONT_PDFLATEX"
+     "TITLE_FONT" "AUTHOR_FONT" "SECTION_FONT" "SUBSECTION_FONT"
+     "CVTAG_INTENSITY_DEFAULT" "CVTAG_FONT_DEFAULT" "CVTAG_BASELINE_DEFAULT"
+     "CVTAG_INNER_X_SEP_DEFAULT" "CVTAG_INNER_Y_SEP_DEFAULT"
+     "CVTAG_TEXT_HEIGHT_DEFAULT" "CVTAG_TEXT_DEPTH_DEFAULT" "CVTAG_CORNER_DEFAULT")
+   resumel-profile-variable-names)
+  "Variable names common to all resumel templates, including portable profile keys.")
 
 ;; ---------------------------------------------------------------------------
 ;; Private helpers

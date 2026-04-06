@@ -1,0 +1,158 @@
+* Page 1, Column 1 :ignore:
+{{{beginparacol}}}
+
+** Personal Statement :ignore:
+#+begin_export latex
+ \begin{quote}
+ \mbox{}Visionary physicist and inventor with decades of experience in temporal
+ mechanics, applied nuclear science, and experimental engineering. Proven track
+ record of delivering breakthrough prototypes under extreme constraints and
+ communicating complex ideas to diverse stakeholders.
+ \end{quote}
+#+end_export
+
+** Experience {{{fa(Briefcase)}}}
+*** Job 1 :ignore:
+{{{cvevent(Principal Research Scientist,\href{https://www.brown-enterprises.com}{Brown Enterprises}\, \href{https://www.brown-enterprises.com/labs}{Advanced Research Labs}\, \href{https://www.brown-enterprises.com/temporal}{Temporal Division},Nov 5 1955 -- Oct 26 1985, Hill Valley\, CA)}}}
+
+**** Role 1 :ignore:
+*Lead, temporal mechanics*
+- Conceived and built the flux capacitor enabling controlled displacement across the fourth dimension. {{{tag(Plutonium)}}} {{{tag(1.21 GW)}}}
+
+**** Role 2 :ignore:
+*Vehicle integration engineer*
+- Retrofitted a DeLorean DMC-12 with nuclear-powered time circuits and 88 mph activation threshold. {{{tag(\Cplusplus)}}} {{{tag(CAD)}}}
+
+**** Role 3 :ignore:
+*Safety and compliance*
+- Developed shielding protocols for plutonium fuel cells and maintained zero-incident lab safety record. {{{tag(NRC)}}} {{{tag(OSHA)}}}
+
+{{{divider}}}
+
+*** Job 2 :ignore:
+{{{cvevent(Senior Fusion Engineer,\href{https://www.brown-enterprises.com}{Brown Enterprises}\, \href{https://www.brown-enterprises.com/energy}{Energy Systems}\, \href{https://www.brown-enterprises.com/fusion}{Mr. Fusion Division},Oct 21 2015 -- Sep 2 1885, Hill Valley\, CA)}}}
+
+**** Role 1 :ignore:
+*Compact fusion reactor design*
+- Designed the Mr. Fusion Home Energy Reactor converting household waste to 1.21 gigawatts. {{{tag(Fusion)}}} {{{tag(Python)}}}
+
+**** Role 2 :ignore:
+*Cross-era field testing*
+- Validated reactor performance across four distinct temporal periods with zero containment breaches. {{{tag(QA)}}} {{{tag(Testing)}}}
+
+**** Role 3 :ignore:
+*Legacy system migration*
+- Replaced hazardous plutonium fuel system with clean Mr. Fusion power source on existing DeLorean platform. {{{tag(Systems)}}} {{{tag(Safety)}}}
+
+{{{divider}}}
+
+*** Job 3 :ignore:
+{{{cvevent(Consulting Physicist,\href{https://www.hillvalley.gov}{Hill Valley Civic Authority}\, \href{https://www.hillvalley.gov/power}{Dept. of Power}\, \href{https://www.hillvalley.gov/clock}{Clock Tower Commission},Sep 2 1885 -- Jan 1 1886, Hill Valley\, CA)}}}
+
+**** Role 1 :ignore:
+*Lightning harvesting*
+- Engineered a cable rig to channel a bolt of lightning into the flux capacitor via the Clock Tower. {{{tag(HV Engineering)}}} {{{tag(Timing)}}}
+
+**** Role 2 :ignore:
+*Locomotive retrofit*
+- Converted a Rogers 4-4-0 steam locomotive into a temporal vehicle using 19th-century materials. {{{tag(Mechanical)}}} {{{tag(Steam)}}}
+
+**** Role 3 :ignore:
+*Public infrastructure*
+- Restored Clock Tower electrical systems and advised on Hill Valley power grid improvements. {{{tag(Electrical)}}} {{{tag(Consulting)}}}
+
+{{{divider}}}
+
+
+* Page 1, Column 2 :ignore:
+# Switch to the right column - will automatically move to the next page.
+{{{switchcol}}}
+
+** Skills {{{fa(Gears)}}}
+*** Core Sciences :ignore:
+*Core Sciences*
+
+{{{ltags(Temporal Mechanics,5,Nuclear Physics,4,Quantum Theory,3,Electrodynamics,2,Thermodynamics,1)}}}
+
+{{{divider}}}
+
+*** Engineering :ignore:
+*Engineering*
+
+{{{tag(Flux Capacitor Design)}}} {{{tag(Vehicle Integration)}}}
+
+{{{tag(Fusion Reactor Systems)}}} {{{tag(High-Voltage Circuits)}}}
+
+{{{divider}}}
+
+*** Tools & Equipment :ignore:
+*Tools & Equipment*
+
+{{{tag(DeLorean DMC-12)}}} {{{tag(Mr. Fusion)}}} {{{tag(Oscilloscope)}}} {{{tag(Plutonium)}}} {{{tag(Lightning Rod)}}} {{{tag(Hoverboard)}}}
+
+** Education {{{fa(GraduationCap)}}}
+{{{cvevent(\href{http://www.caltech.edu}{Ph.D. in Temporal Physics},\href{http://www.caltech.edu}{California Institute of Technology}, 1942--1948, Pasadena\, CA)}}}
+{{{cvthesis(https://resolver.caltech.edu/thesis-1948-brown, Theoretical Foundations of Fourth-Dimensional Displacement)}}}
+
+{{{divider}}}
+
+{{{cvevent(\href{http://www.mit.edu}{M.Sc. in Nuclear Engineering},\href{http://www.mit.edu}{Massachusetts Institute of Technology},1939--1942, Cambridge\, MA)}}}
+{{{cvthesis(https://dspace.mit.edu/thesis-1942-brown, Controlled Energy Release in Sub-Critical Assemblies)}}}
+
+{{{divider}}}
+
+{{{cvevent(\href{http://www.berkeley.edu}{B.Sc. in Applied Physics},\href{http://www.berkeley.edu/}{University of California\, Berkeley},1936--1939, Berkeley\, CA)}}}
+
+** Projects {{{fa(Wrench)}}}
+*** Project 1 :ignore:
+{{{cvproject(Flux Capacitor, Temporal Device, https://github.com/ebrown/flux-capacitor, github.com/ebrown/flux-capacitor)}}}
+- Core component enabling time travel; requires exactly 1.21 gigawatts.
+
+*** Project 2 :ignore:
+{{{cvproject(DeLorean Time Machine, Vehicle Platform, https://github.com/ebrown/delorean-tm, github.com/ebrown/delorean-tm)}}}
+- Stainless-steel body provides flux dispersal; activation at 88 mph.
+
+*** Project 3 :ignore:
+{{{cvproject(Mr. Fusion Reactor, Energy System, https://github.com/ebrown/mr-fusion, github.com/ebrown/mr-fusion)}}}
+- Compact cold-fusion reactor powered by ordinary household waste.
+
+*** Project 4 :ignore:
+{{{cvproject(Jules Verne Time Train, Rail Vehicle, https://github.com/ebrown/jv-train, github.com/ebrown/jv-train)}}}
+- Steam-powered temporal locomotive with hover-rail conversion capability.
+
+# ** Newpage :ignore:
+# {{{new-page}}}
+
+* Page 2, Column 1 :ignore:
+# Switch to the left column - will automatically move to the next page.
+{{{switchcol}}}
+
+** Wheel Chart
+
+# Usage: wheelchart(outer wheel radius,inner wheel radius,
+#                   value 1,text width 1,color 1,detail 1,
+#                   ...
+#                   value 5,text width 5,color 5,detail 5,
+#
+# Note: Up to 5 wheel items can be inserted.  If more are required, adjust the
+#       wheelchart macro in resumel.org
+{{{wheelchart(1.5cm,0.5cm,
+  8,8em,accent!60,Temporal experiments,
+  3,8em,accent!40,Walking Einstein,
+  6,8em,accent!30,Reading Jules Verne,
+  2,10em,accent,Playing the organ,
+  5,6em,accent!20,Repairing the DeLorean)}}}
+
+* Page 2, Column 2 :ignore:
+# Switch to the right column
+{{{switchcol}}}
+
+** Awards {{{fa(Trophy)}}}
+{{{cvhonors-begin}}}
+{{{cvachievement(\faTrophy,Breakthrough,\href{https://www.aps.org}{American Physical Society} Medal,Nov 1955,Flux capacitor conception)}}}
+{{{cvachievement(\faTrophy,Pioneer,\href{https://www.hill-valley.gov}{Hill Valley} Civic Honor,Oct 1985,First controlled time travel)}}}
+{{{cvachievement(\faTrophy,Innovator,\href{https://www.energy.gov}{DOE} Clean Energy Prize,Oct 2015,Mr. Fusion reactor design)}}}
+{{{cvhonors-end}}}
+
+* Back Matter :ignore:
+{{{endparacol}}}

@@ -1,0 +1,41 @@
+% resumel-wheelchart.tex --- \wheelchart for templates without altacv.cls
+% (AltaCV/modAltacv already define \wheelchart; \@ifundefined skips this copy.)
+% Uses color2/color0 for leader line and label text so moderncv/awesome/jakes work.
+\makeatletter
+\@ifundefined{wheelchart}{%
+  \usepackage{accsupp}%
+  \usetikzlibrary{arrows.meta}%
+  % Adapted from altacv.cls (same logic as v1.7.x wheelchart).
+  \newcommand{\wheelchart}[4][0]{%
+    \begingroup\centering
+    \def\innerradius{#3}%
+    \def\outerradius{#2}%
+    \pgfmathsetmacro{\totalnum}{0}%
+    \foreach \value/\width/\colour/\name in {#4} {%
+        \pgfmathparse{\value+\totalnum}%
+        \global\let\totalnum=\pgfmathresult%
+    }%
+    \begin{tikzpicture}
+      \pgfmathsetmacro{\wheelwidth}{\outerradius-\innerradius}
+      \pgfmathsetmacro{\midradius}{(\outerradius+\innerradius)/2}
+      \pgfmathsetmacro{\totalrot}{-90 + #1}
+      \begin{scope}[rotate=\totalrot]
+      \pgfmathsetmacro{\cumnum}{0}
+      \foreach \value/\width/\colour/\name in {#4} {
+            \pgfmathsetmacro{\newcumnum}{\cumnum + \value/\totalnum*360}
+            \pgfmathsetmacro{\percentage}{\value/\totalnum*100}
+            \pgfmathsetmacro{\midangle}{-(\cumnum+\newcumnum)/2}
+            \pgfmathparse{(-\midangle>180?"west":"east")} \edef\textanchor{\pgfmathresult}
+            \pgfmathparse{(-\midangle>180?"flush left":"flush right")} \edef\textalign{\pgfmathresult}
+            \pgfmathsetmacro\labelshiftdir{1-2*(-\midangle<180)}
+            \filldraw[draw=white,fill=\colour] (-\cumnum:\outerradius) arc (-\cumnum:-(\newcumnum):\outerradius) --
+            (-\newcumnum:\innerradius) arc (-\newcumnum:-(\cumnum):\innerradius) -- cycle;
+            \draw[-{Latex[length=2mm]},thin,color2] node [append after command={(\midangle:\midradius pt) -- (\midangle:\outerradius + 1ex) -- (\tikzlastnode)}] at (\midangle:\outerradius + 1ex) [xshift=\labelshiftdir*0.5cm,inner sep=1ex, outer sep=0pt, text width=\width,anchor=\textanchor,align=\textalign,font=\small,text=color0]{\BeginAccSupp{method=pdfstringdef,ActualText={\name: \value}}\name\EndAccSupp{}};
+            \global\let\cumnum=\newcumnum
+        }
+      \end{scope}
+    \end{tikzpicture}\par
+    \endgroup
+  }%
+}{}%
+\makeatother

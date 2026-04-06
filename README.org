@@ -184,6 +184,8 @@ Override any template variable by adding a =#+RESUMEL_<VAR>: value= keyword to y
 #+RESUMEL_GEOMETRY: scale=0.8, top=1.5cm, bottom=1.5cm
 #+end_src
 
+For a /portable/ profile (name, headline, email, phone, social links) that works across templates, see [[file:docs/profile.md][docs/profile.md]]. Portable keywords are merged into Org export on =M-x resumel-export=; template-specific keys such as =#+RESUMEL_JAKES_EMAIL:= apply when a portable key is unset.
+
 *** Browsing variables
 
 =show-X= commands show only buffer-set variables; =show-all-X= commands show all variables including defaults:
@@ -240,6 +242,13 @@ make clean   # remove generated results
 #+end_src
 
 Tests export all fixture files and compare resulting PDFs against expected outputs using =diff-pdf=.
+
+*Contributor note — =diff-pdf= on PATH*
+
+- *macOS (Homebrew)*: Batch Emacs inherits =PATH= from the environment that runs =make test=. If the wrong =diff-pdf= is used, set =RESUMEL_DIFF_PDF= to the full path of the binary you want.
+- *Linux*: Install the distro package (e.g. Debian/Ubuntu: =apt install diff-pdf=) or ensure the binary is on =PATH=.
+
+When syncing color or class definitions with upstream sources, local clones under =~/Repos/= are convenient (e.g. =awesomecv=, =altacv=, =moderncv=, =jakesresume=); those paths are not part of the repository.
 
 * Adding New Templates
 
