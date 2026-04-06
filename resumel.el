@@ -54,12 +54,6 @@ argument pair in STRINGS (skill level skill level...)."
           (push (format "\\cvtag{%s}[%s]" skill level) result))))
     (string-join (nreverse result) " ")))
 
-(defalias 'resumel-expand-cvtags 'resumel-expand-tags
-  "Alias for `resumel-expand-tags' (deprecated name).")
-
-(defalias 'resumel-expand-cvltags 'resumel-expand-ltags
-  "Alias for `resumel-expand-ltags' (deprecated name).")
-
 (defun resumel-expand-wheelchart (&rest args)
   "Generate LaTeX wheelchart command from ARGS (outer-radius inner-radius value
 text-width color detail value text-width color detail...)."
