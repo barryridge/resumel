@@ -11,8 +11,8 @@
 #+MACRO: switchcol @@latex:\clearpage@@
 #+MACRO: cvevent @@latex:\cventry{$1}{$2}{$4}{$3}{}@@
 #+MACRO: cvproject @@latex:\cventry{$2}{\textbf{$1}\textnormal{ | }\faGithub\textnormal{ }\href{$3}{$4}}{}{}{}@@
-#+MACRO: cvthesis @@latex:\begin{cvitems}\item \faBook \emph{\href{$1}{$2}}\end{cvitems}@@
-#+MACRO: cvachievement @@latex:\cvhonor{$1}{$2}{}{$3}@@
+#+MACRO: cvthesis @@latex:{\small\faBook\ \emph{\href{$1}{$2}}}\par@@
+#+MACRO: cvachievement @@latex:\cvhonor{$1\ $2}{$3}{$5}{$4}@@
 #+MACRO: cvhonors-begin @@latex:\begin{cvhonors}@@
 #+MACRO: cvhonors-end @@latex:\end{cvhonors}@@
 
@@ -22,13 +22,15 @@
 #+MACRO: fa-basic-icons {{{fa(Gears)}}} {{{fa(GraduationCap)}}} {{{fa(Book)}}} {{{fa(Wrench)}}} {{{fa(Trophy)}}} {{{fa(ChalkboardUser)}}} {{{fa(Users)}}}
 #+MACRO: fa-briefcase-colors {{{fa(Briefcase,\color{color1})}}} {{{fa(Briefcase,\color{black})}}} {{{fa(Briefcase,\color{darkgray})}}} {{{fa(Briefcase,\color{gray})}}} {{{fa(Briefcase,\color{lightgray})}}} {{{fa(Briefcase,\color{green})}}} {{{fa(Briefcase,\color{orange})}}} {{{fa(Briefcase,\color{purple})}}} {{{fa(Briefcase,\color{red})}}} {{{fa(Briefcase,\color{blue})}}} {{{fa(Briefcase,\color{awesome-emerald})}}}
 #+MACRO: fa-briefcase-sizes-colors {{{fa(Briefcase,\color{color1}\Huge)}}} {{{fa(Briefcase,\color{awesome-emerald}\huge)}}} {{{fa(Briefcase,\color{awesome-darknight}\Large)}}} {{{fa(Briefcase,\color{awesome-skyblue}\large)}}} {{{fa(Briefcase,\color{awesome-red}\normalsize)}}} {{{fa(Briefcase,\color{awesome-pink}\small)}}} {{{fa(Briefcase,\color{awesome-orange}\footnotesize)}}} {{{fa(Briefcase,\color{awesome-nephritis}\scriptsize)}}} {{{fa(Briefcase,\color{awesome-concrete}\tiny)}}}
-#+MACRO: item @@latex:\begin{cvitems}\item \textbf{$1}: $2\end{cvitems}@@
-#+MACRO: double @@latex:\begin{cvitems}\item \textbf{$1}: $2 \item \textbf{$3}: $4\end{cvitems}@@
-#+MACRO: itemc @@latex:\textit{\textbf{$1}}: $2 \hfill \small $3@@
+#+MACRO: item @@latex:{\small \textbf{$1}: $2\par}@@
+#+MACRO: double @@latex:{\small \textbf{$1}: $2 \quad \textbf{$3}: $4\par}@@
+#+MACRO: itemc @@latex:{\small \textit{\textbf{$1}}: $2 \hfill $3\par}@@
 #+MACRO: listdouble @@latex:\par\noindent\begin{tabular}{@{}l@{\hspace{1.25em}}l@{}}$1 & $2\end{tabular}@@
 #+MACRO: entries-begin @@latex:\begin{cventries}@@
 #+MACRO: entries-end @@latex:\end{cventries}@@
-#+MACRO: entry @@latex:\cventry{$1}{$2}{$3}{$4}{$5}{}@@
-#+MACRO: achievement @@latex:\begin{cvitems}\item $1 \textbf{$2} --- $3\end{cvitems}@@
-#+MACRO: reference @@latex:\begin{cvitems}\item $1, $2, $3\end{cvitems}@@
+#+MACRO: entry @@latex:\cventry{$1}{$2}{$3}{$4}{$5}@@
+#+MACRO: achievement @@latex:{\small $1~\textbf{$2} --- $3\par}@@
+#+MACRO: reference @@latex:{\small $1, $2, $3\par}@@
+#+MACRO: skills-begin @@latex:\begin{cvskills}@@
+#+MACRO: skills-end @@latex:\end{cvskills}@@
 #+MACRO: skill @@latex:\cvskill{$1}{$2}@@

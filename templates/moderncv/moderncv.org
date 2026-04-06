@@ -17,7 +17,7 @@
 #+MACRO: cvevent @@latex:\subsection*{$1}\cvitem{}{$2}\cvitem{\calendarsymbol}{$3}\cvitem{\addresssymbol}{$4}@@
 #+MACRO: cvproject @@latex:\cvitem{}{\textbf{$1} {\small($2)}\quad\href{$3}{\faGithub\ $4}}@@
 #+MACRO: cvthesis @@latex:\cvitem{}{\faBook \emph{\href{$1}{$2}}}@@
-#+MACRO: cvachievement @@latex:\cvitem{\mbox{$1}}{\textbf{$2} --- $3}@@
+#+MACRO: cvachievement @@latex:\cvitem{\mbox{$1}}{\textbf{$2, $3} --- $4 | $5}@@
 #+MACRO: cvhonors-begin @@latex:@@
 #+MACRO: cvhonors-end @@latex:@@
 
@@ -36,4 +36,6 @@
 #+MACRO: entry @@latex:\cventry{$4}{$1}{$2}{$3}{}{$5}@@
 #+MACRO: achievement @@latex:\cvitem{\textbf{Achievement}}{$1~$2 --- $3}@@
 #+MACRO: reference @@latex:\cvitem{Reference}{$1, $2, $3}@@
+#+MACRO: skills-begin @@latex:@@
+#+MACRO: skills-end @@latex:@@
 #+MACRO: skill @@latex:\cvitem{$1}{Level $2}@@

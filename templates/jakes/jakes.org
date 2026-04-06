@@ -4,15 +4,14 @@
 # Common CV Macros (resumel common interface):
 # ------------------------------------------------------------------------------
 #+MACRO: cvevent @@latex:\cvevent{$1}{$2}{$3}{$4}@@
-#+MACRO: cvachievement @@latex:\cvachievement{$1}{$2}{$3}@@
+#+MACRO: cvachievement @@latex:\cvachievement{$1}{$2, $3}{$4 | $5}@@
 #+MACRO: cvref @@latex:\cvref{$1}{$2}{$3}@@
 #+MACRO: cvskill @@latex:\cvskill{$1}{$2}@@
 #+MACRO: beginparacol @@latex:@@
 #+MACRO: endparacol @@latex:@@
 #+MACRO: switchcol @@latex:\par\medskip@@
 #+MACRO: cvproject @@latex:\cvprojectheading{\textbf{$1} $|$ \emph{$2}}{\href{$3}{\faGithub\ $4}}@@
-#+MACRO: cvthesis @@latex:{\small\faBook\ \emph{\href{$1}{$2}}}\par@@
-#+MACRO: cvachievement @@latex:\cvachievement{$1}{$2}{$3}@@
+#+MACRO: cvthesis @@latex:\par{\small\faBook\ \emph{\href{$1}{$2}}}\par@@
 #+MACRO: cvhonors-begin @@latex:@@
 #+MACRO: cvhonors-end @@latex:@@
 
@@ -49,4 +48,6 @@
 #+MACRO: entry @@latex:\resumeSubheading{$1}{$4}{$2}{$3}\resumeItemListStart\resumeItem{$5}\resumeItemListEnd@@
 #+MACRO: achievement @@latex:{\small $1~\textbf{$2} --- $3\par}@@
 #+MACRO: reference @@latex:{\small $1, $2, $3\par}@@
+#+MACRO: skills-begin @@latex:@@
+#+MACRO: skills-end @@latex:@@
 #+MACRO: skill @@latex:\cvskill{$1}{$2}@@

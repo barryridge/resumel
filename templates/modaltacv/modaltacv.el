@@ -148,7 +148,7 @@
     {\\personalinfofont\\@personalinfo\\par}
     \\end{minipage}%
   \\endgroup
-  \\vspace{-0.7em}
+  \\vspace{0.3em}
 }
 \\makeatother
 

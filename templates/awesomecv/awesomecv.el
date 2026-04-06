@@ -157,6 +157,25 @@
 \\usepackage{dashrule}
 \\newcommand{\\divider}{\\textcolor{color2!30}{\\hdashrule{\\linewidth}{0.6pt}{0.5ex}}\\medskip}
 
+% Loosen the class's aggressive -2mm inter-entry spacing so descriptions
+% don't bleed into the next entry's title.
+\\makeatletter
+\\renewcommand*{\\cventry}[5]{%
+  \\vspace{0.5mm}
+  \\setlength\\tabcolsep{0pt}
+  \\setlength{\\extrarowheight}{0pt}
+  \\begin{tabular*}{\\textwidth}{@{\\extracolsep{\\fill}} L{\\textwidth - 4.5cm} R{4.5cm}}
+    \\ifempty{#2#3}
+      {\\entrypositionstyle{#1} & \\entrydatestyle{#4} \\\\}
+      {\\entrytitlestyle{#2} & \\entrylocationstyle{#3} \\\\
+      \\entrypositionstyle{#1} & \\entrydatestyle{#4} \\\\}
+    \\ifstrempty{#5}
+      {}
+      {\\multicolumn{2}{L{\\textwidth}}{\\descriptionstyle{#5}} \\\\}
+  \\end{tabular*}%
+}
+\\makeatother
+
 % CV Tags
 %
 % Set global cvtag defaults

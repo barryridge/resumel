@@ -7,7 +7,7 @@
 #+MACRO: cvsection @@latex:\cvsection{$1}@@
 #+MACRO: cvsubsection @@latex:\cvsubsection{$1}@@
 #+MACRO: cvevent @@latex:\cvevent{$1}{$2}{$3}{$4}@@
-#+MACRO: cvachievement @@latex:\cvachievement{$1}{$2}{$3}@@
+#+MACRO: cvachievement @@latex:\cvachievement{$1}{$2, $3}{$4 | $5}@@
 #+MACRO: cvref @@latex:\cvref{$1}{$2}{$3}@@
 #+MACRO: cvskill @@latex:\cvskill{$1}{$2}@@
 #+MACRO: cvthesis @@latex:\faBook \emph{\href{$1}{$2}}@@
@@ -32,4 +32,6 @@
 #+MACRO: entry @@latex:\cvevent{$1}{$2}{$4}{$3}@@
 #+MACRO: achievement @@latex:\cvachievement{$1}{$2}{$3}@@
 #+MACRO: reference @@latex:\cvref{$1}{$2}{$3}@@
+#+MACRO: skills-begin @@latex:@@
+#+MACRO: skills-end @@latex:@@
 #+MACRO: skill @@latex:\cvskill{$1}{$2}@@

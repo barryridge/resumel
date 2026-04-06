@@ -182,6 +182,10 @@
 % Highlight macro used to boldface name in .bib file
 \\newcommand{\\highlight}[1]{\\textbf{#1}} % Replace \\textbf with any desired formatting
 
+% FA6/FA5 compatibility: moderncv 2.5+ uses fontawesome6, older versions use fontawesome5
+\\providecommand{\\faLocationDot}{\\faMapMarker*}
+\\providecommand{\\faCalendarDays}{\\faCalendar}
+
 % Add map marker symbol to address
 \\renewcommand*{\\addresssymbol}{{\\color{color2}\\small\\faLocationDot}~}
 

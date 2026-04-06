@@ -178,7 +178,7 @@ yet bound when the template is loaded."
 %-------------------------
 % Divider
 
-\\newcommand{\\divider}{\\smallskip\\textcolor{color2!30}{\\hdashrule{\\linewidth}{0.6pt}{0.5ex}}\\medskip}
+\\newcommand{\\divider}{\\medskip\\textcolor{color2!30}{\\hdashrule{\\linewidth}{0.6pt}{0.5ex}}\\medskip}
 
 %-------------------------
 % CV Tags
@@ -266,21 +266,19 @@ yet bound when the template is loaded."
 % These provide a template-agnostic interface matching the other resumel templates.
 
 % cvevent: {title}{organization}{dates}{location}
-% Extra padding absorbs the negative \\vspace calls in the unified complex body,
-% which were tuned for AltaCV's generous native spacing.
 \\newcommand{\\cvevent}[4]{%
-  \\vspace{6pt}%
+  \\vspace{4pt}%
   \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
     \\textbf{#1} & #3 \\\\
     \\textit{\\small#2} & \\textit{\\small #4} \\\\
-  \\end{tabular*}\\vspace{4pt}
+  \\end{tabular*}\\vspace{-2pt}
 }
 % cvprojectheading: single-row variant for projects (title | type on left, link on right)
 \\newcommand{\\cvprojectheading}[2]{%
   \\vspace{4pt}%
   \\begin{tabular*}{0.97\\textwidth}{l@{\\extracolsep{\\fill}}r}
     \\small#1 & #2 \\\\
-  \\end{tabular*}\\vspace{6pt}
+  \\end{tabular*}\\vspace{-2pt}
 }
 
 % cvachievement: {icon}{title}{description}
@@ -290,11 +288,11 @@ yet bound when the template is loaded."
 
 % cvref: {name}{institution}{email}
 \\newcommand{\\cvref}[3]{%
-  \\vspace{6pt}%
+  \\vspace{4pt}%
   \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
     \\textbf{#1} & \\href{mailto:#3}{\\underline{#3}} \\\\
     \\textit{\\small#2} \\\\
-  \\end{tabular*}\\vspace{4pt}
+  \\end{tabular*}\\vspace{-2pt}
 }
 
 % cvskill: {name}{level} where level is 1-5
