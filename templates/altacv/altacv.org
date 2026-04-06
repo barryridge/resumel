@@ -12,5 +12,24 @@
 #+MACRO: cvskill @@latex:\cvskill{$1}{$2}@@
 #+MACRO: cvthesis @@latex:\faBook \emph{\href{$1}{$2}}@@
 #+MACRO: cvproject @@latex:\cvevent{\textbf{$1} {\small $2}}{\href{$3}{\faGithub $4}}{}{}@@
-#+MACRO: cvaward @@latex:\cvachievement{\faTrophy}{$1}{\small\cvDateMarker $2 | $3}{}@@
+#+MACRO: cvaward @@latex:\cvachievement{\faTrophy}{$1}{\small\cvDateMarker $2 | $3}@@
 #+MACRO: wheelchart @@latex:\wheelchart{$1}{$2}{$3}@@
+#+MACRO: cvhonors-begin @@latex:@@
+#+MACRO: cvhonors-end @@latex:@@
+
+# ------------------------------------------------------------------------------
+# Unified basic interface (see docs/unified-basic-interface.md)
+# ------------------------------------------------------------------------------
+#+MACRO: fa-basic-icons {{{fa(Cogs)}}} {{{fa(GraduationCap)}}} {{{fa(Book)}}} {{{fa(Wrench)}}} {{{fa(Trophy)}}} {{{fa(ChalkboardTeacher)}}} {{{fa(Users)}}}
+#+MACRO: fa-briefcase-colors {{{fa(Briefcase,\color{color1})}}} {{{fa(Briefcase,\color{Black})}}} {{{fa(Briefcase,\color{SlateGrey})}}} {{{fa(Briefcase,\color{LightGrey})}}} {{{fa(Briefcase,\color{DarkPastelRed})}}} {{{fa(Briefcase,\color{PastelRed})}}} {{{fa(Briefcase,\color{Blue})}}} {{{fa(Briefcase,\color{DarkBlue})}}} {{{fa(Briefcase,\color{GoldenEarth})}}} {{{fa(Briefcase,\color{CoolSky})}}} {{{fa(Briefcase,\color{SoftSkyBlue})}}}
+#+MACRO: fa-briefcase-sizes-colors {{{fa(Briefcase,\color{color1}\Huge)}}} {{{fa(Briefcase,\color{Black}\huge)}}} {{{fa(Briefcase,\color{SlateGrey}\Large)}}} {{{fa(Briefcase,\color{LightGrey}\large)}}} {{{fa(Briefcase,\color{DarkPastelRed}\normalsize)}}} {{{fa(Briefcase,\color{PastelRed}\small)}}} {{{fa(Briefcase,\color{Blue}\footnotesize)}}} {{{fa(Briefcase,\color{DarkBlue}\scriptsize)}}} {{{fa(Briefcase,\color{GoldenEarth}\tiny)}}}
+#+MACRO: item @@latex:\begin{itemize}\item \textbf{$1}: $2\end{itemize}@@
+#+MACRO: double @@latex:\begin{tabular}{@{}ll@{}}\textbf{$1} & $2 \\ \textbf{$3} & $4 \\\end{tabular}@@
+#+MACRO: itemc @@latex:\textit{\textbf{$1}}: $2 \hfill \small $3@@
+#+MACRO: listdouble @@latex:\par\noindent\begin{tabular}{@{}l@{\hspace{1.25em}}l@{}}$1 & $2\end{tabular}@@
+#+MACRO: entries-begin @@latex:@@
+#+MACRO: entries-end @@latex:@@
+#+MACRO: entry @@latex:\cvevent{$1}{$2}{$4}{$3}@@
+#+MACRO: achievement @@latex:\cvachievement{$1}{$2}{$3}@@
+#+MACRO: reference @@latex:\cvref{$1}{$2}{$3}@@
+#+MACRO: skill @@latex:\cvskill{$1}{$2}@@
