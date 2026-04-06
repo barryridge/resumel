@@ -48,10 +48,10 @@
 * Skills
 
 ** Programming
-{{{cvtags(Python,Elisp,JavaScript,LaTeX,C++,Java)}}}
+{{{tags(Python,Elisp,JavaScript,LaTeX,C++,Java)}}}
 
 ** Tools & Technologies
-{{{cvltags(Emacs,5,Git,4,Docker,3,AWS,2)}}}
+{{{ltags(Emacs,5,Git,4,Docker,3,AWS,2)}}}
 
 * Education
 @@latex:\begin{cventries}@@

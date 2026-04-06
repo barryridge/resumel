@@ -59,13 +59,23 @@
 
 ;; Function to compare two PDFs using diff-pdf
 (defun resumel-files-equal-p (file1 file2)
-  "Compare FILE1 and FILE2 using diff-pdf tool with specified tolerances."
+  "Compare FILE1 and FILE2 using diff-pdf tool with specified tolerances.
+Uses RESUMEL_DIFF_PDF (full path) when set; otherwise the program name diff-pdf
+on exec-path (from the environment that started Emacs)."
   (let ((channel-tolerance (or (getenv "DIFF_PDF_CHANNEL_TOLERANCE") "0"))
-        (per-page-pixel-tolerance (or (getenv "DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE") "0")))
-    (zerop (call-process "diff-pdf" nil nil nil
+        (per-page-pixel-tolerance (or (getenv "DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE") "0"))
+        (diff-pdf (or (getenv "RESUMEL_DIFF_PDF") "diff-pdf")))
+    (zerop (call-process diff-pdf nil nil nil
                          "--channel-tolerance" channel-tolerance
                          "--per-page-pixel-tolerance" per-page-pixel-tolerance
                          file1 file2))))
+
+(ert-deftest resumel-test-expand-tags-and-aliases ()
+  "resumel-expand-tags matches deprecated cvtags alias; same for ltags/cvltags."
+  (should (string= (resumel-expand-tags "A" "B")
+                   (resumel-expand-cvtags "A" "B")))
+  (should (string= (resumel-expand-ltags "X" "1" "Y" "2")
+                   (resumel-expand-cvltags "X" "1" "Y" "2"))))
 
 ;; List of test cases
 (defvar resumel-test-cases
@@ -478,7 +488,8 @@
   (should (listp resumel-core-variable-names))
   (should (> (length resumel-core-variable-names) 0))
   (should (member "COMPILER" resumel-core-variable-names))
-  (should (member "CVTAG_CORNER_DEFAULT" resumel-core-variable-names)))
+  (should (member "CVTAG_CORNER_DEFAULT" resumel-core-variable-names))
+  (should (member "NAME" resumel-core-variable-names)))
 
 ;;; ---------------------------------------------------------------------------
 ;;; Unit tests for template preview
