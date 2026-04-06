@@ -97,8 +97,10 @@ Row 2, Col 1 {{{amp()}}} Row 2, Col 2 {{{amp()}}} Row 2, Col 3 {{{endl()}}}
 {{{reference(Prof.\ Alpha Beta,Institute,a.beta@university.edu)}}}
 
 ** Skill levels
+{{{skills-begin}}}
 {{{skill(Skill 1,1)}}}
 {{{skill(Skill 2,2)}}}
 {{{skill(Skill 3,3)}}}
 {{{skill(Skill 4,4)}}}
 {{{skill(Skill 5,5)}}}
+{{{skills-end}}}

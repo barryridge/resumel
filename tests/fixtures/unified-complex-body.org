@@ -3,7 +3,6 @@
 
 ** Personal Statement :ignore:
 #+begin_export latex
- \vspace{1.0em}
  \begin{quote}
  \mbox{}Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut enim ad minim veniam,
  quis nostrud exercitation in systems design, technical leadership, and clear
@@ -17,57 +16,51 @@
 
 **** Role 1 :ignore:
 *Lead, reliability engineering*
-- Lorem ipsum dolor sit amet; owned SLOs and incident response for critical services. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- Lorem ipsum dolor sit amet; owned SLOs and incident response for critical services. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 
 **** Role 2 :ignore:
 *Staff engineer, tooling*
-- Consectetuer adipiscing elit; shipped internal frameworks adopted org-wide. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- Consectetuer adipiscing elit; shipped internal frameworks adopted org-wide. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 
 **** Role 3 :ignore:
 *Mentor and hiring manager*
-- Sed do eiusmod tempor; grew the team and interview loop with clear rubrics. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- Sed do eiusmod tempor; grew the team and interview loop with clear rubrics. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 
-{{{vspace(-0.2cm)}}}
 {{{divider}}}
-{{{vspace(-0.2cm)}}}
 
 *** Job 2 :ignore:
 {{{cvevent(Principal Software Engineer,\href{https://www.company-2-site.com}{Vector Labs}\, \href{https://www.company-2-site.com/department/group}{Applied Research}\, \href{https://www.company-2-site.com/department}{Simulation},May 9 1806 -- Apr 7 2025, Riverside\, State)}}}
 
 **** Role 1 :ignore:
 *Simulation and modeling*
-- Ut labore et dolore magna; delivered physics-adjacent prototypes for customer pilots. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- Ut labore et dolore magna; delivered physics-adjacent prototypes for customer pilots. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 
 **** Role 2 :ignore:
 *Cross-functional programs*
-- Aliqua enim ad minim veniam; partnered with product and field teams on roadmaps. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- Aliqua enim ad minim veniam; partnered with product and field teams on roadmaps. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 
 **** Role 3 :ignore:
 *Open source liaison*
-- Duis aute irure dolor; represented the org at conferences and meetups. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- Duis aute irure dolor; represented the org at conferences and meetups. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 
-{{{vspace(-0.2cm)}}}
 {{{divider}}}
-{{{vspace(-0.2cm)}}}
 
 *** Job 3 :ignore:
 {{{cvevent(Staff Engineer,\href{https://www.company-3-site.com}{Nimbus Analytics}\, \href{https://www.company-3-site.com/department/group}{Data Platform}\, \href{https://www.company-3-site.com/department}{Infrastructure},May 9 1806 -- Apr 7 2025, Harbor\, State)}}}
 
 **** Role 1 :ignore:
 *Streaming pipelines*
-- Excepteur sint occaecat; built Kafka-based ingestion with exactly-once semantics. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- Excepteur sint occaecat; built Kafka-based ingestion with exactly-once semantics. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 
 **** Role 2 :ignore:
 *Cost and capacity*
-- Cupidatat non proident; reduced cloud spend through autoscaling and profiling. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- Cupidatat non proident; reduced cloud spend through autoscaling and profiling. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 
 **** Role 3 :ignore:
 *Security reviews*
-- Sunt in culpa qui officia; drove threat modeling for new services. {{{cvtag(\Cplusplus)}}} {{{cvtag(Python)}}}
+- Sunt in culpa qui officia; drove threat modeling for new services. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
 
-{{{vspace(-0.2cm)}}}
 {{{divider}}}
-{{{vspace(-0.2cm)}}}
 
 
 * Page 1, Column 2 :ignore:
@@ -80,66 +73,50 @@
 
 {{{ltags(C,5,\Cplusplus,4,Python,3,ELisp,2,UNIX Shell,1)}}}
 
-{{{vspace(-0.1cm)}}}
 {{{divider}}}
-{{{vspace(-0.1cm)}}}
 
 *** Science, Eng. & Math :ignore:
 *Science, Eng. & Math*
 
-{{{cvtag(Computer Vision (CV))}}} {{{cvtag(Machine Learning (ML))}}}
+{{{tag(Computer Vision (CV))}}} {{{tag(Machine Learning (ML))}}}
 
-{{{cvtag(Deep Learning (DL))}}} {{{cvtag(Artificial Intelligence (AI))}}}
+{{{tag(Deep Learning (DL))}}} {{{tag(Artificial Intelligence (AI))}}}
 
-{{{vspace(-0.1cm)}}}
 {{{divider}}}
-{{{vspace(-0.1cm)}}}
 
 *** Tools & Libraries :ignore:
 *Tools & Libraries*
 
-{{{cvtag(Git)}}} {{{cvtag(SVN)}}} {{{cvtag(CI/CD)}}} {{{cvtag(Make)}}} {{{cvtag(CMake)}}} {{{cvtag(Vim)}}} {{{cvtag(Emacs)}}}
-
-{{{vspace(-0.1cm)}}}
+{{{tag(Git)}}} {{{tag(SVN)}}} {{{tag(CI/CD)}}} {{{tag(Make)}}} {{{tag(CMake)}}} {{{tag(Vim)}}} {{{tag(Emacs)}}}
 
 ** Education {{{fa(GraduationCap)}}}
 {{{cvevent(\href{http://www.university-1.com/department}{Ph.D. in Computer Science},\href{http://www.university-1.com}{University One}, 1885--2025, Old College Town\, Country)}}}
 {{{cvthesis(https://www.thesis-1-link.com, Lorem Ipsum in Distributed Systems)}}}
 
-{{{vspace(-0.15cm)}}}
 {{{divider}}}
-{{{vspace(-0.15cm)}}}
 
 {{{cvevent(\href{http://www.university-2.com}{M.Sc. in Software Engineering},\href{http://www.university-2.com}{University Two},1885--2025, Harbor\, Country)}}}
 {{{cvthesis(https://www.thesis-2-link.com, Consectetuer Adipiscing: A Case Study)}}}
 
-{{{vspace(-0.15cm)}}}
 {{{divider}}}
-{{{vspace(-0.15cm)}}}
 
 {{{cvevent(\href{http://www.university-3.com}{B.Sc. in Applied Mathematics},\href{http://www.university-3.com/}{University Three},1885-2025, Summit\, Country)}}}
-
-{{{vspace(-0.2cm)}}}
 
 ** Projects {{{fa(Wrench)}}}
 *** Project 1 :ignore:
 {{{cvproject(Org Resume Toolkit, Python Library, https://github.com/user-name/project1, https://github.com/user-name/project1)}}}
-{{{vspace(-0.5em)}}}
 - Lorem ipsum export pipeline; used by a small user community.
 
 *** Project 2 :ignore:
 {{{cvproject(LaTeX Fixture Lab, Python Library, https://github.com/user-name/project2, https://github.com/user-name/project2)}}}
-{{{vspace(-0.5em)}}}
 - Deterministic PDF regression tests with diff-pdf and CI hooks.
 
 *** Project 3 :ignore:
 {{{cvproject(CV Schema Explorer, Python Library, https://github.com/user-name/project3, https://github.com/user-name/project3)}}}
-{{{vspace(-0.5em)}}}
 - Prototype UI for browsing template variables and defaults.
 
 *** Project 4 :ignore:
 {{{cvproject(Font Awesome Bridge, Python Library, https://github.com/user-name/project4, https://github.com/user-name/project4)}}}
-{{{vspace(-0.5em)}}}
 - Maps icon names across FA5/FA6 stacks for shared Org macros.
 
 # ** Newpage :ignore:
@@ -171,9 +148,9 @@
 
 ** Awards {{{fa(Trophy)}}}
 {{{cvhonors-begin}}}
-{{{cvachievement(\faTrophy,\href{https://www.award-1.com}{Helix Dynamics} Excellence,\small Jun 1885 | Cross-team delivery)}}}
-{{{cvachievement(\faTrophy,\href{https://www.award-1.com}{Vector Labs} Innovator,\small Jun 1885 | Simulation research)}}}
-{{{cvachievement(\faTrophy,\href{https://www.award-1.com}{Open Source Alliance} Award,\small Jun 1885 | Tooling maintenance)}}}
+{{{cvachievement(\faTrophy,Winner,\href{https://www.award-1.com}{Helix Dynamics} Excellence,Jun 1885,Cross-team delivery)}}}
+{{{cvachievement(\faTrophy,Finalist,\href{https://www.award-1.com}{Vector Labs} Innovator,Jun 1885,Simulation research)}}}
+{{{cvachievement(\faTrophy,Honoree,\href{https://www.award-1.com}{Open Source Alliance} Award,Jun 1885,Tooling maintenance)}}}
 {{{cvhonors-end}}}
 
 * Back Matter :ignore:
