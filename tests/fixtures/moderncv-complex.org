@@ -8,8 +8,8 @@
 #+RESUMEL_MODERNCV_COLOR: blue
 # RESUMEL_MODERNCV_STYLE Options: 'casual', 'classic' (default), 'banking', 'oldstyle', 'fancy', 'contemporary'
 #+RESUMEL_MODERNCV_STYLE: classic
-#+TITLE: World Expert \newline \newline \small{Seeking a fantastic new role.}
-#+AUTHOR: Firstname Lastname
+#+TITLE: Temporal Physicist \newline \newline \small{Your future is whatever you make it.}
+#+AUTHOR: Emmett Brown
 #+DATE: <1955-11-05 Sat>
 #+EXPORT_FILE_NAME: ../results/moderncv-complex.pdf
 #+cite_export: bibtex
@@ -17,12 +17,12 @@
 #+OPTIONS: toc:nil title:nil H:2
 
 * Personal Information :ignore:
-\address{City, State}{}
-\phone[mobile]{+1 (555) 555-1234}
-\email{user@foo.bar}
-\homepage{www.foo.bar}
-\social[linkedin]{user-name}
-\social[github]{username}
+\address{Hill Valley, CA}{}
+\phone[mobile]{+1 (555) 121-2100}
+\email{doc@brown-enterprises.com}
+\homepage{www.brown-enterprises.com}
+\social[linkedin]{emmett-brown}
+\social[github]{ebrown}
 
 * Color Customization :ignore:
 # colorlet macro: {{{colorlet(var,color)}}}

@@ -5,8 +5,8 @@
 #+RESUMEL_SANS_FONT_XELATEX: Latin Modern Sans
 #+RESUMEL_MAIN_FONT_PDFLATEX: lmodern
 #+RESUMEL_SANS_FONT_PDFLATEX: lmodern
-#+TITLE: World Expert
-#+AUTHOR: Firstname Lastname
+#+TITLE: Temporal Physicist
+#+AUTHOR: Emmett Brown
 #+DATE: <1955-11-05 Sat>
 #+EXPORT_FILE_NAME: ../results/modaltacv-complex.pdf
 #+OPTIONS: toc:nil title:nil H:2
@@ -25,12 +25,12 @@
 ** Personal Info :ignore:
 #+begin_export latex
 \personalinfo{
-  \location{City, State}
-  \phone{+1 (555) 555-1234}
-  \email{user@foo.bar}
-  \homepage{www.foo.bar}
-  \linkedin{user-name}
-  \github{username}
+  \location{Hill Valley, CA}
+  \phone{+1 (555) 121-2100}
+  \email{doc@brown-enterprises.com}
+  \homepage{www.brown-enterprises.com}
+  \linkedin{emmett-brown}
+  \github{ebrown}
 }
 \makecvheader
 #+end_export

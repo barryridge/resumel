@@ -4,61 +4,62 @@
 ** Personal Statement :ignore:
 #+begin_export latex
  \begin{quote}
- \mbox{}Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut enim ad minim veniam,
- quis nostrud exercitation in systems design, technical leadership, and clear
- communication across stakeholders.
+ \mbox{}Visionary physicist and inventor with decades of experience in temporal
+ mechanics, applied nuclear science, and experimental engineering. Proven track
+ record of delivering breakthrough prototypes under extreme constraints and
+ communicating complex ideas to diverse stakeholders.
  \end{quote}
 #+end_export
 
 ** Experience {{{fa(Briefcase)}}}
 *** Job 1 :ignore:
-{{{cvevent(Senior Platform Engineer,\href{https://www.company-1-site.com}{Helix Dynamics}\, \href{https://www.company-1-site.com/department/group}{Platform Group}\, \href{https://www.company-1-site.com/department}{Core Systems},May 9 1806 -- Apr 7 2025, Metropolis\, State)}}}
+{{{cvevent(Principal Research Scientist,\href{https://www.brown-enterprises.com}{Brown Enterprises}\, \href{https://www.brown-enterprises.com/labs}{Advanced Research Labs}\, \href{https://www.brown-enterprises.com/temporal}{Temporal Division},Nov 5 1955 -- Oct 26 1985, Hill Valley\, CA)}}}
 
 **** Role 1 :ignore:
-*Lead, reliability engineering*
-- Lorem ipsum dolor sit amet; owned SLOs and incident response for critical services. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
+*Lead, temporal mechanics*
+- Conceived and built the flux capacitor enabling controlled displacement across the fourth dimension. {{{tag(Plutonium)}}} {{{tag(1.21 GW)}}}
 
 **** Role 2 :ignore:
-*Staff engineer, tooling*
-- Consectetuer adipiscing elit; shipped internal frameworks adopted org-wide. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
+*Vehicle integration engineer*
+- Retrofitted a DeLorean DMC-12 with nuclear-powered time circuits and 88 mph activation threshold. {{{tag(\Cplusplus)}}} {{{tag(CAD)}}}
 
 **** Role 3 :ignore:
-*Mentor and hiring manager*
-- Sed do eiusmod tempor; grew the team and interview loop with clear rubrics. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
+*Safety and compliance*
+- Developed shielding protocols for plutonium fuel cells and maintained zero-incident lab safety record. {{{tag(NRC)}}} {{{tag(OSHA)}}}
 
 {{{divider}}}
 
 *** Job 2 :ignore:
-{{{cvevent(Principal Software Engineer,\href{https://www.company-2-site.com}{Vector Labs}\, \href{https://www.company-2-site.com/department/group}{Applied Research}\, \href{https://www.company-2-site.com/department}{Simulation},May 9 1806 -- Apr 7 2025, Riverside\, State)}}}
+{{{cvevent(Senior Fusion Engineer,\href{https://www.brown-enterprises.com}{Brown Enterprises}\, \href{https://www.brown-enterprises.com/energy}{Energy Systems}\, \href{https://www.brown-enterprises.com/fusion}{Mr. Fusion Division},Oct 21 2015 -- Sep 2 1885, Hill Valley\, CA)}}}
 
 **** Role 1 :ignore:
-*Simulation and modeling*
-- Ut labore et dolore magna; delivered physics-adjacent prototypes for customer pilots. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
+*Compact fusion reactor design*
+- Designed the Mr. Fusion Home Energy Reactor converting household waste to 1.21 gigawatts. {{{tag(Fusion)}}} {{{tag(Python)}}}
 
 **** Role 2 :ignore:
-*Cross-functional programs*
-- Aliqua enim ad minim veniam; partnered with product and field teams on roadmaps. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
+*Cross-era field testing*
+- Validated reactor performance across four distinct temporal periods with zero containment breaches. {{{tag(QA)}}} {{{tag(Testing)}}}
 
 **** Role 3 :ignore:
-*Open source liaison*
-- Duis aute irure dolor; represented the org at conferences and meetups. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
+*Legacy system migration*
+- Replaced hazardous plutonium fuel system with clean Mr. Fusion power source on existing DeLorean platform. {{{tag(Systems)}}} {{{tag(Safety)}}}
 
 {{{divider}}}
 
 *** Job 3 :ignore:
-{{{cvevent(Staff Engineer,\href{https://www.company-3-site.com}{Nimbus Analytics}\, \href{https://www.company-3-site.com/department/group}{Data Platform}\, \href{https://www.company-3-site.com/department}{Infrastructure},May 9 1806 -- Apr 7 2025, Harbor\, State)}}}
+{{{cvevent(Consulting Physicist,\href{https://www.hillvalley.gov}{Hill Valley Civic Authority}\, \href{https://www.hillvalley.gov/power}{Dept. of Power}\, \href{https://www.hillvalley.gov/clock}{Clock Tower Commission},Sep 2 1885 -- Jan 1 1886, Hill Valley\, CA)}}}
 
 **** Role 1 :ignore:
-*Streaming pipelines*
-- Excepteur sint occaecat; built Kafka-based ingestion with exactly-once semantics. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
+*Lightning harvesting*
+- Engineered a cable rig to channel a bolt of lightning into the flux capacitor via the Clock Tower. {{{tag(HV Engineering)}}} {{{tag(Timing)}}}
 
 **** Role 2 :ignore:
-*Cost and capacity*
-- Cupidatat non proident; reduced cloud spend through autoscaling and profiling. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
+*Locomotive retrofit*
+- Converted a Rogers 4-4-0 steam locomotive into a temporal vehicle using 19th-century materials. {{{tag(Mechanical)}}} {{{tag(Steam)}}}
 
 **** Role 3 :ignore:
-*Security reviews*
-- Sunt in culpa qui officia; drove threat modeling for new services. {{{tag(\Cplusplus)}}} {{{tag(Python)}}}
+*Public infrastructure*
+- Restored Clock Tower electrical systems and advised on Hill Valley power grid improvements. {{{tag(Electrical)}}} {{{tag(Consulting)}}}
 
 {{{divider}}}
 
@@ -68,56 +69,56 @@
 {{{switchcol}}}
 
 ** Skills {{{fa(Gears)}}}
-*** Programming :ignore:
-*Programming*
+*** Core Sciences :ignore:
+*Core Sciences*
 
-{{{ltags(C,5,\Cplusplus,4,Python,3,ELisp,2,UNIX Shell,1)}}}
-
-{{{divider}}}
-
-*** Science, Eng. & Math :ignore:
-*Science, Eng. & Math*
-
-{{{tag(Computer Vision (CV))}}} {{{tag(Machine Learning (ML))}}}
-
-{{{tag(Deep Learning (DL))}}} {{{tag(Artificial Intelligence (AI))}}}
+{{{ltags(Temporal Mechanics,5,Nuclear Physics,4,Quantum Theory,3,Electrodynamics,2,Thermodynamics,1)}}}
 
 {{{divider}}}
 
-*** Tools & Libraries :ignore:
-*Tools & Libraries*
+*** Engineering :ignore:
+*Engineering*
 
-{{{tag(Git)}}} {{{tag(SVN)}}} {{{tag(CI/CD)}}} {{{tag(Make)}}} {{{tag(CMake)}}} {{{tag(Vim)}}} {{{tag(Emacs)}}}
+{{{tag(Flux Capacitor Design)}}} {{{tag(Vehicle Integration)}}}
+
+{{{tag(Fusion Reactor Systems)}}} {{{tag(High-Voltage Circuits)}}}
+
+{{{divider}}}
+
+*** Tools & Equipment :ignore:
+*Tools & Equipment*
+
+{{{tag(DeLorean DMC-12)}}} {{{tag(Mr. Fusion)}}} {{{tag(Oscilloscope)}}} {{{tag(Plutonium)}}} {{{tag(Lightning Rod)}}} {{{tag(Hoverboard)}}}
 
 ** Education {{{fa(GraduationCap)}}}
-{{{cvevent(\href{http://www.university-1.com/department}{Ph.D. in Computer Science},\href{http://www.university-1.com}{University One}, 1885--2025, Old College Town\, Country)}}}
-{{{cvthesis(https://www.thesis-1-link.com, Lorem Ipsum in Distributed Systems)}}}
+{{{cvevent(\href{http://www.caltech.edu}{Ph.D. in Temporal Physics},\href{http://www.caltech.edu}{California Institute of Technology}, 1942--1948, Pasadena\, CA)}}}
+{{{cvthesis(https://resolver.caltech.edu/thesis-1948-brown, Theoretical Foundations of Fourth-Dimensional Displacement)}}}
 
 {{{divider}}}
 
-{{{cvevent(\href{http://www.university-2.com}{M.Sc. in Software Engineering},\href{http://www.university-2.com}{University Two},1885--2025, Harbor\, Country)}}}
-{{{cvthesis(https://www.thesis-2-link.com, Consectetuer Adipiscing: A Case Study)}}}
+{{{cvevent(\href{http://www.mit.edu}{M.Sc. in Nuclear Engineering},\href{http://www.mit.edu}{Massachusetts Institute of Technology},1939--1942, Cambridge\, MA)}}}
+{{{cvthesis(https://dspace.mit.edu/thesis-1942-brown, Controlled Energy Release in Sub-Critical Assemblies)}}}
 
 {{{divider}}}
 
-{{{cvevent(\href{http://www.university-3.com}{B.Sc. in Applied Mathematics},\href{http://www.university-3.com/}{University Three},1885-2025, Summit\, Country)}}}
+{{{cvevent(\href{http://www.berkeley.edu}{B.Sc. in Applied Physics},\href{http://www.berkeley.edu/}{University of California\, Berkeley},1936--1939, Berkeley\, CA)}}}
 
 ** Projects {{{fa(Wrench)}}}
 *** Project 1 :ignore:
-{{{cvproject(Org Resume Toolkit, Python Library, https://github.com/user-name/project1, https://github.com/user-name/project1)}}}
-- Lorem ipsum export pipeline; used by a small user community.
+{{{cvproject(Flux Capacitor, Temporal Device, https://github.com/ebrown/flux-capacitor, github.com/ebrown/flux-capacitor)}}}
+- Core component enabling time travel; requires exactly 1.21 gigawatts.
 
 *** Project 2 :ignore:
-{{{cvproject(LaTeX Fixture Lab, Python Library, https://github.com/user-name/project2, https://github.com/user-name/project2)}}}
-- Deterministic PDF regression tests with diff-pdf and CI hooks.
+{{{cvproject(DeLorean Time Machine, Vehicle Platform, https://github.com/ebrown/delorean-tm, github.com/ebrown/delorean-tm)}}}
+- Stainless-steel body provides flux dispersal; activation at 88 mph.
 
 *** Project 3 :ignore:
-{{{cvproject(CV Schema Explorer, Python Library, https://github.com/user-name/project3, https://github.com/user-name/project3)}}}
-- Prototype UI for browsing template variables and defaults.
+{{{cvproject(Mr. Fusion Reactor, Energy System, https://github.com/ebrown/mr-fusion, github.com/ebrown/mr-fusion)}}}
+- Compact cold-fusion reactor powered by ordinary household waste.
 
 *** Project 4 :ignore:
-{{{cvproject(Font Awesome Bridge, Python Library, https://github.com/user-name/project4, https://github.com/user-name/project4)}}}
-- Maps icon names across FA5/FA6 stacks for shared Org macros.
+{{{cvproject(Jules Verne Time Train, Rail Vehicle, https://github.com/ebrown/jv-train, github.com/ebrown/jv-train)}}}
+- Steam-powered temporal locomotive with hover-rail conversion capability.
 
 # ** Newpage :ignore:
 # {{{new-page}}}
@@ -136,11 +137,11 @@
 # Note: Up to 5 wheel items can be inserted.  If more are required, adjust the
 #       wheelchart macro in resumel.org
 {{{wheelchart(1.5cm,0.5cm,
-  6,8em,accent!30,Sleep\, \\beautiful sleep,
-  3,8em,accent!40,Hopeful novelist by night,
-  8,8em,accent!60,Daytime job,
-  2,10em,accent,Sports and relaxation,
-  5,6em,accent!20,Spending time with family)}}}
+  8,8em,accent!60,Temporal experiments,
+  3,8em,accent!40,Walking Einstein,
+  6,8em,accent!30,Reading Jules Verne,
+  2,10em,accent,Playing the organ,
+  5,6em,accent!20,Repairing the DeLorean)}}}
 
 * Page 2, Column 2 :ignore:
 # Switch to the right column
@@ -148,9 +149,9 @@
 
 ** Awards {{{fa(Trophy)}}}
 {{{cvhonors-begin}}}
-{{{cvachievement(\faTrophy,Winner,\href{https://www.award-1.com}{Helix Dynamics} Excellence,Jun 1885,Cross-team delivery)}}}
-{{{cvachievement(\faTrophy,Finalist,\href{https://www.award-1.com}{Vector Labs} Innovator,Jun 1885,Simulation research)}}}
-{{{cvachievement(\faTrophy,Honoree,\href{https://www.award-1.com}{Open Source Alliance} Award,Jun 1885,Tooling maintenance)}}}
+{{{cvachievement(\faTrophy,Breakthrough,\href{https://www.aps.org}{American Physical Society} Medal,Nov 1955,Flux capacitor conception)}}}
+{{{cvachievement(\faTrophy,Pioneer,\href{https://www.hill-valley.gov}{Hill Valley} Civic Honor,Oct 1985,First controlled time travel)}}}
+{{{cvachievement(\faTrophy,Innovator,\href{https://www.energy.gov}{DOE} Clean Energy Prize,Oct 2015,Mr. Fusion reactor design)}}}
 {{{cvhonors-end}}}
 
 * Back Matter :ignore:
