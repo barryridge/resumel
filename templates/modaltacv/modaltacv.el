@@ -1,3 +1,5 @@
+(require 'resumel)
+
 (let* ((compiler (or (cdr (assoc "COMPILER" resumel-template-vars)) "pdflatex"))
        (geometry (or (cdr (assoc "GEOMETRY" resumel-template-vars)) "left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm"))
        (documentclass-options (or (cdr (assoc "DOCUMENTCLASS_OPTIONS" resumel-template-vars)) "10pt,letterpaper,ragged2e,withhyper"))
@@ -29,6 +31,8 @@
                `("resumel-modaltacv"
                  ,(concat "\\documentclass[" documentclass-options "]{altacv}
 
+% Resumel shared color registry
+" (resumel--latex-color-registry) "
 % Layout
 %
 \\geometry{" geometry "}
@@ -67,29 +71,8 @@
 \\renewcommand{\\cvsectionfont}{" section-font "}
 \\renewcommand{\\cvsubsectionfont}{" subsection-font "}
 
-% Colors
+% Colors (base names from resumel-colors.tex)
 %
-% Define altacv colors
-\\definecolor{Black}{HTML}{000000}
-\\definecolor{SlateGrey}{HTML}{2E2E2E}
-\\definecolor{LightGrey}{HTML}{666666}
-\\definecolor{DarkPastelRed}{HTML}{450808}
-\\definecolor{PastelRed}{HTML}{8F0D0D}
-\\definecolor{Blue}{HTML}{3872B2}
-\\definecolor{DarkBlue}{HTML}{1F4064}
-\\definecolor{GoldenEarth}{HTML}{E7D192}
-\\definecolor{CoolSky}{HTML}{92CDE7}
-\\definecolor{SoftSkyBlue}{HTML}{97D5EF}
-
-% Define moderncv colors
-\\definecolor{black}{RGB}{0, 0, 0}
-\\definecolor{red}{rgb}{0.95, 0.20, 0.20}
-\\definecolor{darkgrey}{rgb}{0.45, 0.45, 0.45}
-\\definecolor{orange}{rgb}{0.95, 0.55, 0.15}
-\\definecolor{burgundy}{rgb}{0.596078, 0, 0}% 139/255 (0.545098) or 152/255 (0.596078)
-\\definecolor{purple}{rgb}{0.50, 0.33, 0.80}
-\\definecolor{lightblue}{rgb}{0.22, 0.45, 0.70}
-\\definecolor{green}{rgb}{0.35, 0.70, 0.30}
 \\colorlet{color0}{black}
 \\colorlet{color1}{lightblue}
 \\colorlet{color2}{darkgrey}
