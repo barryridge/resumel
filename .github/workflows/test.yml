@@ -182,8 +182,7 @@ jobs:
 
       - name: Install diff-pdf via Homebrew
         run: |
-          brew update
-          brew upgrade
+          brew install llvm --build-bottle
           brew install diff-pdf
 
       - name: Debug CI Emacs Setup
