@@ -286,7 +286,7 @@ make clean   # remove generated results
 Tests export all fixture files and compare resulting PDFs against expected outputs using [[https://github.com/vslavik/diff-pdf][vslavik/diff-pdf]] ([[https://vslavik.github.io/diff-pdf/][project site]]).
 
 - *macOS*: =brew install diff-pdf= or MacPorts (=port install diff-pdf=), per upstream.
-- *Linux*: Install via [[https://brew.sh][Homebrew on Linux]] (=brew install diff-pdf=), build [[https://github.com/vslavik/diff-pdf][from source]] following the upstream README, or use your distribution’s packages where they exist (e.g. Fedora/CentOS: =dnf install diff-pdf= per upstream).
+- *Linux*: On Debian/Ubuntu (enable =universe= if needed), =sudo apt install diff-pdf-wx= — the package name is =diff-pdf-wx=, but it installs vslavik’s =diff-pdf= command ([[https://packages.ubuntu.com/search?keywords=diff-pdf-wx][Ubuntu packages]]). Alternatively: [[https://brew.sh][Homebrew on Linux]] (=brew install diff-pdf=), build [[https://github.com/vslavik/diff-pdf][from source]] per the upstream README, or your distribution’s package where available (e.g. Fedora/CentOS: =dnf install diff-pdf= per upstream).
 
 Batch Emacs inherits =PATH= from whatever runs =make test= (your shell, CI, or IDE).  If the wrong binary is found first, set =RESUMEL_DIFF_PDF= to the full path of vslavik’s =diff-pdf=.
 

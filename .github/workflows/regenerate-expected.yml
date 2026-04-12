@@ -28,7 +28,8 @@ jobs:
           sudo apt-get install -y \
             emacs \
             make \
-            git
+            git \
+            diff-pdf-wx
 
       - name: Set up TeX Live
         uses: TeX-Live/setup-texlive-action@v4
@@ -174,14 +175,6 @@ jobs:
           sudo find /tmp/source-sans-3 -name "*.otf" \
             -exec cp {} /usr/local/share/fonts/source-sans-3/ \;
           sudo fc-cache -fv
-
-      - name: Setup Homebrew
-        id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
-      - name: Install diff-pdf via Homebrew
-        run: |
-          brew install diff-pdf
 
       - name: Generate PDFs
         env:
