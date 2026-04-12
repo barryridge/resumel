@@ -124,7 +124,7 @@ Examples:
 ;; Declared as defvar so template .el files can read it via dynamic binding.
 (defvar resumel-template-vars nil
   "Alist of (VAR-NAME . value) pairs parsed from RESUMEL_* Org keywords.
-Set during `resumel-setup'.  Template .el files read this to resolve their
+Set during `resumel--setup'.  Template .el files read this to resolve their
 configuration variables.")
 
 ;; Set the directory where resumel.el is located
@@ -263,6 +263,18 @@ Returns the selected template string."
         (when (and preview-window (window-live-p preview-window))
           (delete-window preview-window))))))
 
+(defconst resumel-template-names
+  '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes")
+  "Built-in resumel template identifiers, in minibuffer completion order.")
+
+(defun resumel-read-template-name (&optional prompt)
+  "Read a template name via minibuffer, with optional live PDF preview.
+Uses `resumel--with-live-preview' over `resumel-template-names'.  Does not
+modify the current buffer.  Returns the selected string."
+  (resumel--with-live-preview
+   resumel-template-names
+   (or prompt "Select template: ")))
+
 ;; Helper function for including template Org file
 (defun resumel-insert-template-include ()
   "Insert #+INCLUDE directive for the selected template's org file."
@@ -353,10 +365,7 @@ Intended for the temporary buffer used by `resumel-export'."
   "Select a resumel TEMPLATE to use for exports.
 Sets `resumel-default-template' globally.  When called from an Org
 buffer, also inserts or updates #+RESUMEL_TEMPLATE: in the file header."
-  (interactive
-   (list (resumel--with-live-preview
-          '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes")
-          "Select template: ")))
+  (interactive (list (resumel-read-template-name "Select template: ")))
   (setq resumel-default-template template)
   (when (derived-mode-p 'org-mode)
     (save-excursion
@@ -373,9 +382,10 @@ buffer, also inserts or updates #+RESUMEL_TEMPLATE: in the file header."
 (defvar-local resumel-selected-template resumel-default-template
   "Currently selected resumel template.")
 
-(defun resumel-setup ()
-  "Set up resumel with the selected template."
-  (interactive)
+(defun resumel--setup ()
+  "Set up resumel export pipeline with the selected template.
+This is an internal function called by `resumel-export'; use
+`resumel-init' to interactively scaffold a new resume buffer."
   (let ((template nil)
         (vars '()))
     ;; Parse the Org buffer and collect RESUMEL_* keywords
@@ -416,11 +426,32 @@ buffer, also inserts or updates #+RESUMEL_TEMPLATE: in the file header."
       ;; Switch to Org-mode in the temporary buffer
       (org-mode)
       ;; Set up resumel in the temporary buffer
-      (resumel-setup)
+      (resumel--setup)
       ;; Map portable profile keywords to Org export keywords (#+AUTHOR / #+TITLE / #+EMAIL)
       (resumel--merge-profile-export-keywords)
       ;; Export to PDF
       (org-latex-export-to-pdf))))
+
+;;;###autoload
+(defun resumel-view-export (&optional arg)
+  "Open this buffer's exported PDF in another window.
+The file path is the one Org LaTeX export would use (from
+`#+EXPORT_FILE_NAME' and related settings), same as for `resumel-export'.
+
+With a prefix ARG, run `resumel-export' first, then open the PDF.
+
+Uses `find-file-other-window', which uses `pdf-view-mode' when the
+pdf-tools package is installed, or `doc-view-mode' / the default viewer
+otherwise."
+  (interactive "P")
+  (unless (derived-mode-p 'org-mode)
+    (error "resumel-view-export must be called from an Org buffer"))
+  (when arg (resumel-export))
+  (let ((pdf (org-export-output-file-name ".pdf")))
+    (unless (file-exists-p pdf)
+      (user-error "No PDF at %s — run M-x resumel-export first, or use C-u M-x resumel-view-export"
+                  pdf))
+    (find-file-other-window pdf)))
 
 ;;; Template file viewing
 
@@ -432,7 +463,7 @@ currently selected in that buffer.  Useful for inspecting LaTeX class
 definitions and template variable defaults."
   (interactive
    (list (completing-read "Template: "
-                          '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes")
+                          resumel-template-names
                           nil t nil nil
                           (when (derived-mode-p 'org-mode)
                             (resumel--get-buffer-template)))))
@@ -451,7 +482,7 @@ currently selected in that buffer.  Useful for inspecting the template
 macros available for use in your resume file."
   (interactive
    (list (completing-read "Template: "
-                          '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes")
+                          resumel-template-names
                           nil t nil nil
                           (when (derived-mode-p 'org-mode)
                             (resumel--get-buffer-template)))))
@@ -471,7 +502,7 @@ Does not alter the template selection in the current Org buffer.
 Requires PDF files in `resumel-preview-pdf-dir'."
   (interactive
    (list (resumel--with-live-preview
-          '("moderncv" "altacv" "modaltacv" "awesomecv" "jakes")
+          resumel-template-names
           "View template PDF: "
           t)))
   (let* ((tmpl (or template resumel-default-template))
@@ -706,7 +737,7 @@ explicitly set in the Org buffer are displayed."
                 (insert "\n")))
           (setq resumel-variables--populating nil))
         (goto-char (min saved-pt (point-max))))
-      (display-buffer buf))))
+      (pop-to-buffer buf))))
 (defun resumel-variables-mode-p ()
   "Return non-nil if the current buffer is in `resumel-variables-mode'."
   (eq major-mode 'resumel-variables-mode))

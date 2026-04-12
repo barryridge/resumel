@@ -52,7 +52,7 @@ Templates are modular: each lives in its own directory with a =.el= file (LaTeX 
 
 - *Emacs* 26.1+  [[https://www.gnu.org/software/emacs/download.html][Download Emacs]]
 - *LaTeX distribution*: [[https://www.tug.org/texlive/][TeX Live]] / [[https://miktex.org/][MiKTeX]] / [[http://www.tug.org/mactex/][MacTeX]]
-- *diff-pdf*: required for tests  [[https://github.com/vslavik/diff-pdf][diff-pdf GitHub]]
+- *diff-pdf* ([[https://vslavik.github.io/diff-pdf/][project site]], [[https://github.com/vslavik/diff-pdf][GitHub]]): Václav Slávik’s visual PDF comparer, required for tests.
 
 * Installation
 
@@ -234,6 +234,48 @@ selected in the active Org buffer.  The file opens in another window via
 navigate candidates (like =resumel-select-template=), but does not change the
 template selection in your Org file.
 
+** resumel-mode
+
+=resumel-mode= is a minor mode that provides in-buffer assistance when editing resumel Org files.
+
+*** Auto-enable
+
+The mode activates automatically when an Org buffer contains a =#+RESUMEL_TEMPLATE:= keyword.  You can also force it on in /all/ Org buffers:
+
+#+begin_src emacs-lisp
+(setq resumel-mode-auto-enable t)
+#+end_src
+
+Or enable it manually with =M-x resumel-mode=.
+
+*** Macro completion
+
+Inside a macro call (after ={{{=), invoke completion (=C-x C-o=, or your framework's trigger) to see all available macro names with descriptions and arity hints.
+
+*** Keyword completion
+
+On a line starting with =#+RESUMEL=, invoke completion to see all available =RESUMEL_*= variable names for the current template.  A trailing =: = is inserted automatically.
+
+*** Eldoc
+
+When point is on a macro name or =#+RESUMEL_= keyword, the echo area shows a help string (macro description or keyword name).  Controlled by =resumel-mode-eldoc= (default =t=).
+
+*** Keymap (=C-c ,=)
+
+| Key       | Command                         | Description                        |
+|-----------+---------------------------------+------------------------------------|
+| =C-c , e= | =resumel-export=                | Export the buffer to PDF            |
+| =C-c , i= | =resumel-init=                  | Scaffold a new resume from template |
+| =C-c , t= | =resumel-select-template=       | Change the active template          |
+| =C-c , v= | =resumel-view-export=           | Open the exported PDF (pdf-tools / doc-view) |
+| =C-c , s= | =resumel-show-all-variables=    | Show all template variables         |
+
+Use =C-u C-c , v= to export first, then open the PDF.  The opened file is the same path Org uses (e.g. from =#+EXPORT_FILE_NAME=); with the [[https://github.com/vedang/pdf-tools][pdf-tools]] package installed, Emacs uses =pdf-view-mode=.
+
+*** resumel-init
+
+=M-x resumel-init= (or =C-c , i=) scaffolds the current buffer as a new resumel resume.  It prompts for a template (same live preview as =resumel-select-template=) and inserts boilerplate configuration (including =#+EXPORT_FILE_NAME=), a short starter =Summary= section, and skeleton body sections with example macros so =M-x resumel-export= can run on the first try.  If the buffer already has content, it asks for confirmation before erasing.
+
 * Testing
 
 #+begin_src shell
@@ -241,14 +283,12 @@ make test    # run all tests
 make clean   # remove generated results
 #+end_src
 
-Tests export all fixture files and compare resulting PDFs against expected outputs using =diff-pdf=.
+Tests export all fixture files and compare resulting PDFs against expected outputs using [[https://github.com/vslavik/diff-pdf][vslavik/diff-pdf]] ([[https://vslavik.github.io/diff-pdf/][project site]]).
 
-*Contributor note — =diff-pdf= on PATH*
+- *macOS*: =brew install diff-pdf= or MacPorts (=port install diff-pdf=), per upstream.
+- *Linux*: On Debian/Ubuntu (enable =universe= if needed), =sudo apt install diff-pdf-wx= — the package name is =diff-pdf-wx=, but it installs vslavik’s =diff-pdf= command ([[https://packages.ubuntu.com/search?keywords=diff-pdf-wx][Ubuntu packages]]). Alternatively: [[https://brew.sh][Homebrew on Linux]] (=brew install diff-pdf=), build [[https://github.com/vslavik/diff-pdf][from source]] per the upstream README, or your distribution’s package where available (e.g. Fedora/CentOS: =dnf install diff-pdf= per upstream).
 
-- *macOS (Homebrew)*: Batch Emacs inherits =PATH= from the environment that runs =make test=. If the wrong =diff-pdf= is used, set =RESUMEL_DIFF_PDF= to the full path of the binary you want.
-- *Linux*: Install the distro package (e.g. Debian/Ubuntu: =apt install diff-pdf=) or ensure the binary is on =PATH=.
-
-When syncing color or class definitions with upstream sources, local clones under =~/Repos/= are convenient (e.g. =awesomecv=, =altacv=, =moderncv=, =jakesresume=); those paths are not part of the repository.
+Batch Emacs inherits =PATH= from whatever runs =make test= (your shell, CI, or IDE).  If the wrong binary is found first, set =RESUMEL_DIFF_PDF= to the full path of vslavik’s =diff-pdf=.
 
 * Adding New Templates
 
@@ -261,7 +301,7 @@ When syncing color or class definitions with upstream sources, local clones unde
 
 =resumel= is inspired by and builds on Aidan Scannell's [[https://github.com/aidanscannell/my-org-resume][my-org-resume]].
 
-Developed with the assistance of [[https://claude.ai][Claude]], [[https://chatgpt.com][ChatGPT]], [[https://github.com/karthink/gptel][gptel]], and [[https://github.com/xenodium/agent-shell][agent-shell]].
+Developed with the assistance of [[https://cursor.com/][Cursor]], [[https://claude.ai][Claude]], [[https://chatgpt.com][ChatGPT]], [[https://github.com/karthink/gptel][gptel]], and [[https://github.com/xenodium/agent-shell][agent-shell]].
 
 * License
 
