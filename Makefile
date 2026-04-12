@@ -28,6 +28,7 @@ test: clean
 	 	$(EMACS) $(EMACS_FLAGS) \
 	        -l ert \
 	        -l resumel.el \
+	        -l resumel-mode.el \
 	        -l $(TEST_DIR)/test-resumel.el \
 	        -f ert-run-tests-batch-and-exit
 

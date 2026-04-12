@@ -30,11 +30,7 @@ The macro `{{{colorlet(var,source)}}}` from `resumel.org` expands to `\colorlet{
 
 ## Upstream sync
 
-To refresh hex/RGB values from upstream classes or docs, compare against local clones (not committed), for example:
-
-- `~/Repos/moderncv`, `~/Repos/altacv`, `~/Repos/awesomecv`, `~/Repos/jakesresume`
-
-Then update `templates/resumel-colors.tex` and run `make test`.
+To refresh hex/RGB values from upstream classes or docs, compare against your own local checkouts of the upstream LaTeX projects (moderncv, AltaCV, Awesome-CV, Jake’s Resume). Those sources are not committed in this repository. Then update `templates/resumel-colors.tex` and run `make test`.
 
 ## Implementation note
 

@@ -1,6 +1,7 @@
 (require 'ert)
 (require 'cl-lib)
 (require 'resumel)
+(require 'resumel-mode)
 
 ;; Declare completion-UI variables as special so let-bindings in tests
 ;; work correctly for simulating vertico/ivy state.
@@ -42,8 +43,7 @@
       ;; Export to PDF and capture any error details
       (condition-case err
           (progn
-            ;; Call resumel-setup before exporting
-            (resumel-setup)
+            (resumel--setup)
             (resumel--merge-profile-export-keywords)
             (org-latex-export-to-pdf)
             (unless (file-exists-p pdf-file)
@@ -57,11 +57,11 @@
              (message "LaTeX Output:\n%s" (buffer-string))))
          (signal (car err) (cdr err)))))))
 
-;; Function to compare two PDFs using diff-pdf
 (defun resumel-files-equal-p (file1 file2)
-  "Compare FILE1 and FILE2 using diff-pdf tool with specified tolerances.
-Uses RESUMEL_DIFF_PDF (full path) when set; otherwise the program name diff-pdf
-on exec-path (from the environment that started Emacs)."
+  "Compare FILE1 and FILE2 using vslavik's diff-pdf CLI.
+See https://github.com/vslavik/diff-pdf .  Uses RESUMEL_DIFF_PDF (full path)
+when set; otherwise the program name diff-pdf on exec-path (from the
+environment that started Emacs)."
   (let ((channel-tolerance (or (getenv "DIFF_PDF_CHANNEL_TOLERANCE") "0"))
         (per-page-pixel-tolerance (or (getenv "DIFF_PDF_PER_PAGE_PIXEL_TOLERANCE") "0"))
         (diff-pdf (or (getenv "RESUMEL_DIFF_PDF") "diff-pdf")))
@@ -752,3 +752,193 @@ Preview only fires via the interactive form's minibuffer hooks."
       (let ((resumel-preview-pdf-dir (expand-file-name "expected" resumel-test-dir)))
         (call-interactively #'resumel-view-template-pdf)))
     (should called-force)))
+
+;;; ---------------------------------------------------------------------------
+;;; resumel-mode macro index and completion-at-point
+;;; ---------------------------------------------------------------------------
+
+(ert-deftest resumel-test-mode-merged-macros-include-shared-bf ()
+  "Merged file macros include `bf' from resumel.org."
+  (let ((resumel-mode--merged-file-macros-cache nil))
+    (should (string-match-p "\\\\textbf"
+                            (cdr (assoc "bf" (resumel-mode--merged-file-macros "moderncv")))))))
+
+(ert-deftest resumel-test-mode-wheelchart-altacv-is-template-latex ()
+  "AltaCV template defines wheelchart with @@latex, shadowing shared eval macro."
+  (let ((resumel-mode--merged-file-macros-cache nil))
+    (let ((w (cdr (assoc "wheelchart" (resumel-mode--merged-file-macros "altacv")))))
+      (should (string-prefix-p "@@latex" w)))))
+
+(ert-deftest resumel-test-mode-wheelchart-moderncv-uses-eval-from-shared ()
+  "moderncv.org does not redefine wheelchart; expansion comes from resumel.org (eval)."
+  (let ((resumel-mode--merged-file-macros-cache nil))
+    (let ((w (cdr (assoc "wheelchart" (resumel-mode--merged-file-macros "moderncv")))))
+      (should (string-match-p "eval" w)))))
+
+(ert-deftest resumel-test-mode-buffer-macro-overrides-file ()
+  "Buffer-local #+MACRO: overrides merged file definitions."
+  (resumel-test-with-org-buffer
+      "#+MACRO: bf buffer-override\n#+RESUMEL_TEMPLATE: moderncv\n"
+    (let ((resumel-mode--merged-file-macros-cache nil))
+      (should (string= (cdr (assoc "bf" (resumel-mode--macro-index)))
+                       "buffer-override")))))
+
+(ert-deftest resumel-test-mode-macro-capf-inside-braces ()
+  "`resumel-mode-macro-completion-at-point' returns bounds for the macro name prefix."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n\n{{{bf"
+    (resumel-mode 1)
+    (goto-char (point-max))
+    (let ((capf (resumel-mode-macro-completion-at-point)))
+      (should capf)
+      (should (equal (buffer-substring-no-properties (nth 0 capf) (nth 1 capf))
+                     "bf"))
+      (should (member "bf" (nth 2 capf))))))
+
+(ert-deftest resumel-test-mode-macro-annotation-uses-description ()
+  "Macro completion annotation includes the hand-written description."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n\n{{{bf"
+    (resumel-mode 1)
+    (goto-char (point-max))
+    (let* ((capf (resumel-mode-macro-completion-at-point))
+           (ann-fn (plist-get (nthcdr 3 capf) :annotation-function)))
+      (should ann-fn)
+      (should (string-match-p "bold text" (funcall ann-fn "bf"))))))
+
+;;; ---------------------------------------------------------------------------
+;;; resumel-mode auto-enable detection
+;;; ---------------------------------------------------------------------------
+
+(ert-deftest resumel-test-mode-auto-detect-with-template-keyword ()
+  "resumel-mode--buffer-has-resumel-template-p returns non-nil for resumel files."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n#+TITLE: Test\n"
+    (should (resumel-mode--buffer-has-resumel-template-p))))
+
+(ert-deftest resumel-test-mode-auto-detect-without-template-keyword ()
+  "resumel-mode--buffer-has-resumel-template-p returns nil for plain Org files."
+  (resumel-test-with-org-buffer
+      "#+TITLE: Test\n#+AUTHOR: Jane\n"
+    (should-not (resumel-mode--buffer-has-resumel-template-p))))
+
+(ert-deftest resumel-test-mode-auto-enable-activates-on-template ()
+  "resumel-mode--maybe-turn-on enables the mode when #+RESUMEL_TEMPLATE is present."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: altacv\n#+TITLE: Test\n"
+    (let ((resumel-mode-auto-enable nil))
+      (resumel-mode--maybe-turn-on)
+      (should resumel-mode))))
+
+(ert-deftest resumel-test-mode-auto-enable-skips-plain-org ()
+  "resumel-mode--maybe-turn-on does not activate in plain Org buffers."
+  (resumel-test-with-org-buffer
+      "#+TITLE: Test\n"
+    (let ((resumel-mode-auto-enable nil))
+      (resumel-mode--maybe-turn-on)
+      (should-not resumel-mode))))
+
+;;; ---------------------------------------------------------------------------
+;;; resumel-mode keyword completion bounds
+;;; ---------------------------------------------------------------------------
+
+(ert-deftest resumel-test-mode-keyword-bounds-after-underscore ()
+  "Keyword bounds are detected after #+RESUMEL_ with partial name."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n#+RESUMEL_MOD"
+    (goto-char (point-max))
+    (let ((bounds (resumel-mode--resumel-keyword-name-bounds)))
+      (should bounds)
+      (should (string= "MOD"
+                        (buffer-substring-no-properties
+                         (car bounds) (cdr bounds)))))))
+
+(ert-deftest resumel-test-mode-keyword-bounds-before-underscore ()
+  "Keyword bounds are detected at #+RESUMEL without trailing underscore."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n#+RESUMEL"
+    (goto-char (point-max))
+    (let ((bounds (resumel-mode--resumel-keyword-name-bounds)))
+      (should bounds)
+      (should (string= ""
+                        (buffer-substring-no-properties
+                         (car bounds) (cdr bounds)))))))
+
+(ert-deftest resumel-test-mode-keyword-capf-exit-inserts-colon ()
+  "Keyword CAPF exit-function inserts ': ' after the completed keyword."
+  (resumel-test-with-org-buffer
+      "#+RESUMEL_TEMPLATE: moderncv\n#+RESUMEL_COMPILER"
+    (resumel-mode 1)
+    (goto-char (point-max))
+    (let* ((capf (resumel-mode-resumel-keyword-completion-at-point))
+           (exit-fn (plist-get (nthcdr 3 capf) :exit-function)))
+      (should exit-fn)
+      (funcall exit-fn "COMPILER" 'finished)
+      (should (string-match-p "COMPILER: $"
+                               (buffer-substring-no-properties
+                                (line-beginning-position) (point)))))))
+
+;;; ---------------------------------------------------------------------------
+;;; resumel-init scaffold
+;;; ---------------------------------------------------------------------------
+
+(ert-deftest resumel-test-init-inserts-moderncv-scaffold ()
+  "resumel-init inserts moderncv boilerplate."
+  (resumel-test-with-org-buffer ""
+    (cl-letf (((symbol-function 'yes-or-no-p)
+               (lambda (&rest _) t)))
+      (let ((resumel-default-template "moderncv"))
+        (resumel-init)
+        (let ((content (buffer-string)))
+          (should (string-match-p "RESUMEL_TEMPLATE: moderncv" content))
+          (should (string-match-p "MODERNCV_COLOR" content))
+          (should (string-match-p "MODERNCV_STYLE" content))
+          (should (string-match-p "EXPORT_FILE_NAME: resumel-resume.pdf" content))
+          (should (string-match-p "\\* Summary" content))
+          (should (string-match-p "{{{entries-begin}}}" content))
+          (should resumel-mode))))))
+
+(ert-deftest resumel-test-init-inserts-jakes-scaffold ()
+  "resumel-init inserts jakes boilerplate (minimal)."
+  (resumel-test-with-org-buffer ""
+    (cl-letf (((symbol-function 'yes-or-no-p)
+               (lambda (&rest _) t)))
+      (let ((resumel-default-template "jakes"))
+        (resumel-init)
+        (let ((content (buffer-string)))
+          (should (string-match-p "RESUMEL_TEMPLATE: jakes" content))
+          (should-not (string-match-p "GEOMETRY" content))
+          (should (string-match-p "EXPORT_FILE_NAME: resumel-resume.pdf" content)))))))
+
+(ert-deftest resumel-test-init-fallback-for-unknown-template ()
+  "resumel-init produces minimal scaffold for an unknown template."
+  (resumel-test-with-org-buffer ""
+    (cl-letf (((symbol-function 'yes-or-no-p)
+               (lambda (&rest _) t)))
+      (let ((resumel-default-template "unknown-tmpl"))
+        (resumel-init)
+        (let ((content (buffer-string)))
+          (should (string-match-p "RESUMEL_TEMPLATE: unknown-tmpl" content))
+          (should (string-match-p "EXPORT_FILE_NAME: resumel-resume.pdf" content)))))))
+
+;;; ---------------------------------------------------------------------------
+;;; resumel-view-export
+;;; ---------------------------------------------------------------------------
+
+(ert-deftest resumel-test-view-export-requires-org ()
+  "`resumel-view-export' is only valid in Org buffers."
+  (with-temp-buffer
+    (fundamental-mode)
+    (should-error (resumel-view-export))))
+
+(ert-deftest resumel-test-view-export-missing-pdf ()
+  "`resumel-view-export' signals when the PDF file is absent."
+  (resumel-test-with-org-buffer
+      "#+TITLE: T\n#+EXPORT_FILE_NAME: resumel-ert-view-export-missing.pdf\n"
+    (let ((default-directory (temporary-file-directory)))
+      (should-error (resumel-view-export) :type 'user-error))))
+
+(ert-deftest resumel-test-mode-map-view-and-show-variables-keys ()
+  "`C-c ,' submap binds v to view export and s to show all variables."
+  (should (eq (lookup-key resumel-mode-command-map "v") #'resumel-view-export))
+  (should (eq (lookup-key resumel-mode-command-map "s") #'resumel-show-all-variables)))
