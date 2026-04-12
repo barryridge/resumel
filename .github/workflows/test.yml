@@ -179,12 +179,11 @@ jobs:
       - name: Setup Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
-        run: |
-          brew update
-          brew upgrade
 
       - name: Install diff-pdf via Homebrew
         run: |
+          brew update
+          brew upgrade
           brew install diff-pdf
 
       - name: Debug CI Emacs Setup
