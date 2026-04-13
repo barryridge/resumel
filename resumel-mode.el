@@ -19,6 +19,7 @@
 (require 'org)
 (require 'subr-x)
 (require 'resumel)
+(require 'resumel-install)
 
 ;; --- Customization ---------------------------------------------------------
 
@@ -365,6 +366,7 @@ CALLBACK receives the documentation string.  The legacy
     (define-key map (kbd "e") #'resumel-export)
     (define-key map (kbd "i") #'resumel-init)
     (define-key map (kbd "t") #'resumel-select-template)
+    (define-key map (kbd "u") #'resumel-install-templates)
     (define-key map (kbd "v") #'resumel-view-export)
     (define-key map (kbd "s") #'resumel-show-all-variables)
     map)
@@ -386,7 +388,7 @@ When enabled, offers:
 - completion for #+RESUMEL_ keyword names
 - optional Eldoc hints (`resumel-mode-eldoc')
 - `resumel-init' to scaffold a new resume
-- \\`C-c ,' prefix: export, view PDF, template, variables, etc.
+- \\`C-c ,' prefix: export, view PDF, template, install upstream LaTeX classes, variables, etc.
 
 \\{resumel-mode-map}"
   :lighter " Resumel"
