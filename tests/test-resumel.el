@@ -2,6 +2,7 @@
 (require 'cl-lib)
 (require 'resumel)
 (require 'resumel-mode)
+(require 'resumel-install)
 
 ;; Declare completion-UI variables as special so let-bindings in tests
 ;; work correctly for simulating vertico/ivy state.
@@ -942,3 +943,115 @@ Preview only fires via the interactive form's minibuffer hooks."
   "`C-c ,' submap binds v to view export and s to show all variables."
   (should (eq (lookup-key resumel-mode-command-map "v") #'resumel-view-export))
   (should (eq (lookup-key resumel-mode-command-map "s") #'resumel-show-all-variables)))
+
+;;; ---------------------------------------------------------------------------
+;;; resumel-install-templates
+;;; ---------------------------------------------------------------------------
+
+(ert-deftest resumel-test-install-jobs-dedupe-altacv ()
+  "`altacv' and `modaltacv' map to a single AltaCV clone job."
+  (let ((jobs (resumel-install-jobs-for-templates '("altacv" "modaltacv"))))
+    (should (equal (length jobs) 1))
+    (should (eq (nth 0 (car jobs)) 'altacv))))
+
+(ert-deftest resumel-test-install-jobs-all-installable ()
+  "All non-jakes templates yield three distinct clone jobs."
+  (let ((jobs (resumel-install-jobs-for-templates
+               '("moderncv" "altacv" "modaltacv" "awesomecv"))))
+    (should (equal (length jobs) 3))
+    (should (equal (mapcar #'car jobs) '(moderncv altacv awesomecv)))))
+
+(ert-deftest resumel-test-install-job-target-dir ()
+  "`resumel-install--job-target-dir' builds tex/latex paths under ROOT."
+  (let ((root (expand-file-name "fake-texmf/" temporary-file-directory)))
+    (should (string=
+             (resumel-install--job-target-dir root "moderncv")
+             (expand-file-name "tex/latex/moderncv" root)))))
+
+(ert-deftest resumel-test-install-jakes-excluded ()
+  "`jakes' never appears in installable templates."
+  (should-not (member "jakes" (resumel-install-installable-templates))))
+
+(ert-deftest resumel-test-install-jakes-maps-to-nil ()
+  "`jakes' yields no install job."
+  (let ((jobs (resumel-install-jobs-for-templates '("jakes"))))
+    (should (null jobs))))
+
+(ert-deftest resumel-test-install-templates-mocked-clone ()
+  "`resumel-install-templates' runs git clone with mocked subprocess (no network)."
+  (let (calls
+        (resumel-install-skip-executable-checks t)
+        (resumel-install--process-fn
+         (lambda (program &optional _infile _destination _display &rest args)
+           (push (cons (file-name-nondirectory program) args) calls)
+           0)))
+    (let ((dir (make-temp-file "resumel-install" t)))
+      (unwind-protect
+          (let ((res (resumel-install-templates '("moderncv") dir)))
+            (should (assq 'moderncv res))
+            (should (eq (cdr (assq 'moderncv res)) 'cloned))
+            (should
+             (cl-some (lambda (c)
+                        (and (equal (car c) "git")
+                             (equal (cadr c) "clone")))
+                      calls)))
+        (delete-directory dir t)))))
+
+(ert-deftest resumel-test-install-templates-mocked-pull ()
+  "Existing git dir triggers pull instead of clone."
+  (let (calls
+        (resumel-install-skip-executable-checks t)
+        (resumel-install--process-fn
+         (lambda (program &optional _infile _destination _display &rest args)
+           (push (cons (file-name-nondirectory program) args) calls)
+           0)))
+    (let ((dir (make-temp-file "resumel-install" t)))
+      (unwind-protect
+          (let ((target (expand-file-name "tex/latex/moderncv" dir)))
+            (make-directory target t)
+            (make-directory (expand-file-name ".git" target))
+            (let ((res (resumel-install-templates '("moderncv") dir)))
+              (should (assq 'moderncv res))
+              (should (eq (cdr (assq 'moderncv res)) 'pulled))
+              (should
+               (cl-some (lambda (c)
+                          (and (equal (car c) "git")
+                               (member "pull" c)))
+                        calls))))
+        (delete-directory dir t)))))
+
+(ert-deftest resumel-test-install-templates-non-git-dir-errors ()
+  "Non-git existing directory is caught as a failed job."
+  (let ((resumel-install-skip-executable-checks t)
+        (resumel-install--process-fn
+         (lambda (_prog &optional _i _d _disp &rest _args) 0)))
+    (let ((dir (make-temp-file "resumel-install" t)))
+      (unwind-protect
+          (let ((target (expand-file-name "tex/latex/moderncv" dir)))
+            (make-directory target t)
+            (let ((res (resumel-install-templates '("moderncv") dir)))
+              (should (assq 'moderncv res))
+              (should (consp (cdr (assq 'moderncv res))))
+              (should (eq (car (cdr (assq 'moderncv res))) 'failed))))
+        (delete-directory dir t)))))
+
+(ert-deftest resumel-test-install-templates-mktexlsr-called ()
+  "mktexlsr is invoked after a successful clone."
+  (let (calls
+        (resumel-install-skip-executable-checks t)
+        (resumel-install--process-fn
+         (lambda (program &optional _infile _destination _display &rest args)
+           (push (cons (file-name-nondirectory program) args) calls)
+           0)))
+    (let ((dir (make-temp-file "resumel-install" t)))
+      (unwind-protect
+          (progn
+            (resumel-install-templates '("moderncv") dir)
+            (should
+             (cl-some (lambda (c) (equal (car c) "mktexlsr")) calls)))
+        (delete-directory dir t)))))
+
+(ert-deftest resumel-test-install-mode-map-key ()
+  "`C-c , u' is bound to `resumel-install-templates'."
+  (should (eq (lookup-key resumel-mode-command-map "u")
+              #'resumel-install-templates)))

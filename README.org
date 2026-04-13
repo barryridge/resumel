@@ -53,6 +53,34 @@ Templates are modular: each lives in its own directory with a =.el= file (LaTeX 
 - *Emacs* 26.1+  [[https://www.gnu.org/software/emacs/download.html][Download Emacs]]
 - *LaTeX distribution*: [[https://www.tug.org/texlive/][TeX Live]] / [[https://miktex.org/][MiKTeX]] / [[http://www.tug.org/mactex/][MacTeX]]
 - *diff-pdf* ([[https://vslavik.github.io/diff-pdf/][project site]], [[https://github.com/vslavik/diff-pdf][GitHub]]): Václav Slávik’s visual PDF comparer, required for tests.
+  
+** Upstream LaTeX class files
+
+The package’s Org and Emacs Lisp templates live under =templates/= in this repository.  The underlying LaTeX classes for *ModernCV*, *AltaCV* / *ModaltaCV*, and *Awesome-CV* are maintained upstream.  Many TeX installations already ship them; if yours does not (for example a minimal TeX Live scheme), install them into your user texmf tree so LaTeX can find the =.cls= files.
+
+- *Jake’s Resume* (=jakes=) uses the standard =article= class only; no extra class repository is required.
+
+You can install the upstream repositories with:
+
+#+begin_src
+M-x resumel-install-templates RET
+#+end_src
+
+By default this uses =resumel-template-install-root= (=~/texmf=), cloning into =tex/latex/moderncv=, =tex/latex/altacv=, and =tex/latex/awesomecv= (AltaCV serves both AltaCV and ModAltaCV).  Shallow clones (=--depth 1=) keep downloads small.  After cloning or pulling, the command runs =mktexlsr= on that tree when available.
+
+If you use a directory other than the usual user texmf location, set =TEXMFHOME= to that directory (or extend TeX’s search path another way) so =kpathsea= can find the files, then run =mktexlsr= on it.
+
+Manual shell equivalent (same layout as CI):
+
+#+begin_src shell
+mkdir -p "$HOME/texmf/tex/latex"
+git clone --depth 1 https://github.com/moderncv/moderncv.git "$HOME/texmf/tex/latex/moderncv"
+git clone --depth 1 https://github.com/liantze/AltaCV.git "$HOME/texmf/tex/latex/altacv"
+git clone --depth 1 https://github.com/posquit0/Awesome-CV.git "$HOME/texmf/tex/latex/awesomecv"
+mktexlsr "$HOME/texmf"
+#+end_src
+
+With =resumel-mode=, =C-c , u= runs the same command.
 
 * Installation
 
@@ -67,6 +95,7 @@ git clone https://github.com/barryridge/resumel.git
 #+begin_src elisp
 (add-to-list 'load-path "/path/to/resumel/")
 (require 'resumel)
+(require 'resumel-install) ;; optional: M-x resumel-install-templates
 ;; optional key binding:
 (global-set-key (kbd "C-c r") 'resumel-export)
 #+end_src
